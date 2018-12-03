@@ -1,0 +1,10 @@
+{
+  "name": "basic-html",
+  "version": "1.0.0",
+  "description": "Html Template",
+  "scripts": {},
+  "author": "",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}

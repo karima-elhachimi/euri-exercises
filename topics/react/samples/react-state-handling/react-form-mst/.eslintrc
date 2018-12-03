@@ -1,0 +1,26 @@
+{
+  "extends": ["airbnb", "prettier"],
+  "globals": {},
+  "parser": "babel-eslint",
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true,
+    "jest": true
+  },
+  "rules": {
+    "react/prefer-stateless-function": "off",
+    "react/jsx-filename-extension": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "react/button-has-type": "off",
+    "react/prop-types": "off",
+    "react/no-array-index-key": "off",
+    "jsx-a11y/label-has-for": "off",
+    "no-return-assign": "off",
+    "no-param-reassign": "off",
+    "lines-between-class-members": "off",
+    "no-console": [0, ""],
+    "array-callback-return": "off",
+    "consistent-return": "off"
+  }
+}

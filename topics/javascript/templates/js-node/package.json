@@ -1,0 +1,26 @@
+{
+  "name": "node-app",
+  "version": "1.0.0",
+  "description": "ES.Next Node Template",
+  "scripts": {
+    "build": "babel . -d ./build --ignore node_modules",
+    "start": "nodemon main.js --exec babel-node",
+    "lint": "eslint \"**/*.js\"",
+    "format": "prettier --write '**/*.{js,ts,css}'"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^7.2.3",
+    "babel-preset-node6": "^11.0.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "eslint": "3.19.0",
+    "eslint-config-airbnb-base": "^11.3.2",
+    "eslint-config-prettier": "^2.3.0",
+    "eslint-plugin-import": "^2.7.0",
+    "prettier": "^1.6.1"
+  }
+}
