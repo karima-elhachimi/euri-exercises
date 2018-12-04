@@ -132,44 +132,6 @@ Setup SourceTree for Beyond Compare:
 
 > License: see license file
 
-## .NET Core SDK 1.1
-
-.NET Core is a general purpose development platform maintained by Microsoft and the .NET community on [GitHub](https://github.com/dotnet/core). It is cross-platform, supporting Windows, macOS and Linux, and can be used in device, cloud, and embedded/IoT scenarios.
-
-[https://www.microsoft.com/net/core#macos](https://www.microsoft.com/net/core#macos)
-
-## Containers: Docker
-
-Install Docker for Mac
-
-```
-    Follow 'https://docs.docker.com/docker-for-mac/'
-```
-
-Verify your installation
-
-Type the docker run hello-world command and press RETURN.
-
-```
-$ docker run hello-world
- Unable to find image 'hello-world:latest' locally
- latest: Pulling from library/hello-world
- 535020c3e8ad: Pull complete
- af340544ed62: Pull complete
- Digest: sha256:a68868bfe696c00866942e8f5ca39e3e31b79c1e50feaee4ce5e28df2f051d5c
- Status: Downloaded newer image for hello-world:latest
-
- Hello from Docker.
- This message shows that your installation appears to be working correctly.
- ...
-```
-
-## Robomongo (MongoDB management tool)
-
-Shell-centric cross-platform MongoDB management tool
-
-[http://robomongo.org/](http://robomongo.org/)
-
 ## Other usefull utilities
 
 First you need to pre-install 'caskroom' (see above)

@@ -23,7 +23,6 @@ And install Office 2016 (there is a Windows and a OSX version)
 #### Links
 
 - [https://euricom.sharepoint.com](https://euricom.sharepoint.com)
-- [https://www.yammer.com/euri.com/](https://www.yammer.com/euri.com/)
 - [https://outlook.office365.com](https://outlook.office365.com)
 
 ## Slack
