@@ -3,6 +3,7 @@
     "airbnb-base",
     "prettier"
   ],
+  "parser": "babel-eslint",
   "globals": {},
   "env": {
     "browser": true,
@@ -10,7 +11,7 @@
     "jest": true
   },
   "rules": {
-    "no-console": [0, ""], // allow console.log
+    "no-console": [0, ""],
     "array-callback-return": "off",
     "consistent-return": "off"
   }

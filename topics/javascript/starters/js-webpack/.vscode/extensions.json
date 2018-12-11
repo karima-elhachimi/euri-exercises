@@ -8,5 +8,6 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "christian-kohler.path-intellisense",
+    "formulahendry.auto-close-tag"
   ]
 }
