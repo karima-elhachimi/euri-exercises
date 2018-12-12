@@ -9,7 +9,8 @@
     "lint": "eslint \"src/**/*.{js,jsx}\" --fix",
     "format": "prettier --write 'src/**/*.{js,jsx,json,css, scss, html}'",
     "test:ci": "jest",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "analyse": "webpack-bundle-analyzer bundle/stats.json"
   },
   "author": "",
   "license": "MIT",
@@ -81,6 +82,7 @@
     "terser-webpack-plugin": "^1.1.0",
     "url-loader": "^1.1.2",
     "webpack": "^4.27.1",
+    "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10",
     "webpack-manifest-plugin": "^2.0.4",

@@ -7,6 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const getClientEnvironment = require('./env');
 
@@ -233,6 +234,12 @@ module.exports = {
 
     // show progress during build
     new webpack.ProgressPlugin(),
+
+    // write stats file for later
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'disabled',
+      generateStatsFile: true,
+    }),
 
     // show friendly build errors
     new FriendlyErrorsWebpackPlugin(),

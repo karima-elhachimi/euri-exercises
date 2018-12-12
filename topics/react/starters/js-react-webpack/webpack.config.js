@@ -1,6 +1,7 @@
 /* eslint-disable */
 const path = require('path');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
   entry: './src/index.jsx',
@@ -35,6 +36,10 @@ module.exports = {
   plugins: [
     // show friendly build errors
     new FriendlyErrorsWebpackPlugin(),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'disabled',
+      generateStatsFile: true,
+    })
   ],
   resolve: {
     // allow import of js and jsx files
