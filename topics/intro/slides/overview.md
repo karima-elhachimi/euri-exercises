@@ -1,8 +1,7 @@
 ## Introduction Slides
 
 Slides
-- [My & Myself](./me.md)
-- [State of Javascript 2017](./state_of_JS_2017.md)
+- [State of Javascript 2019](./state_of_JS_2019.md)
 - [Web Fundamentals](./web-fundamentals)
 - [GraphQL](./graphql.md)
 

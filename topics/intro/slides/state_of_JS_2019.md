@@ -22,10 +22,13 @@ revealOptions:
 
 ## The State Of JavaScript 2017
 <img src="./images/state-of-js-2017.png" width="900px" /><br>
+
+#### THIS IS WORK IN PROGRESS
+
 <small>by Peter Cosemans</small>
 
 <small>
-Copyright (c) 2017 Euricom nv.
+Copyright (c) 2017-2019 Euricom nv.
 </small>
 
 ---
