@@ -1,0 +1,26 @@
+{
+  // See http://go.microsoft.com/fwlink/?LinkId=827846
+  // for the documentation about the extensions.json format
+  "recommendations": [
+    // Format-on-save with Prettier
+    "esbenp.prettier-vscode",
+    // SCSS intellisense
+    "mrmlnc.vscode-scss",
+    // npm intellisense
+    "christian-kohler.npm-intellisense",
+    // path intellisense
+    "christian-kohler.path-intellisense",
+    // Color Hightlight
+    "naumovs.color-highlight",
+    // Auto Close Tag
+    "formulahendry.auto-close-tag",
+    // Auto Rename Tag
+    "formulahendry.auto-rename-tag",
+    // Sorting HTML and Jade attributes
+    "mrmlnc.vscode-attrs-sorter",
+    // eslint
+    "dbaeumer.vscode-eslint",
+    // Chrome debugger
+    "msjsdiag.debugger-for-chrome"
+  ]
+}

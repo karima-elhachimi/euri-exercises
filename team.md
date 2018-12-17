@@ -2,25 +2,33 @@
 
 ## Bootcamp Manager
 
-### Stijn Liesenborghs
-- Email: <a href="mailto:stijn.liesenborghs@euri.com">stijn.liesenborghs@euri.com</a>
-- Mobile: +32 472 20 75 45
-- Personal coach (Evals, SPOC for all your non technical questions)
-
-<img src="./team/StijnLiesenborghs.jpg" width="250">
+T.B.D
 
 ## Trainers
 
+### Tom Marien
+
+- Email: <a href="mailto:tom.marien@euri.com">tom.marien@euri.com</a>
+- Training: JavaScript, React State Management
+
+<img src="./team/TomMarien.jpg" width="250">
+
 ### Wart Claes
+
 - Email: <a href="mailto:wart.claes@euri.com">wart.claes@euri.com</a>
-- Training: HTML/CSS
+- Training: Styling and Layout
 
 <img src="./team/WartClaes.jpg" width="250">
+
+### Frederik Bouillon
+
+- Email: <a href="mailto:frederik.bouillon@euri.com">frederik.bouillon@euri.com</a>
+- Training: React core, unit testing and patterns
+
+<img src="./team/FrederikBouillon.jpg" width="250">
 
 ---
 
 ## Bootcampers
 
-
-
-
+T.B.D
