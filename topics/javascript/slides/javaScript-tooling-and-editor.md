@@ -1,6 +1,6 @@
 ---
 title: JavaScript, Tooling and Editor
-transition: 'fade'
+transition: "fade"
 verticalSeparator: "^\\*\\*\\*"
 ---
 
@@ -8,8 +8,7 @@ verticalSeparator: "^\\*\\*\\*"
 
 <img src="./images/tooling.jpg" width="400px" /><br>
 <small>
-by Peter Cosemans<br>
-Copyright (c) 2017-2018 Euricom nv.
+Copyright (c) 2017-2019 Euricom nv.
 </small>
 
 <!-- markdownlint-disable -->
@@ -57,49 +56,6 @@ Copyright (c) 2017-2018 Euricom nv.
 - **_Babel_** - ES6+ to JavaScript transpiler
 - **_Prettier_** - An opinionated code formatter
 - **_Linting_** - Analyse your code for potential errors
-
----
-
-# GIT
-
-Git is used everywhere
-
-- All open source projects
-- All JavaScript libraries
-- Default support in IDE & editors
-- All npm modules are stored on github
-- All content of this workshop :)
-
-<!-- prettier-ignore -->
-***
-
-# GIT
-
-Clone this repo
-
-```
-mkdir git
-cd git
-git clone https://github.com/Euricom/training-workshop-ES-React-2018Q3.git
-cd training-workshop-ES-React-2018Q3
-```
-
-Get latest version of repo
-
-```
-cd training-workshop-ES-React-2018Q3
-git pull
-```
-
-<!-- prettier-ignore -->
-***
-
-# GIT
-
-3th party git tools
-
-- [SourceTree](https://www.sourcetreeapp.com/)
-- [Gitkraken](https://www.gitkraken.com/)
 
 ---
 
@@ -168,12 +124,64 @@ To Install
 
 [https://github.com/nodejs/Release#release-schedule](https://github.com/nodejs/Release#release-schedule)
 
+Check you node version
+
+```bash
+# verify your node version
+node --version
+```
+
 <!-- prettier-ignore -->
 ***
 
-## NPM
+## Switch node version
 
-### Node Package Manager
+Using 'n'
+
+```bash
+# install
+npm install n -g
+
+# use
+n 6.9.4
+n latest
+n
+    node/6.2.0
+    node/6.5.0
+    node/6.7.0
+  ο node/6.9.4
+    node/7.4.0
+n ls
+```
+
+<!-- prettier-ignore -->
+***
+
+## Switch node version
+
+Using 'nvm'
+
+```bash
+# install
+brew install nvm
+
+# use
+nvm list available
+nvm install 6.9.4
+nvm use 6.9.4
+nvm ls
+```
+
+---
+
+# Node Package Manager
+
+> Get that node module
+
+<!-- prettier-ignore -->
+***
+
+## Node Package Manager
 
 The JavaScript way of packaging and deploying code (modules)
 
@@ -336,41 +344,35 @@ $ yarn upgrade-interactive      # interactive upgrade all modules
 
 ---
 
-## WebPack
+# WebPack
 
-[WebPack](https://webpack.js.org/) a modern bundler (compile and) for javascript.
-
-```bash
-yarn add webpack webpack-cli --dev
-```
-
-webpack.config.js
-
-```js
-module.exports = {
-  entry: './src/index.js',
-  mode: 'development',
-  devtool: 'source-maps',
-  output: { path: __dirname, filename: 'bundle.js' },
-};
-```
-
-Run
-
-```bash
-# development build
-npx webpack
-
-# production build
-npx webpack --mode production
-```
+> A modern bundler for javascript.
 
 <!-- prettier-ignore -->
 ***
 
-## WebPack
+## Quick start
 
-Add the bundle to html files
+A mini application
+
+src/calc.js
+
+```js
+module.exports = {
+  add(x, y) {
+    return x + y;
+  }
+};
+```
+
+src/index.js
+
+```js
+const calc = require("./calc");
+console.log(calc.add(1, 2));
+```
+
+index.html
 
 ```html
 <body>
@@ -382,33 +384,33 @@ Add the bundle to html files
 <!-- prettier-ignore -->
 ***
 
-## WebPack-dev-server
+## Webpack Setup
 
-An development web server that bundle automatically.
-
-install
+Install
 
 ```bash
-yarn add webpack-dev-server --dev
+yarn add webpack webpack-cli --dev
 ```
 
-run
+webpack.config.js
+
+```js
+module.exports = {
+  entry: "./src/index.js",
+  mode: "development",
+  devtool: "source-maps",
+  output: { path: __dirname, filename: "bundle.js" }
+};
+```
+
+Run
 
 ```bash
-# startup
-npx webpack-dev-serve
-```
+# development build
+npx webpack
 
-Add npm scripts
-
-```json
-{
-  "scripts": {
-    "serve": "webpack",
-    "build": "webpack",
-    "build:prod": "webpack --mode production"
-  }
-}
+# production build
+npx webpack --mode production
 ```
 
 ---
@@ -428,21 +430,177 @@ Install
 
 ```bash
 # install as npm module
-yarn add babel-cli --dev
-yarn add babel-preset-env babel-preset-stage-2 --dev
+yarn @babel/core @babel/preset-env --dev
 ```
 
-Configure: .babelrc
+Configure: .babelrc<br>
+Babel needs preset to know how to build.
 
 ```json
 {
-  "presets": ["env", "stage-2"]
+  "presets": ["@babel/preset-env"]
 }
 ```
 
-Babel needs preset to know how to build.
+See [@babel/preset-env](https://github.com/babel/babel/tree/master/packages/babel-preset-env) for more information
 
-See [babel-preset-env](https://github.com/babel/babel-preset-env) for more information
+<!-- prettier-ignore -->
+***
+
+## Build Javascript
+
+src/index.js
+
+```js
+const person = {
+  name: "jan",
+  age: 12
+};
+
+// object spread not supported by node 6
+const otherPerson = { ...person, age: 20 };
+console.log(otherPerson);
+```
+
+@babel/preset-env will transpile for the current node version
+lets switch to an other version
+
+```bash
+n 6.10
+
+# or use nvm
+```
+
+build the javascript
+
+```bash
+npx babel ./src -d ./build
+```
+
+see the result in ./build
+
+<!-- prettier-ignore -->
+***
+
+## Configure node version
+
+.babelrc
+
+```json
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "6.10"
+        }
+      }
+    ]
+  ]
+}
+```
+
+When you are running node 11, its building to node 6
+
+<!-- prettier-ignore -->
+***
+
+## Using nodemon
+
+```bash
+# install dependencies
+yarn @babel/cli @babel/node --dev
+```
+
+add startup script in package.json
+
+```json
+"scripts": {
+  "build": "babel ./src -d ./build",
+  "start": "nodemon --exec babel-node src/index.js",
+},
+```
+
+and run it
+
+```bash
+# start the application, watch and rerun
+yarn start
+```
+
+<!-- prettier-ignore -->
+***
+
+## Babel Plugins
+
+With plugins you can add additional features to babel.
+Lets add a pre-release feature (numeric-separator).
+
+```bash
+# install plugin
+yarn add @babel/plugin-proposal-numeric-separator --dev
+```
+
+.babelrc
+
+```json
+{
+  "presets": ["@babel/preset-env"],
+  "plugins": ["@babel/plugin-proposal-numeric-separator"]
+}
+```
+
+index.js
+
+```js
+// Numeric Separator (stage 3)
+const bigNumber = 123_234_234;
+console.log(bigNumber);
+```
+
+<!-- prettier-ignore -->
+***
+
+## Final Config
+
+.babelrc
+
+```json
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": true
+        }
+      }
+    ]
+  ],
+  "plugins": ["@babel/plugin-proposal-numeric-separator"]
+}
+```
+
+package.json
+
+```json
+{
+  "scripts": {
+    "build": "babel ./src -d ./build",
+    "start": "nodemon --exec babel-node src/index.js",
+    "start:prod": "./build/index.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/cli": "^7.2.0",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.2.0"
+  }
+}
+```
 
 <!-- prettier-ignore -->
 ***
@@ -462,19 +620,29 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-      },
-    ],
-  },
+        loader: "babel-loader",
+        exclude: /node_modules/
+      }
+    ]
+  }
 };
 ```
+
+specify which browser to support (.babelrc)
+
+```json
+{
+  "targets": "> 0.25%, not dead"
+}
+```
+
+See more: https://babeljs.io/docs/en/babel-preset-env
 
 Enjoy the latest ES7+ features :)
 
 ---
 
-# Auto Format
+# Prettier - Format your code
 
 > Always use a code formatter
 
@@ -484,8 +652,6 @@ Enjoy the latest ES7+ features :)
 ## Prettier
 
 Use [https://prettier.io/](Prettier) to format your code.
-
-
 
 <!-- prettier-ignore -->
 ***
@@ -522,7 +688,7 @@ Config file: `.prettierrc`
 }
 ```
 
-script
+script (package.json)
 
 ```
 scripts: {
@@ -534,7 +700,7 @@ scripts: {
 
 # Linting
 
-> Don't start without it.
+> Don't start without a linter
 
 <!-- prettier-ignore -->
 ***
@@ -566,42 +732,119 @@ Any good JS editor support's linting: Visual Studio Code, WebStorm, Atom, ...
 <!-- prettier-ignore -->
 ***
 
-## ESLint - Setup
+### ESLint - Setup
 
 ```bash
-# linter engine
-yarn add eslint@4 --dev
-## eslint config
-yarn add eslint-config-airbnb eslint-plugin-react  --dev
-yarn add eslint-plugin-jsx-a11y eslint-plugin-import  --dev
+# install eslint
+yarn add eslint --dev
 ```
 
 .eslintrc
 
 ```json
 {
-  "extends": ["airbnb"],
-  "globals": {},
-  "env": {
-    "es6": true,
-    "node": true
+  "extends": ["eslint:recommended"],
+  "parserOptions": {
+    "ecmaVersion": 2018
   },
   "rules": {
-    "strict": [0],
-    "no-console": [0, ""]
+    "valid-typeof": "error"
   }
 }
 ```
 
-Add npm script
+Add npm script (package.json)
 
 ```json
 scripts: {
-    "lint": "eslint \"./src/**/*.js\""
+  "lint": "eslint \"./src/**/*.js\""
 }
 ```
 
+<!-- prettier-ignore -->
+***
+
+### ESLint - Run
+
+Some bad code
+
+<!-- prettier-ignore -->
+```js
+const name = "Freddy";
+typeof name === "strng";
+
+if (!"serviceWorker" in navigator) {
+  // you have an old browser :-(
+}
+
+const greeting = "hello";
+console.log("${greeting} world!")
+
+[(1, 2, 3)].forEach(x => console.log(x));
+```
+
+Run eslint
+
+```js
+yarn lint
+```
+
 <small>This setup follow the airbnb styleguide: https://github.com/zalmoxisus/javascript</small>
+
+<!-- prettier-ignore -->
+***
+
+### Add some rules
+
+.eslintrc
+
+```json
+{
+  "extends": ["eslint:recommended"]
+  ...
+}
+```
+
+run it
+
+```
+yarn lint
+
+/Users/peter/git/temp/t1/src/index.js
+   2:17  error  Invalid typeof comparison value                             valid-typeof
+   4:5   error  Unexpected negating the left operand of 'in' operator       no-unsafe-negation
+   4:25  error  'navigator' is not defined                                  no-undef
+   8:7   error  'greeting' is assigned a value but never used               no-unused-vars
+   9:1   error  Unexpected console statement                                no-console
+   9:1   error  'console' is not defined                                    no-undef
+  12:3   error  Unexpected newline between object and [ of property access  no-unexpected-multiline
+  12:28  error  Unexpected console statement                                no-console
+  12:28  error  'console' is not defined                                    no-undef
+
+```
+
+<!-- prettier-ignore -->
+***
+
+### Add the environment
+
+Add the eslint environment (.eslintrc)
+
+```json
+  "env": {
+    "browser": true,
+    "node": true
+  },
+```
+
+The environement
+
+Final run
+
+```
+eslint "./src/**/*.js"
+✨  Done in 0.56s.
+```
 
 <!-- prettier-ignore -->
 ***
@@ -629,7 +872,7 @@ $ yarn add eslint-config-prettier --dev
 ```json
 {
   "extends": [
-      "airbnb",
+      "eslint:recommended",
       "prettier"
   ],
   ...
@@ -638,6 +881,53 @@ $ yarn add eslint-config-prettier --dev
 
 No more linting errors for formatting.
 
+<!-- prettier-ignore -->
+***
+
+### Support for ES6+ features
+
+```js
+// stage-2 feature
+const number = 123_121_2342;
+console.log(number);
+```
+
+```bash
+# install babel parser for eslint
+yarn add babel-eslint --dev
+```
+
+configure it (.eslintrc)
+
+```json
+{
+    "parser": "babel-eslint",
+    ...
+}
+```
+
+Supporting all of babel
+
+<!-- prettier-ignore -->
+***
+
+### Other...
+
+### ESLint configurations
+
+- eslint-config-airbnb
+- eslint-config-standard
+- eslint-config-google
+- eslint-config-idiomatic
+- ...
+
+### Linters
+
+- JSLint (Outdated)
+- JSHint (Outdated)
+- TSLint (Typescript)
+- StyleLint (CSS, Sass, Less)
+
 ---
 
 ## Starters
@@ -645,10 +935,9 @@ No more linting errors for formatting.
 Pre-defined projects for easy startup. Where to find?
 
 ```
-<root>/starters/react-webpack-jsx
-<root>/starters/react-webpack
-<root>/starters/react-parcel
-<root>/starters/react-cra-prettier
+<root>/starters/js-node
+<root>/starters/js-node-jest
+<root>/starters/js-webpack
 ```
 
 Ready to:

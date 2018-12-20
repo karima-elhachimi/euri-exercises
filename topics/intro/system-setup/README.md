@@ -31,7 +31,7 @@ Our workgroup communication platform
 [https://slack.com/](https://slack.com/)
 
 > Sign-in with domain: euricom
-(you should have received an slack invitation by mail)
+> (you should have received an slack invitation by mail)
 
 Install your desktop app and sign-in
 
@@ -39,10 +39,12 @@ Install your desktop app and sign-in
 
 Usefull channels (you have to add them)
 
-- `bootcamp-dotnet`<br>Communication platform for bootcamp
-- `frontend`<br>All frontend related info and comments
-- `dotnet`<br>All dotNet related info and comments
-- `mjr`<br>Euricom knowledge sessions
+- `js-frontend`
+- `js-frontend-react`
+- `js-frontend-angular`
+- `js-frontend-vuejs`
+- `js-frontend`
+- `js-frontend-node`
 
 ### Google Chrome
 

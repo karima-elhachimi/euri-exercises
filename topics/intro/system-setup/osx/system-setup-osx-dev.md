@@ -1,4 +1,3 @@
-
 ## Setup OSX for Modern/Hipster Development
 
 A fresh OSX isn't entirely ready for modern development, but all the tools you need are available. A good terminal, popular bash tools, Git, a decent package manager - when properly setup, modern development on OSX can be a lot of fun. In particular, this document outlines how to configure your OSX in such a way that it can easily handle most development tasks.
@@ -80,9 +79,9 @@ git config --global credential.helper cache
 
 If the git command line gets to complicated you can install the following tools
 
-```
+```bash
+brew cask install gitkraken   # preferred
 brew cask install sourcetree
-brew cask install gitkraken
 ```
 
 ## Code Editor: VS Code
@@ -97,15 +96,10 @@ To make it even better install the following extenstions
 
 - EditorConfig for VS Code
 - ESLint
-- TSLint
-- Git History (git log)
-- Git Blame
-- Git Flow
-- beautify
 - npm Intellisense
 - Path Intellisense
 - Spelling and Grammer Checker
-- Document This
+- Prettier
 
 ## Marked2 (Markdown Viewer)
 
@@ -150,11 +144,11 @@ Then you can
 
 And
 
-* http://pilotmoon.com/popclip/  (easy copy/past)
-* http://marked2app.com/ (markdown)
-* http://cord.sourceforge.net/ (remote desktop)
-* https://cyberduck.io/ (FTP, SFTP, WebDav, ...)
-* http://www.videolan.org (the video player)
+- http://pilotmoon.com/popclip/ (easy copy/past)
+- http://marked2app.com/ (markdown)
+- http://cord.sourceforge.net/ (remote desktop)
+- https://cyberduck.io/ (FTP, SFTP, WebDav, ...)
+- http://www.videolan.org (the video player)
 
 ## Dot files
 
@@ -169,7 +163,7 @@ See https://github.com/KingScooty/dotfiles
 
 ## Quick Look
 
-Copy *.qlgenerator to /Library/QuickLook or ~/Library/QuickLook
+Copy \*.qlgenerator to /Library/QuickLook or ~/Library/QuickLook
 And restart finder
 
 ## Some short-cuts & tips
@@ -180,59 +174,30 @@ For dummies:
 
 Short-cuts
 
-* **Cmd + Space**: Spotlight search
-* **Cmd + Shft + 3**: Take screenshots
-* **Cmd + Shft + 4**: Take screenshots of area
-* **Cmd + Shft + 4** & space: Take screenshots window
-* **Cmd + Opt + D**: Hide your dock
-* **Cmd + Opt + Esc**: Force Quit dialog
-* **Cmd + Opt + Shft + Esc**: Force Quit current application
-* **Cmd + Opt + Ctrl + Eject**: Force shutdown (direct!)
-* **Cmd + plus(+) or min(-)**: Zoom in & out
+- **Cmd + Space**: Spotlight search
+- **Cmd + Shft + 3**: Take screenshots
+- **Cmd + Shft + 4**: Take screenshots of area
+- **Cmd + Shft + 4** & space: Take screenshots window
+- **Cmd + Opt + D**: Hide your dock
+- **Cmd + Opt + Esc**: Force Quit dialog
+- **Cmd + Opt + Shft + Esc**: Force Quit current application
+- **Cmd + Opt + Ctrl + Eject**: Force shutdown (direct!)
+- **Cmd + plus(+) or min(-)**: Zoom in & out
 
-* **fn + BS**: Delete (to remove from the front of the cursor)
-* **fn + Up or Down**: Page up / down
+- **fn + BS**: Delete (to remove from the front of the cursor)
+- **fn + Up or Down**: Page up / down
 
 Tips
 
-* Us keyboard 'US-international' for all those french characters. Show 'Character viewer' and/or 'Keyboard Viewer' for other symbols.
-* When you have a file open (sublime, photoshop, word), you can drap the icon to move the file.
-* When you have a file open (sublime, photoshop, word), you can cmd + click the filename in the title to view its location.
-* When **Cmd + Tab** switch between application, press **Q** to quit app, **H** to hide it.
-* The spotlight search has a calculator build in.
+- Us keyboard 'US-international' for all those french characters. Show 'Character viewer' and/or 'Keyboard Viewer' for other symbols.
+- When you have a file open (sublime, photoshop, word), you can drap the icon to move the file.
+- When you have a file open (sublime, photoshop, word), you can cmd + click the filename in the title to view its location.
+- When **Cmd + Tab** switch between application, press **Q** to quit app, **H** to hide it.
+- The spotlight search has a calculator build in.
 
 More: http://www.danrodney.com/mac/index.html
 
-## OSX Tweaks
-
-#### General UI/UX
-
-    # Save to disk (not to iCloud) by default
-    defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
-
-    # Remove duplicates in the “Open With” menu (also see `lscleanup` alias)
-    #/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user
-
-    # Disable local Time Machine backups
-    hash tmutil &> /dev/null && sudo tmutil disablelocal
-
-#### SSD-specific tweaks
-
-    # Disable local Time Machine snapshots
-    sudo tmutil disablelocal
-
-    # Disable hibernation (speeds up entering sleep mode)
-    sudo pmset -a hibernatemode 0
-
-    # Remove the sleep image file to save disk space
-    sudo rm /Private/var/vm/sleepimage
-    # Create a zero-byte file instead…
-    sudo touch /Private/var/vm/sleepimage
-    # …and make sure it can’t be rewritten
-    sudo chflags uchg /Private/var/vm/sleepimage
-
-    # Disable the sudden motion sensor as it’s not useful for SSDs
-    sudo pmset -a sms 0
+## MacOS Tweaks
 
 #### Finder
 
