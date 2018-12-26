@@ -1,7 +1,7 @@
 ---
 title: Javascript Fundamentals
 transition: "fade"
-verticalSeparator: "^\\_\\_\\\*"
+verticalSeparator: "^\\*\\*\\*"
 ---
 
 ## Javascript Fundamentals

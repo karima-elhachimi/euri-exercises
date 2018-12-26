@@ -1,12 +1,12 @@
 ---
 title: Javascript Modules Systems
 transition: "fade"
-verticalSeparator: "^\\_\\_\\\*"
+verticalSeparator: "^\\*\\*\\*"
 ---
 
 ## Javascript Modules Systems
 
-<img src="./images/js-big.png" width="400px" /><br>
+<img src="./images/js-modules.jpg" width="400px" /><br>
 <small>
 Copyright (c) 2017-2019 Euricom nv.
 </small>

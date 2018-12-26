@@ -6,7 +6,7 @@ verticalSeparator: "^\\*\\*\\*"
 
 ## JavaScript Tooling and Editor
 
-<img src="./images/tooling.jpg" width="400px" /><br>
+<img src="./images/js-tooling.jpeg" width="400px" /><br>
 <small>
 Copyright (c) 2017-2019 Euricom nv.
 </small>

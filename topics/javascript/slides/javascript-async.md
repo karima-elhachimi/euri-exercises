@@ -1,12 +1,12 @@
 ---
 title: Javascript Async
 transition: "fade"
-verticalSeparator: "^\\_\\_\\\*"
+verticalSeparator: "^\\*\\*\\*"
 ---
 
 ## Javascript Async
 
-<img src="./images/js-big.png" width="400px" /><br>
+<img src="./images/async.png" width="400px" /><br>
 <small>
 Copyright (c) 2017-2019 Euricom nv.
 </small>
@@ -38,6 +38,8 @@ Copyright (c) 2017-2019 Euricom nv.
     font-size: 90%;
 }
 </style>
+
+---
 
 # Async
 

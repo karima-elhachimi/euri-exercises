@@ -1,7 +1,8 @@
 ## Javascript Unit Testing
 
 <img src="./images/testing.jpeg" width="600px" /><br>
-<small>by Peter Cosemans</small>
+
+### !!!! WORK IN PROGRESS !!!!
 
 <br>
 <small>

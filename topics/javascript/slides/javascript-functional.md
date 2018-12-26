@@ -1,12 +1,12 @@
 ---
-title: Funtional Javascript 
+title: Funtional Javascript
 transition: "fade"
-verticalSeparator: "^\\_\\_\\\*"
+verticalSeparator: "^\\*\\*\\*"
 ---
 
 ## Funtional Javascript
 
-<img src="./images/js-big.png" width="400px" /><br>
+<img src="./images/functional.png" width="400px" /><br>
 <small>
 Copyright (c) 2017-2019 Euricom nv.
 </small>
