@@ -45,6 +45,12 @@ Copyright (c) 2017-2019 Euricom nv.
 
 > Function all over the place
 
+---
+
+# A pure function
+
+> Pure? How can a function be pure?
+
 <!-- prettier-ignore -->
 ***
 
@@ -70,12 +76,18 @@ inc() is impure because it changes count outside its scope
 <!-- prettier-ignore -->
 ***
 
-## A pure function
+## A pure function:
 
-- The function always returns the same result for the same arguments.
-- The function does NOT produce any observable side effects.
+> The function always returns the same result for the same arguments.
 
-What are side effects:
+and
+
+> The function does NOT produce any observable side effects.
+
+<!-- prettier-ignore -->
+***
+
+## Side effects:
 
 - Making a HTTP request
 - Mutating data

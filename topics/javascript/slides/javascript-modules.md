@@ -41,7 +41,7 @@ Copyright (c) 2017-2019 Euricom nv.
 
 ---
 
-# Javascript modules systems
+## Javascript modules systems
 
 - IIFE (Revealing Module Pattern)
 - CommonJS (Node module pattern)
@@ -49,13 +49,16 @@ Copyright (c) 2017-2019 Euricom nv.
 - UMD (Combination of IIFE, CommonJS, AMD)
 - ES Modules (ECMAScript Modules)
 
-<!-- prettier-ignore -->
-***
+---
 
 ## IIFE
 
+> Immediately Invoked Function Expression
+
 <!-- prettier-ignore -->
 ***
+
+## Revealing module pattern
 
 ```js
 var myRevealingModule = (function () {
@@ -76,7 +79,16 @@ var myRevealingModule = (function () {
 })();
 ```
 
+---
+
 ## CommonJS (CJS)
+
+> The nodeJS module pattern
+
+<!-- prettier-ignore -->
+***
+
+## CommonJS
 
 ```js
 // myLib.js
@@ -90,6 +102,79 @@ myLib.setName();
 ```
 
 Used by nodeJS (webpack.config.js, .eslintrc.js, ...)
+
+---
+
+## Asynchronous Module Definition (AMD)
+
+> CommonJS in the browser
+
+<!-- prettier-ignore -->
+***
+
+## AMD
+
+Powered by RequireJS
+
+```js
+// foo.js
+define(["jquery"], function($) {
+  // methods
+  function myFunc() {}
+
+  // exposed public methods
+  return {
+    doSomething: myFunc
+  };
+});
+```
+
+```js
+// main.js
+require(["foo"], function(foo) {
+  // rest of your code here
+  foo.doSomething();
+});
+```
+
+---
+
+## Universal Module Definition (UMD)
+
+> Combination of IIFE, CommonJS, AMD
+
+<!-- prettier-ignore -->
+***
+
+## UMD
+
+```js
+(function(root, factory) {
+  if (typeof define === "function" && define.amd) {
+    // AMD
+    define(["jquery"], factory);
+  } else if (typeof exports === "object") {
+    // Node, CommonJS-like
+    module.exports = factory(require("jquery"));
+  } else {
+    // Browser globals (root is window)
+    root.myLib = factory(root.jQuery);
+  }
+})(this, function($) {
+  // this is where I defined my module implementation
+
+  function myFunc() {}
+  return {
+    func: myFunc
+  };
+});
+```
+
+---
+
+## ES Modules (ESM)
+
+> EcmaScript Module Pattern
 
 <!-- prettier-ignore -->
 ***

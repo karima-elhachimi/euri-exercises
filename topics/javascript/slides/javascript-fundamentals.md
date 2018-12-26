@@ -6,7 +6,7 @@ verticalSeparator: "^\\*\\*\\*"
 
 ## Javascript Fundamentals
 
-<img src="./images/js-big.png" width="400px" /><br>
+<img src="./images/js-big.png" width="350px" /><br>
 <small>
 Copyright (c) 2017-2019 Euricom nv.
 </small>
@@ -41,9 +41,9 @@ Copyright (c) 2017-2019 Euricom nv.
 
 ---
 
-# Learn Javascript
+## Learn Javascript
 
-<img src="./images/js-books.jpg" width="400px" /><br>
+<img src="./images/js-books.jpg" width="350px" /><br>
 
 > https://github.com/getify/You-Dont-Know-JS
 
@@ -64,21 +64,25 @@ Copyright (c) 2017-2019 Euricom nv.
   - To complex, not for amateur programmer
   - Brendan helps Netscape decide
   - Brendan starts a new language
-    - In 10 days!
-    - Code Name: Mocha
-  - Mocha was renamed to LiveScript (sept 1995)
-  - LiveScript was later renamed to JavaScript (dec 1995)
-- 1996: People start using Javascript
+    - In 10 days! (Code Name: Mocha)
 
 <!-- prettier-ignore -->
 ***
 
 ## Ecmascript
 
+- 1995 (sept): Mocha was renamed to LiveScript
+- 1995 (dec): LiveScript was later renamed to JavaScript
+- 1996: People start using Javascript
 - 1996: Microsoft is comming with IE. Netscape in problem.
 - 1997: Netscape reches out to Ecma. JS was standardized: Ecmascript
+
+<!-- prettier-ignore -->
+***
+
+## Life is Good
+
 - 1999: Ecmascript 3
-  - Life is Good
   - More people implementing ES spec
   - More people/companies get involved (Apple, Yahoo, Adobe, ...)
 
@@ -91,12 +95,17 @@ Copyright (c) 2017-2019 Euricom nv.
   - IE Crushes NetScape
   - 2003 Netscape ends
   - IE Glory Days
-  - Talks start for ES4: 2005
-  - Conflicting ideas
-    - Crockford: Remove bad parts
-    - MS: Keep it backwards compatible
-    - Adobe: Add classes and flex stuff
-    - Crock/MS/Yahoo (ES3.1) vs Adobe/Opera/Mozilla (ES4)
+
+<!-- prettier-ignore -->
+***
+
+## IE4 Conflicting ideas
+
+- 2005: Talks start for ES4
+  - Crockford: Remove bad parts
+  - MS: Keep it backwards compatible
+  - Adobe: Add classes and flex stuff
+  - Crock/MS/Yahoo (ES3.1) vs Adobe/Opera/Mozilla (ES4)
 
 <!-- prettier-ignore -->
 ***
@@ -110,26 +119,29 @@ Copyright (c) 2017-2019 Euricom nv.
 - 2015: TC39 has finalized ES6
   - Renamed ES6 to ES2015
   - Browser starting the implementation of ES2015
-- Today:
-  - TC39 works on features for ES2019
-  - Browsers are inplementing ES2019 and beyond
+
+<!-- prettier-ignore -->
+***
+
+## Today
+
+- TC39 works on features for ES2019
+- Browsers are inplementing ES2019 and beyond
 
 ---
 
-# Documentation
+## Documentation
 
 > Where are the manual's
 
 <!-- prettier-ignore -->
 ***
 
-# Javascript Help
+## Javascript Help
 
-## [The MDN JavaScript reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference)
-
-## [DevDocs](http://devdocs.io/javascript)
-
-## [JavaScript Weekly](http://javascriptweekly.com/)
+- [The MDN JavaScript reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference)
+- [DevDocs](http://devdocs.io/javascript)
+- [JavaScript Weekly](http://javascriptweekly.com/)
 
 ---
 
@@ -190,9 +202,9 @@ https://github.com/Microsoft/TypeScript/wiki/Roadmap
 <!-- prettier-ignore -->
 ***
 
-## ES6+ Today
+## ES Today
 
-<img src="./images/compatibility-table.png" width="1000px" /><br>
+<img src="./images/compatibility-table.png" width="800px" /><br>
 
 - Edge, Chrome, Firefox and Safari: +95%
 - Node 8.x: +98%
@@ -201,14 +213,14 @@ https://github.com/Microsoft/TypeScript/wiki/Roadmap
 
 ---
 
-# NodeJS (quick start)
+# NodeJS <br>(quick start)
 
 > Your Javascript engine for the desktop
 
 <!-- prettier-ignore -->
 ***
 
-## NodeJS - Run your code
+## Your first app
 
 Your JS file
 
@@ -224,6 +236,11 @@ To run
 node main.js
 > Hello nodeJS
 ```
+
+<!-- prettier-ignore -->
+***
+
+## Auto (re)run
 
 To auto restart after file change
 
@@ -241,30 +258,36 @@ Hello node
 [nodemon] clean exit - waiting for changes before restart
 ```
 
----
+<!-- prettier-ignore -->
+***
 
 ## NodeJS != Browser
 
 Node doesn't have:
 
 ```
-    + window object
-    + location object
-    + document object
+  + window object
+  + location object
+  + document object
 ```
 
 Node is/has:
 
 ```
-    + global object (== window object)
-    + headless (no DOM)
-    + process object (to get info about the process)
-    + __dirname & __filename object
+  + global object (== window object)
+  + headless (no DOM)
+  + process object (to get info about the process)
+  + __dirname & __filename object
 
-    + module object (to export a module)
-    + everything is a module (every file)
-    + required function (to load other modules)
+  + module object (to export a module)
+  + everything is a module (every file)
+  + required function (to load other modules)
 ```
+
+<!-- prettier-ignore -->
+***
+
+## NodeJS == Browser
 
 In common with browser:
 
@@ -282,7 +305,7 @@ In common with browser:
 <!-- prettier-ignore -->
 ***
 
-## JavaScript has lexical scoping with function scope.
+### Lexical scoping with function scope.
 
 Do you know the answer?
 
@@ -367,9 +390,9 @@ a;              // undefined
 <!-- prettier-ignore -->
 ***
 
-## Strict
+### Strict Mode
 
-The syntax, for declaring [strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode), was designed to be compatible with older versions of JavaScript. <small>Strict mode was introduced in ES5.</small>
+The syntax, for declaring [strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode), was designed to be compatible with older versions of JavaScript.
 
 ```
 "use strict";
@@ -409,7 +432,10 @@ console.log(i)           // output: throws error, 11, undefined
 
 > No block scoping when using var!
 
-Use `let` and `const`
+<!-- prettier-ignore -->
+***
+
+## Use `let` and `const`
 
 ```js
 let foo = 2
@@ -478,6 +504,11 @@ for(var i = 0; i < 10; i++) {
 console.log(i);     // undefined, error, 0, 10, 11
 ```
 
+<!-- prettier-ignore -->
+***
+
+## What about
+
 Try/catch block
 
 ```javascript
@@ -494,7 +525,8 @@ console.log(err); // ?
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
----
+<!-- prettier-ignore -->
+***
 
 ## Function Hoisting
 
@@ -513,6 +545,11 @@ var bar = function(){
     ...
 };
 ```
+
+<!-- prettier-ignore -->
+***
+
+## Function Hoisting
 
 Is hoisted as:
 
@@ -631,7 +668,8 @@ function foo() {
 foo();
 ```
 
----
+<!-- prettier-ignore -->
+***
 
 ## Closure
 
@@ -653,9 +691,12 @@ function bam() {
 bam(); // 'bar'
 ```
 
-Another example
+<!-- prettier-ignore -->
+***
 
-<!-- .element: class="fragment" data-fragment-index="1" -->
+## Closure
+
+Another example
 
 ```javascript
 function foo() {
@@ -667,8 +708,6 @@ function foo() {
 
 foo(); // 'bar'
 ```
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
 
 <!-- prettier-ignore -->
 ***
@@ -729,10 +768,6 @@ Is used to isolate from global scope
         }
     })(jquery, window);
 
-> The IIFE was (in ES5) the standard way to build libraries
-
-See [https://github.com/jashkenas/underscore/blob/master/underscore.js](https://github.com/jashkenas/underscore/blob/master/underscore.js)
-
 <!-- prettier-ignore -->
 ***
 
@@ -756,8 +791,7 @@ var myRevealingModule = (function () {
 ```
 
 ```js
-    // Reveal public pointers to
-    // private functions and properties
+    // Reveal public pointers to private functions and properties
     return {
         setName: publicSetName,
         greeting: publicVar,
@@ -850,9 +884,7 @@ doThis();
 <!-- prettier-ignore -->
 ***
 
-## This
-
-### Default and implicit binding
+## This - Default and implicit binding
 
 ```javascript
 function foo() {
@@ -866,13 +898,9 @@ o2.foo(); // ???
 o3.foo(); // ???
 ```
 
-Result
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
 The 'this' points to the object where it is called from (its context), if there is no object fallback to the global (window in browser).
 
-<!-- .element: class="fragment" data-fragment-index="1" -->
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 ```javascript
 foo(); // 'bar1' default binding (none strict)
@@ -880,14 +908,12 @@ o2.foo(); // 'bar2' explicit binding
 o3.foo(); // 'bar3' explicit binding
 ```
 
-<!-- .element: class="fragment" data-fragment-index="1" -->
+<!-- .element: class="fragment" data-fragment-index="3" -->
 
 <!-- prettier-ignore -->
 ***
 
-## This - Default and implicit binding
-
-Another example
+### Default and implicit binding
 
 ```javascript
 const o1 = {
@@ -897,7 +923,6 @@ const o1 = {
   }
 };
 const o2 = { bar: "bar2", foo: o1.foo };
-
 const bar = "bar3";
 const foo = o1.foo;
 
@@ -953,6 +978,11 @@ const foo2 = foo.bind(obj, "baz");
 
 foo2("bam"); // 'bar baz bam'
 ```
+
+<!-- prettier-ignore -->
+***
+
+### This - Hard binding
 
 Typicall used in this context
 
@@ -1036,10 +1066,10 @@ const car = {
 }
 ```
 
+It's hard binding to the outer scope
+
 <!-- prettier-ignore -->
 ***
-
-It's hard binding to the outer scope
 
 ## This - Summary
 
@@ -1054,7 +1084,7 @@ So to know the value of `this`:
 <!-- prettier-ignore -->
 ***
 
-# This - Exercise
+# Exercise
 
 ```js
 global.fullname = "John Doe";
@@ -1126,11 +1156,16 @@ peter.code(); // 'writing code'
 console.log(Object.getPrototypeOf(peter)); // returns the dev object
 ```
 
+<!-- prettier-ignore -->
+***
+
+## Prototypes
+
 `__proto__` points the actual object that is used in the lookup chain to resolve properties, methods, etc.
 
 ```javascript
-console.log(peter.__proto__)                          // points to Object
-Object.getPrototypeOf(peter) === peter.__proto__)     // true
+console.log(peter.__proto__)                // points to Object
+Object.getPrototypeOf(peter) === peter.__proto__)  // true
 ```
 
 <!-- prettier-ignore -->
@@ -1166,8 +1201,6 @@ person.toString(); // "[object Object]"
 
 ## New keyword
 
-> Remember what the new keyboard did
-
 - A new object is created
 - **_ --> The `__proto__` property is set to the function prototype_**
 - The `this` point to the newly created object
@@ -1190,7 +1223,7 @@ const person = new Person("Paul");
 <!-- prettier-ignore -->
 ***
 
-## Prototype Linking Example
+### Prototype Linking Example
 
 ```javascript
 function Person(name) {
@@ -1199,7 +1232,6 @@ function Person(name) {
     return "Shouting " + this.name;
   };
 }
-
 Person.prototype.identity = function() {
   return "I am " + this.name;
 };
@@ -1208,14 +1240,12 @@ Person.prototype.identity = function() {
 ```javascript
 var john = new Person("John");
 var luna = new Person("Luna");
-
 john.speak = function() {
   alert("Hello, " + this.identity() + ".");
 };
 
 john.identify(); // 'I am John'
 john.speak(); // Error!
-
 john.constructor === Person;
 john.constructor === luna.constructor;
 john.__proto__ == Person.prototype;
@@ -1245,6 +1275,11 @@ class Person {
   }
 }
 ```
+
+<!-- prettier-ignore -->
+***
+
+## ES6 Classes vs prototype
 
 Will be transpiled as follows (output https://www.typescriptlang.org/play/)
 
@@ -1288,14 +1323,6 @@ undeclared
 console.log(unknown)
 ```
 
-TSError: ⨯ Unable to compile TypeScript
-main.ts (7,1): Cannot find name 'unknown'. (2304)
-
-```
-declare var unknown;
-console.log(unknown);
-```
-
 ReferenceError: unknown is not defined
 
 <!-- prettier-ignore -->
@@ -1321,7 +1348,7 @@ See [http://dorey.github.io/JavaScript-Equality-Table/](http://dorey.github.io/J
 <!-- prettier-ignore -->
 ***
 
-## Truthy / Falsy
+## Truthy
 
 ```js
 // what about following conditions check
@@ -1341,7 +1368,10 @@ true
 new Date()
 ```
 
-Falsy
+<!-- prettier-ignore -->
+***
+
+## Falsy
 
 ```
 false
@@ -1357,7 +1387,7 @@ NaN (a special Number value meaning Not-a-Number!)
 
 ## typeof
 
-This is logic
+All clear
 
 ```js
 typeof 89; // 'number'
@@ -1370,14 +1400,19 @@ let val;
 typeof val; // 'undefined'
 ```
 
-but, what is this!
+<!-- prettier-ignore -->
+***
+
+## typeof
+
+not so clear
 
 ```js
 typeof null; // 'object'
 typeof []; // 'object'
 ```
 
-so
+correct way of testing for an object
 
 ```js
 if (myValue && typeof myValue === "object") {

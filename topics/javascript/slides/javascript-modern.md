@@ -45,7 +45,8 @@ Copyright (c) 2017-2019 Euricom nv.
 
 > What you probably already know.
 
----
+<!-- prettier-ignore -->
+***
 
 ## The let keyword
 
@@ -80,7 +81,8 @@ Copyright (c) 2017-2019 Euricom nv.
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
----
+<!-- prettier-ignore -->
+***
 
 ## The const keyword
 
@@ -99,9 +101,9 @@ message = "hello" < --ERROR;
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 ```js
-    const names = [];
-    names.push( "Jordan" );     <-- No Error
-    console.log( names );
+const names = [];
+names.push( "Jordan" );     <-- No Error
+console.log( names );
 ```
 
 <!-- .element: class="fragment" data-fragment-index="3" -->
@@ -110,9 +112,10 @@ message = "hello" < --ERROR;
 
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
----
+<!-- prettier-ignore -->
+***
 
-## Property value shorthand
+### Property value shorthand
 
 ```js
 // ES3/ES5
@@ -140,9 +143,10 @@ function getCar(make, model, value) {
 }
 ```
 
----
+<!-- prettier-ignore -->
+***
 
-## Method definition shorthand
+### Method definition shorthand
 
 ```js
 // ES5
@@ -169,14 +173,15 @@ function getCar(make, model, value) {
 }
 ```
 
----
+<!-- prettier-ignore -->
+***
 
 ## The arrow function
 
 Simpler syntax
 
 ```js
-var createGreeting = function(message, name) {
+const createGreeting = function(message, name) {
   return message + name;
 };
 
@@ -189,11 +194,10 @@ const arrowGreeting = (message, name) => {
 const arrowGreeting = (message, name) => message + name;
 ```
 
----
+<!-- prettier-ignore -->
+***
 
 ## The arrow function
-
-This reference
 
 ```js
 const service = {
@@ -210,11 +214,8 @@ const service = {
 service.delayAction(500);
 ```
 
-Easier with arrow function
-
-<!-- .element: class="fragment" data-fragment-index="2" -->
-
 ```js
+// Easier with arrow function
 const service = {
   foo: "peter",
   delayAction(timeout) {
@@ -227,9 +228,10 @@ const service = {
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
----
+<!-- prettier-ignore -->
+***
 
-## When Not to use an Arrow Function
+### The arrow function - Not to use
 
 Event Handlers
 
@@ -257,9 +259,10 @@ const person = {
 };
 ```
 
----
+<!-- prettier-ignore -->
+***
 
-## When Not to use an Arrow Function
+### The arrow function - Not to use
 
 Prototype methods
 
@@ -276,42 +279,10 @@ Car.prototype.summarize = () => {
 };
 ```
 
----
+<!-- prettier-ignore -->
+***
 
-## Import / Export
-
-ES Modules
-
-```js
-    // service.js
-    export const MAX_LENGTH = 1000;
-    export class Car() {
-        ...
-    }
-    const config = {
-        ...
-    }
-    export default config;
-```
-
-```js
-import config from "./service";
-import { MAX_LENGTH, Car } from "./service";
-
-import * as lib from "./service";
-console.log(lib.MAX_LENGTH);
-const car = new lib.Car();
-
-import config, { MAX_LENGTH, Car } from "./service";
-```
-
-Bye, bye IIFE ( Immediately-Invoked Function Expression )
-
-ALWAYS user npm, NEVER use Bower again.
-
----
-
-## The class
+### The class
 
 ```js
 // ES6
@@ -321,7 +292,6 @@ class Car {
     this.model = model;
     this.value = value;
   }
-
   depreciate() {
     this.value -= 2500;
   }
@@ -341,7 +311,8 @@ Car.prototype.depreciate = function() {
 };
 ```
 
----
+<!-- prettier-ignore -->
+***
 
 ## Classes don't hoist
 
@@ -363,30 +334,32 @@ class Foo {
 }
 ```
 
----
+<!-- prettier-ignore -->
+***
 
 ## The TypeScript class
 
 ```js
-    // TypeScript
-    class Car {
-        model: String
+// TypeScript
+class Car {
+  model: String  // <-- class property
 
-        constructor(private make: String, private value: Number, model: String) {
-            this.model = model;
-        }
+  constructor(private make: String, private value: Number, model: String) {
+      this.model = model;
+  }
 
-        depreciate() {
-            this.value -= 2500;
-        }
-    }
+  depreciate() {
+      this.value -= 2500;
+  }
+}
 ```
 
-<small>Class properties will be supported in ES8</small>
+<small>Class properties will be supported in ES9</small>
 
----
+<!-- prettier-ignore -->
+***
 
-## Don't overuse classes!
+### Don't overuse classes!
 
 ```js
 export class Utils {
@@ -402,19 +375,19 @@ utils.trim(" abc    ");
 The class don't hold state, better to use functions
 
 ```js
-    // better
-    export const trim = (text) => {
-        ...
-    }
-    export const parseDate = (dateString) => {
-        ...
-    }
+export const trim = (text) => {
+    ...
+}
+export const parseDate = (dateString) => {
+    ...
+}
 
-    import { trim } from './util'
-    trim(' abc    ');
+import { trim } from './util'
+trim(' abc    ');
 ```
 
----
+<!-- prettier-ignore -->
+***
 
 ## String interpollation
 
@@ -438,12 +411,13 @@ Inside (\${ and }) is treated as a JavaScript expression
 
 > No more string concatenation!
 
----
+<!-- prettier-ignore -->
+***
 
-## Default Argument Values
+## Default Arguments
 
 ```js
-var myFunction = function(a, b, c) {
+const myFunction = function(a, b, c) {
   a = a || 10;
   b = b || 5;
   c = c || 8;
@@ -452,21 +426,22 @@ var myFunction = function(a, b, c) {
 ```
 
 ```js
-var myFunction = function(a = 10, b = 5, c = 8) {
+const myFunction = function(a = 10, b = 5, c = 8) {
   return a * b * c;
 };
 ```
 
 ```js
-    const INITIAL_STATE = { ... }
-    var myFunction = function(state = INITIAL_STATE, action){
-        ...
-    };
+const INITIAL_STATE = { ... }
+var myFunction = function(state = INITIAL_STATE, action){
+    ...
+};
 ```
 
----
+<!-- prettier-ignore -->
+***
 
-## Computed property keys
+## Computed properts
 
 ```js
 // ES3/ES5
@@ -492,7 +467,8 @@ function getCar(make, model, value) {
 }
 ```
 
----
+<!-- prettier-ignore -->
+***
 
 ## Property accessors
 
@@ -517,9 +493,10 @@ car.value = -1; // <- ERROR
 
 <small>A less known ECMAScript 5 feature</small>
 
----
+<!-- prettier-ignore -->
+***
 
-## Property accessors in class
+### Property accessors in class
 
 ```js
 class Car {
@@ -539,7 +516,8 @@ class Car {
 }
 ```
 
----
+<!-- prettier-ignore -->
+***
 
 ## Computed property accessor names
 
@@ -555,9 +533,10 @@ var obj = {
 console.log(obj.foo); // "bar"
 ```
 
----
+<!-- prettier-ignore -->
+***
 
-## Looping over array and object properties
+### Looping over array and object properties
 
 ```js
 const list = ["john", "zoo", "bar"];
@@ -566,8 +545,7 @@ const list = ["john", "zoo", "bar"];
 for (var i = 0, len = list.length; i < len; i++) {
   console.log(list[i]);
 }
-
-// this is very slow in big arrays
+// this is slow in big arrays
 list.forEach(function(item) {
   console.log(item);
 });
@@ -578,7 +556,6 @@ list.forEach(function(item) {
 for (let item of list) {
   console.log(item);
 }
-
 // ES6+ loop over properties of an object
 const obj = { name: "peter", age: 12 };
 for (let key in obj) {
@@ -590,11 +567,12 @@ for (let key in obj) {
 
 ---
 
-# More advanced ES6
+# More ES6+
 
 > What you should know.
 
----
+<!-- prettier-ignore -->
+***
 
 ## Rest operator
 
@@ -616,7 +594,8 @@ function join(separator, ...values) {
 }
 ```
 
----
+<!-- prettier-ignore -->
+***
 
 ## Spread operator
 
@@ -643,7 +622,8 @@ function addElement(array, element) {
 }
 ```
 
----
+<!-- prettier-ignore -->
+***
 
 ## Spread operator
 
@@ -667,7 +647,8 @@ var y = [3, 4];
 x.push(...y); // x is [1, 2, 3, 4]
 ```
 
----
+<!-- prettier-ignore -->
+***
 
 ## Object Destructuring
 
@@ -719,7 +700,8 @@ console.log(name);
 addCustomer(arg);
 ```
 
----
+<!-- prettier-ignore -->
+***
 
 ## Array Destructuring
 
@@ -838,7 +820,7 @@ To enable decorators you must add a babel plugin
 <!-- prettier-ignore -->
 ***
 
-## Trailing Function Commas
+### Trailing Function Commas
 
 ```js
 
@@ -864,11 +846,9 @@ To enable decorators you must add a babel plugin
 
 <small>ES8<br>Babel plugins:[syntax-trailing-function-commas], TS 2.0 </small>
 
-> Cleaner diff in your git repo
-
 ---
 
-# Exotic ES6
+# Less used Javascript
 
 > Now you know
 
@@ -884,25 +864,23 @@ function* foo() {
   yield 1;
   yield 2;
   yield 3;
-  yield 4;
-  yield 5;
 }
 ```
 
 ```js
-    // get an iterator
-    var it = foo();
+// get an iterator
+const it = foo();
 
-    // get the result
-    it.foo();     // 1
-    it.foo();     // 2
-    it.foo();     // 3
-    ...
+// get the result
+it.foo();     // 1
+it.foo();     // 2
+it.foo();     // 3
+...
 
-    // loop over
-    for(const i of it) {
-        console.log(i)
-    }
+// loop over
+for(const i of it) {
+    console.log(i)
+}
 ```
 
 <!-- prettier-ignore -->
@@ -1021,32 +999,6 @@ Object.create(Object.prototype); // {}
 <!-- prettier-ignore -->
 ***
 
-## Array functions
-
-Common used array functions
-
-```js
-[1, 2].push(1); // [1, 2, 3] > Mutable change!
-const a = [1, 2];
-const b = [...a, 3][(1, 2, 3, 4)] // [1, 2, 3] > Immutable change
-  .slice(1, 2); // [2, 3]
-[1, 2, 3, 4].map(item => item * 2); // [2, 4, 6, 8]
-[1, 2, 3, 4].reduce((sum, item) => (sum = sum + item)), 0; // 10
-
-[4, 2, 1, 3].sort((a, b) => a - b); // [1, 2, 3, 4]
-
-[{ name: "john", age: 12 }, { name: "jane", age: 19 }].find(item => item.age > 18); // { name: 'jane', age: 19}
-```
-
-Only use when you have to
-
-```js
-array.splice;
-```
-
-<!-- prettier-ignore -->
-***
-
 ## String functions
 
 ```js
@@ -1058,6 +1010,13 @@ array.splice;
 ```
 
 ---
+
+# Resources
+
+> More to know
+
+<!-- prettier-ignore -->
+***
 
 ## Resources
 

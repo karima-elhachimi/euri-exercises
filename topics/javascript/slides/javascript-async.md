@@ -84,13 +84,10 @@ getCustomer(123, function(err, result) {
 
 ```js
 const promise = new Promise(function(resolve, reject) {
-
     // Do an async task async task and then...
-
     if(/* good condition */) {
         resolve('Success!');
-    }
-    else {
+    } else {
         reject('Failure!');
     }
 });
@@ -105,11 +102,16 @@ promise
     })
 ```
 
-**then**
+<!-- prettier-ignore -->
+***
+
+## Basic Promise Usage
+
+> then
 
 All promise instances get a then method which allows you to react to the promise. The first then method callback receives the result given to it by the resolve() call.
 
-**catch**
+> catch
 
 The catch callback is executed when the promise is rejected.
 
@@ -130,7 +132,14 @@ function setTimeoutP(timeout) {
     }, timeout);
   });
 }
+```
 
+<!-- prettier-ignore -->
+***
+
+### use of the timer
+
+```js
 // use
 setTimeoutP(1000).then(() => {
   console.log("it is done");
@@ -165,7 +174,7 @@ myAsyncAction(arg)
 <!-- prettier-ignore -->
 ***
 
-# Chaining promises
+## Chaining promises
 
 ```js
 setTimeoutP(1000)
@@ -182,6 +191,11 @@ setTimeoutP(1000)
     console.log(result); // output: happy
   });
 ```
+
+<!-- prettier-ignore -->
+***
+
+### Chaining promises
 
 Promises can be passed over functions
 
@@ -205,7 +219,7 @@ action.then(result => console.log(result)); // output: happy
 <!-- prettier-ignore -->
 ***
 
-# Direct resolved/rejected promise
+## Direct resolved/rejected
 
 ```js
 // resolved promise
@@ -227,14 +241,11 @@ function asyncAction(arg) {
 <!-- prettier-ignore -->
 ***
 
-# Combine promises
+## Combine promises
 
-> One by one, all or just the first one
+### Promise.all
 
-<!-- prettier-ignore -->
-***
-
-## Promise.all
+Wait for all promises to complete
 
 ```js
 Promise.all([promise1, promise2])
@@ -252,7 +263,7 @@ Promise.all([promise1, promise2])
 <!-- prettier-ignore -->
 ***
 
-## Promise.race
+### Promise.race
 
 ```js
 Promise.race([promise1, promise2])
@@ -274,7 +285,7 @@ Promise.race([promise1, promise2])
 <!-- prettier-ignore -->
 ***
 
-# from Promise to Async/await
+### from Promise to Async/await
 
 ```js
 function getCustomers() {
@@ -306,7 +317,7 @@ async function getCustomers() {
 <!-- prettier-ignore -->
 ***
 
-# Combining async calls
+## Combining async calls
 
 Chaining multiple calls
 
@@ -334,7 +345,7 @@ async function getCustomerById(cust1, cust2, cust3) {
 <!-- prettier-ignore -->
 ***
 
-### Generators
+## Generators
 
 ```js
 async function getCustomers() {
@@ -359,5 +370,3 @@ function* getCustomers() {
   }
 }
 ```
-
----

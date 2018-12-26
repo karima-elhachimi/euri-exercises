@@ -94,17 +94,14 @@ See Also [here](https://guides.github.com/features/mastering-markdown/) and [her
 
 # Markdown
 
-Tools
-
-- [VSCode](https://code.visualstudio.com/)
-- [MarkdownPad](http://markdownpad.com) - Windows Only
-- [Caret](https://caret.io/)
-
-Online Tools
-
-- [HackMD](https://hackmd.io/)
-- [Dillinger](https://dillinger.io/)
-- [StackEdit](https://stackedit.io/editor)
+| Tool                                     | platform  |
+| ---------------------------------------- | --------- |
+| [VSCode](https://code.visualstudio.com/) | win/macos |
+| [MarkdownPad](http://markdownpad.com)    | win       |
+| [Caret](https://caret.io/)               | macos     |
+| [HackMD](https://hackmd.io/)             | online    |
+| [StackEdit](https://stackedit.io/editor) | online    |
+| Many others...                           |           |
 
 ---
 
@@ -115,7 +112,9 @@ Online Tools
 <!-- prettier-ignore -->
 ***
 
-## NodeJS - Active LTS or Current
+## NodeJS
+
+### Active LTS or Current
 
 To Install
 [https://nodejs.org/en/](https://nodejs.org/en/)
@@ -124,11 +123,17 @@ To Install
 
 [https://github.com/nodejs/Release#release-schedule](https://github.com/nodejs/Release#release-schedule)
 
+<!-- prettier-ignore -->
+***
+
+## NodeJS
+
 Check you node version
 
 ```bash
 # verify your node version
-node --version
+> node --version
+v8.12.0
 ```
 
 <!-- prettier-ignore -->
@@ -463,7 +468,7 @@ console.log(otherPerson);
 ```
 
 @babel/preset-env will transpile for the current node version
-lets switch to an other version
+lets switch to an older version
 
 ```bash
 n 6.10
@@ -582,6 +587,11 @@ console.log(bigNumber);
 }
 ```
 
+<!-- prettier-ignore -->
+***
+
+## Final Config
+
 package.json
 
 ```json
@@ -628,11 +638,19 @@ module.exports = {
 };
 ```
 
-specify which browser to support (.babelrc)
+<!-- prettier-ignore -->
+***
+
+## Add to webpack
+
+specify which browser to support (package.json)
 
 ```json
 {
-  "targets": "> 0.25%, not dead"
+  "dependencies": {
+    ...
+  },
+  "browserslist": "> 0.25%, not dead"
 }
 ```
 
@@ -642,14 +660,14 @@ Enjoy the latest ES7+ features :)
 
 ---
 
-# Prettier - Format your code
+# Format your code
 
-> Always use a code formatter
+> A formatter can help you writing clean/consistent code
 
 <!-- prettier-ignore -->
 ***
 
-## Prettier
+# Prettier
 
 Use [https://prettier.io/](Prettier) to format your code.
 
@@ -660,7 +678,7 @@ Use [https://prettier.io/](Prettier) to format your code.
 
 Install VSCode plugin<br>
 
-<img src="./images/prettier-vscode.png" width="300px" /><br>
+<img src="./images/prettier-vscode.png" width="200px" /><br>
 
 [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
@@ -911,20 +929,18 @@ Supporting all of babel
 <!-- prettier-ignore -->
 ***
 
-### Other...
+## Other...
 
 ### ESLint configurations
 
 - eslint-config-airbnb
 - eslint-config-standard
 - eslint-config-google
-- eslint-config-idiomatic
 - ...
 
 ### Linters
 
-- JSLint (Outdated)
-- JSHint (Outdated)
+- JSLint & JSHint (Outdated, don't use)
 - TSLint (Typescript)
 - StyleLint (CSS, Sass, Less)
 
