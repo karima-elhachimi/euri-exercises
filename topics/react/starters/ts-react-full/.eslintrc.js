@@ -1,20 +1,26 @@
+const path = require('path');
+
 module.exports = {
   extends: ['airbnb', 'plugin:jest/recommended', 'prettier'],
   plugins: ['babel', 'import', 'prettier'],
   parser: 'babel-eslint',
-  parserOptions: {
-    ecmaVersion: 6,
-    sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
-    },
-  },
   globals: {},
   env: {
     es6: true,
     browser: true,
     node: true,
     jest: true,
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+      alias: {
+        map: [['@', path.join(__dirname, 'src')], ['@test', path.join(__dirname, 'test')]],
+        extensions: ['.ts', '.js', '.jsx', '.json'],
+      },
+    },
   },
   rules: {
     // react
