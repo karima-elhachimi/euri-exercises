@@ -39,7 +39,7 @@ export function arabicToRoman(arabic) {
   let rest = arabic;
 
   // eslint-disable-next-line no-restricted-syntax
-  for (const [romanNumeral, arabicNumeral] of romanNumeralMap.entries()) {
+  for (const [romanNumeral, arabicNumeral] of romanNumeralMap) {
     if (rest >= arabicNumeral) {
       const quotient = Math.trunc(rest / arabicNumeral);
 
