@@ -6,7 +6,7 @@ verticalSeparator: "^\\*\\*\\*"
 
 ## Introduction to WebPack
 
-<img src="./images/webpack.jpg" width="600px" /><br>
+<img src="./images/webpack.jpg" width="800px" /><br>
 <small>
 Copyright (c) 2017-2019 Euricom nv.
 </small>
@@ -53,13 +53,15 @@ Copyright (c) 2017-2019 Euricom nv.
 Install webpack locally
 
 ```bash
-npm install webpack --save-dev  # yarn add webpack --dev
+$ yarn add webpack webpack-cli --dev
+# npm install add webpack webpack-cli --save-dev
 ```
 
 Use
 
 ```bash
-npx webpack --version
+$ npx webpack --version
+4.28.2
 ```
 
 <!-- prettier-ignore -->
@@ -85,8 +87,8 @@ module.exports = new userService();
 main.js
 
 ```js
-var userService = require("./userService");
-var users = userService.getAll();
+const userService = require("./userService");
+const users = userService.getAll();
 users.forEach(function(user) {
   console.log(user.id, user.name);
 });
@@ -108,7 +110,7 @@ index.html
   </head>
   <body>
     <h1>Webpack 101</h1>
-    <script src="bundle.js"></script>
+    <script src="dist/bundle.js"></script>
   </body>
 </html>
 ```
@@ -126,13 +128,8 @@ module.exports = {
   entry: "./main.js",
   mode: "development",
   output: {
-    path: __dirname,
     filename: "bundle.js"
-  },
-  module: {
-    rules: [] // rules how to process files
-  },
-  plugins: [] // additional plugins
+  }
 };
 ```
 
@@ -147,14 +144,14 @@ Via command line (when installed globally)
 npx webpack         # for building once for development
 npx webpack -p      # for production (minification)
 npx webpack --watch # watch file changes and rebuild
-npx webpack -d      # include source maps
 ```
 
 Via npm script
 
 ```json
 "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "build:prod": "webpack -p"
 }
 ```
 
@@ -167,7 +164,8 @@ Open your app with [serve](https://www.npmjs.com/package/serve) or [live-server]
 
 ```
 $ live-server
-Serving "/Users/me/git/vue-webpack" at http://127.0.0.1:8080
+Serving "/Users/me/temp/my-app" at http://127.0.0.1:8080
+Ready for changes
 ```
 
 <!-- prettier-ignore -->
@@ -239,7 +237,7 @@ When running webpack we can see jquery is bundled with our own code.
 ```
 $ webpack
 Hash: f7e4f8b006ab65596006
-Version: webpack 2.2.0-rc.3
+Version: webpack 4.28.2
 Time: 295ms
     Asset    Size  Chunks                    Chunk Names
 bundle.js  271 kB       0  [emitted]  [big]  main
@@ -263,7 +261,8 @@ The Webpack-dev-server combines automatic refresh (after bundle rebuild), faster
 
 ```bash
 # install
-npm install webpack-dev-server --save-dev
+$ yarn add webpack-dev-server --dev
+# npm install webpack-dev-server --save-dev
 ```
 
 ```json
@@ -276,18 +275,54 @@ npm install webpack-dev-server --save-dev
 }
 ```
 
+<!-- prettier-ignore -->
+***
+
+## Run
+
+```bash
+yarn serve
+
+yarn run v1.12.3
+$ webpack-dev-server --open
+ℹ ｢wds｣: Project is running at http://localhost:8080/
+ℹ ｢wds｣: webpack output is served from /
+ℹ ｢wdm｣: wait until bundle finished: /
+ℹ ｢wdm｣: Hash: 67b08579de3b9b2b20a6
+Version: webpack 4.28.2
+Time: 627ms
+Built at: 2018-12-28 09:20:08
+    Asset     Size  Chunks             Chunk Names
+bundle.js  644 KiB    main  [emitted]  main
+Entrypoint main = bundle.js
+[0] multi (webpack)-dev-server/client?http://localhost:8080 ./main.js 40 bytes {main} [built]
+[./main.js] 180 bytes {main} [built]
+
+...
+
+ℹ ｢wdm｣: Compiled successfully.
+```
+
+Webpack-dev-server will build and serve the app.
+Mark that no bundle file is created. All is done in memory.
+
+<!-- prettier-ignore -->
+***
+
+## Config
+
 ```js
 // webpack.config.js
 module.exports = {
+    ...
     output: {
         filename: 'bundle.js',
-        publicPath: '/'                 // required for webpack-dev-server
+        publicPath: '/dist/'       // is required for webpack-dev-server
     },
-    ...
     devServer: {
-        historyApiFallback: true,       // support for html5 mode
-        noInfo: true,                   // limit output
-        proxy: {                        // proxy all url from /api  to ...
+        historyApiFallback: true,  // support for html5 mode
+        noInfo: true,              // limit output
+        proxy: {                   // proxy all url from /api to ...
             '/api': {
                 target: 'https://other-server.example.com',
             }
@@ -297,56 +332,24 @@ module.exports = {
 }
 ```
 
-<!-- prettier-ignore -->
-***
-
-## Run
-
-```
-yarn serve v0.18.1
-$ webpack-dev-server --open
-Project is running at http://localhost:8008/
-webpack output is served from /
-404s will fallback to /index.html
-webpack: wait until bundle finished: /
-Time: 1232ms
-    Asset    Size  Chunks                    Chunk Names
-bundle.js  515 kB       0  [emitted]  [big]  main
-chunk    {0} bundle.js (main) 500 kB [entry] [rendered]
-   [34] ./main.js 175 bytes {0} [built]
-   [35] (webpack)-dev-server/client?http://localhost:8008 4.66 kB {0} [built]
-   [36] ./~/ansi-regex/index.js 135 bytes {0} [built]
-   [37] ./userService.js 170 bytes {0} [built]
-   ...
-   [76] ./~/url/url.js 23.3 kB {0} [built]
-   [77] ./~/url/util.js 314 bytes {0} [built]
-   [78] (webpack)-dev-server/client/socket.js 856 bytes {0} [built]
-   [80] (webpack)/hot/emitter.js 77 bytes {0} [built]
-   [81] multi (webpack)-dev-server/client?http://localhost:8008 ./main.js 40 bytes {0} [built]
-     + 67 hidden modules
-webpack: bundle is now VALID.
-```
-
-> The browser is automatically opened.
-
-Mark that no bundle file is created. All is done in memory.
+Additional config is provided via the webpack.config.js
 
 <!-- prettier-ignore -->
 ***
 
-## Output to folder
+## Output to other folder
 
 ```js
     output: {
         filename: 'bundle.js',
-        path: __dirname + '/bundle',        // separate folder
+        path: __dirname + '/bundle',  // separate folder
         publicPath: '/bundle/'
     },
 ```
 
 The `publicPath` specifies the public URL address of the output files when referenced in a browser.
 
-Specify the bundle folder in your html file
+Change the bundle folder in your html file
 
 ```html
 <script src="bundle/bundle.js"></script>
@@ -363,25 +366,47 @@ Webpack 'Rules' determine how the different types of modules (files) within a pr
 <!-- prettier-ignore -->
 ***
 
+## Rules
+
+Rules configuration
+
+```js
+module.exports = {
+    entry: './main.js',
+    output: {
+        filename: 'bundle.js',
+        path: __dirname + '/bundle',
+        publicPath: '/bundle/'
+    },
+    module: {
+      rules: [...]         // <- add your rules here
+    }
+};
+```
+
+<!-- prettier-ignore -->
+***
+
 ## Add babel support
 
-Install babel-loader (webpack) & babel
+Install
 
 ```bash
-yarn add babel-core babel-preset-latest babel-preset-stage-2 --dev
+# Install babel7
+yarn add @babel/core @babel/preset-env --dev
+
+# Install webpack babel loader
 yarn add babel-loader --dev
 ```
 
-Configure babel (simplified)
+Configure babel
 
 ```json
 // .babelrc
 {
-  "presets": ["latest", "stage-2"]
+  "presets": ["@babel/preset-env"]
 }
 ```
-
-> More information about babel and its configuration see:[https://babeljs.io/](https://babeljs.io/).
 
 <!-- prettier-ignore -->
 ***
@@ -417,7 +442,8 @@ Configure babel-loader in webpack
 Install some more loaders:
 
 ```bash
-npm install style-loader css-loader url-loader --save-dev
+# install loaders
+yarn add style-loader css-loader --dev
 ```
 
 Add the css rule in your webpack.config.js
@@ -464,6 +490,7 @@ import "./style.css";
 Install loader (and dependencies):
 
 ```bash
+# install less itself and the loader
 yarn add less-loader less --dev
 ```
 
@@ -507,16 +534,17 @@ body {
 Install font
 
 ```bash
-npm install font-awesome --save-dev
+yarn add font-awesome --dev
 ```
 
 Install webpack loaders
 
 ```bash
 # the file-loader emits files
-npm install file-loader --save-dev
+yarn add file-loader --dev
+
  # the url-loader uses DataUrls
-npm install url-loader --save-dev
+yarn add url-loader --dev
 ```
 
 <!-- prettier-ignore -->
@@ -530,6 +558,7 @@ Config in webpack
 module.exports = {
   module: {
     rules: [
+      // ....
       {
         test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
         loader: "file-loader"
@@ -554,16 +583,10 @@ Require (import) the css in your main file
 import "font-awesome/css/font-awesome.css";
 ```
 
-Or import the scss in your scss file
-
-```css
-$fa-font-path: "~font-awesome/fonts";
-@import "~font-awesome/scss/font-awesome";
-```
-
 Add an icon in your html
 
 ```html
+<h1>Webpack 101</h1>
 <i class="fa fa-font-awesome fa-5x"></i>
 ```
 
@@ -575,7 +598,7 @@ And your icon is on your page!
 
 # Plugins
 
-> All what you can't do with a rule
+> Optional pre and post processing
 
 <!-- prettier-ignore -->
 ***
@@ -701,11 +724,38 @@ module.exports = {
 <!-- prettier-ignore -->
 ***
 
-## Optimize Javascript
+## Production build
+
+```bash
+# build in production mode
+webpack --mode production
+Hash: 619832e9711bc171e04e
+Version: webpack 4.28.2
+Time: 1048ms
+Built at: 2019-01-02 10:11:51
+                                 Asset      Size  Chunks                    Chunk Names
+  36d50c1381fda7c71d12b6643cbe1ee0.svg  82 bytes          [emitted]
+  674f50d287a8c48dc19ba404d20fe713.eot   162 KiB          [emitted]
+  912ec66d7572ff821749319396470bde.svg   434 KiB          [emitted]
+af7ae505a9eed503f8b8e6982036873e.woff2  75.4 KiB          [emitted]
+  b06871f281fee6b241d60582ae9369b9.ttf   162 KiB          [emitted]
+                             bundle.js  7.03 KiB       0  [emitted]         main
+ fee66e712a8a08eef5805a46892932ad.woff  95.7 KiB          [emitted]
+                              main.css  36.5 KiB       0  [emitted]         main
+```
+
+bundle.js = 7.03KB, main.css = 36.5KB
+
+### Webpack will automatically optimize the JS but NOT the CSS.
+
+<!-- prettier-ignore -->
+***
+
+## Optimize CSS
 
 ```bash
 # install plugin
-yarn add terser-webpack-plugin --save
+yarn add optimize-css-assets-webpack-plugin --dev
 ```
 
 ```js
@@ -713,12 +763,94 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
   optimization: {
-    minimizer: [new TerserPlugin()]
-  }
+    minimizer: [
+       new OptimizeCSSAssetsPlugin({}),
+    ]
+};
+```
+
+See more at [optimize-css-assets-webpack-plugin](https://github.com/NMFR/optimize-css-assets-webpack-plugin)
+
+<!-- prettier-ignore -->
+***
+
+## Result
+
+```bash
+# build in production mode + CSS Optimize
+webpack --mode production
+Hash: a6fe9d86c303d1489f56
+Version: webpack 4.28.2
+Time: 2115ms
+Built at: 2019-01-02 10:18:10
+                                 Asset      Size  Chunks                    Chunk Names
+  36d50c1381fda7c71d12b6643cbe1ee0.svg  82 bytes          [emitted]
+  674f50d287a8c48dc19ba404d20fe713.eot   162 KiB          [emitted]
+  912ec66d7572ff821749319396470bde.svg   434 KiB          [emitted]
+af7ae505a9eed503f8b8e6982036873e.woff2  75.4 KiB          [emitted]
+  b06871f281fee6b241d60582ae9369b9.ttf   162 KiB          [emitted]
+                             bundle.js  20.8 KiB       0  [emitted]         main
+ fee66e712a8a08eef5805a46892932ad.woff  95.7 KiB          [emitted]
+                              main.css  30.3 KiB       0  [emitted]         main
+
+```
+
+bundle.js = 20.8KB, main.css = 30.3KB
+
+CSS is optimized, but JS is bigger now!!!
+We need to manually configure the JS optimize.
+
+<!-- prettier-ignore -->
+***
+
+## Optimize JS
+
+```bash
+# install plugin
+yarn add terser-webpack-plugin --dev
+```
+
+```js
+const TerserPlugin = require("terser-webpack-plugin");
+
+module.exports = {
+  optimization: {
+    minimizer: [new TerserPlugin(
+      cache: true,
+         parallel: true,
+         sourceMap: true, // set to true if you want JS source maps
+       }),
+       new OptimizeCSSAssetsPlugin({}),
+    ]
 };
 ```
 
 [terser-webpack-plugin](https://github.com/webpack-contrib/terser-webpack-plugin)
+
+<!-- prettier-ignore -->
+***
+
+## Result
+
+```bash
+# build in production mode + CSS & JS Optimize
+webpack --mode production
+Hash: 619832e9711bc171e04e
+Version: webpack 4.28.2
+Time: 1499ms
+Built at: 2019-01-02 10:22:47
+                                 Asset      Size  Chunks                    Chunk Names
+  36d50c1381fda7c71d12b6643cbe1ee0.svg  82 bytes          [emitted]
+  674f50d287a8c48dc19ba404d20fe713.eot   162 KiB          [emitted]
+  912ec66d7572ff821749319396470bde.svg   434 KiB          [emitted]
+af7ae505a9eed503f8b8e6982036873e.woff2  75.4 KiB          [emitted]
+  b06871f281fee6b241d60582ae9369b9.ttf   162 KiB          [emitted]
+                             bundle.js  7.03 KiB       0  [emitted]         main
+ fee66e712a8a08eef5805a46892932ad.woff  95.7 KiB          [emitted]
+                              main.css  30.3 KiB       0  [emitted]         main
+```
+
+bundle.js = 7.03KB, main.css = 30.3KB
 
 ---
 
@@ -747,6 +879,8 @@ See https://webpack.github.io/docs/configuration.html#devtool
 
 ## Build for other environments
 
+webpack.common.js
+
 ```js
 // config/webpack.common.js
 module.exports = {
@@ -765,6 +899,10 @@ module.exports = {
 
 <!-- prettier-ignore -->
 ***
+
+### Build for other environments
+
+webpack.dev.js
 
 ```js
 // congig/webpack.dev.js
@@ -786,17 +924,28 @@ module.exports = merge(commonConfig, {
 <!-- prettier-ignore -->
 ***
 
+### Build for other environments
+
+webpack.prod.js
+
 ```js
 // config/webpack.prod.js
 module.exports = merge(commonConfig, {
-  devtool: "source-map"
+  devtool: "source-map",
+  module: {
+    rules: [
+      // prod only rules
+    ]
+  }
 });
 ```
 
 <!-- prettier-ignore -->
 ***
 
-## Build for other environments
+### Build for other environments
+
+webpack.config.js
 
 ```js
 // webpack.config.js
@@ -860,112 +1009,19 @@ module.exports = {
 };
 ```
 
-<!-- prettier-ignore -->
-***
-
-## Extract text (css) from bundle
-
-By default webpack will bundle all in one module. But for css we typically want a separate style.css file.
-
-```bash
-npm install --save-dev extract-text-webpack-plugin
-```
-
-setup config
-
-```js
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-module.exports = {
-    ...
-    module: {
-        rules: [
-            // {  test: /\.scss$/, loader: 'style-loader!css-loader!less-loader' }
-            {
-                test: /\.less$/,
-                loader: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: "css-loader!less-loader"
-                })
-            }
-        ]
-    },
-    plugins: [ new ExtractTextPlugin('styles.css') ]
-}
-```
-
-<!-- prettier-ignore -->
-***
-
-## Hot Module Replacement
-
-```json
-"scripts": {
-    "build": "corss-env NODE_ENV=production webpack",
-    "serve": "webpack-dev-server --open --hot --inline"
-}
-```
-
-Restart webpack-dev-server and thats all. Try to change a css/less file
-
-> Hot module replacement doesn't work together with the 'ExtractTextPlugin' plugin.
-
-<!-- prettier-ignore -->
-***
-
-## Tree Shaking
-
-Tree shaking eliminates unused exports
-
-```js
-export function getById(id) {
-  return { id: 123, name: "john" };
-}
-
-export function getAll() {
-  return [{ id: 123, name: "peter" }, { id: 222, name: "robbert" }];
-}
-```
-
-```js
-import { getAll } from "./userService";
-var users = getAll();
-users.forEach(function(user) {
-  console.log(user.id, user.name);
-});
-```
-
-<!-- prettier-ignore -->
-***
-
-## Tree Shaking
-
-Specify babel will not generate CommonJS modules
-
-```json
-{
-  "presets": [["es2015", { "modules": false }]]
-}
-```
-
-And run webpack with the optimise flag
-
-```bash
-$ webpack --optimize-minimize
-```
-
 ---
 
 ## Resources
 
 Books
 
-    https://github.com/survivejs/webpack
+- [URVIVEJS — WEBPACK](https://survivejs.com/webpack/)
 
 Articles
 
-    https://medium.com/@rajaraodv/webpack-the-confusing-parts-58712f8fcad9
-    https://blog.madewithlove.be/post/webpack-your-bags/
+- [Webpack — The Confusing Parts](https://medium.com/@rajaraodv/webpack-the-confusing-parts-58712f8fcad9)
+- [Webpack your bags](https://blog.madewithlove.be/post/webpack-your-bags/)
 
 Tools
 
-    https://github.com/survivejs/webpack-merge
+[webpack-merge](https://github.com/survivejs/webpack-merge)
