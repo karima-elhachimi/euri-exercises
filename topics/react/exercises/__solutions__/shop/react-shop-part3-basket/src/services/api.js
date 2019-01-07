@@ -1,12 +1,16 @@
 import axios from 'axios';
 import eventBus from 'pubsub-js';
+
+import { ProductModel } from '../models/product';
+import { BasketModel } from '../models/basket';
 import { RequestError, NoConnectionError } from '../core/errors';
 
 const instance = axios.create({
-  baseURL: 'https://euri-test-api.now.sh/api',
-  // baseURL: 'http://localhost:3000/api',
   timeout: 5000,
+  baseURL: 'https://euri-test-api.now.sh/api',
 });
+
+const userKey = 'myKey1234';
 
 // Add a request log interceptor
 instance.interceptors.request.use(config => {
@@ -18,7 +22,10 @@ instance.interceptors.request.use(config => {
 instance.interceptors.response.use(
   response => response,
   error => {
-    if (Object.prototype.hasOwnProperty.call(error.config, 'handleError') && error.config.handleError === true) {
+    if (
+      Object.prototype.hasOwnProperty.call(error.config, 'handleError') &&
+      error.config.handleError === true
+    ) {
       // the error will be handled locally
       return Promise.reject(error);
     }
@@ -40,14 +47,47 @@ instance.interceptors.response.use(
     return Promise.reject(error);
   },
 );
-
 export default {
   base: instance,
   products: {
-    getAll: () => instance.get(`/products`).then(res => res.data.selectedProducts),
-    getById: id => instance.get(`products/${id}`).then(res => res.data),
+    getAll(page = 0, sortExpression = '') {
+      const config = {
+        params: {
+          page: page.toString(),
+          sort: sortExpression,
+        },
+      };
+      return instance.get(`/products`, config).then(res => {
+        const products = res.data.selectedProducts;
+        products.total = res.data.total;
+        return products.map(prod => {
+          return new ProductModel(prod);
+        });
+      });
+    },
+    getById(id) {
+      return instance.get(`products/${id}`).then(res => new ProductModel(res.data));
+    },
+    save(product) {
+      if (product.isNew) {
+        return instance.put(`products/${product.id}`, product);
+      }
+      return instance.post(`products`, product);
+    },
   },
   basket: {
-    get: () => instance.get(`/basket/abc`).then(res => res.data),
+    get() {
+      return instance.get(`basket/${userKey}`).then(res => new BasketModel(res.data));
+    },
+    addProduct(product, quantity) {
+      return instance
+        .post(`basket/${userKey}/product/${product.id}`, {
+          quantity,
+        })
+        .then(res => res.data);
+    },
+    clear() {
+      return instance.delete(`basket/${userKey}`);
+    },
   },
 };
