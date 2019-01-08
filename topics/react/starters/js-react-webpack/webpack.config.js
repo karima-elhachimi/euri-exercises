@@ -36,10 +36,6 @@ module.exports = {
   plugins: [
     // show friendly build errors
     new FriendlyErrorsWebpackPlugin(),
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'disabled',
-      generateStatsFile: true,
-    })
   ],
   resolve: {
     // allow import of js and jsx files

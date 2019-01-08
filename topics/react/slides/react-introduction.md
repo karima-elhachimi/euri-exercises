@@ -1,6 +1,6 @@
 ---
 title: React Introduction
-transition: 'fade'
+transition: "fade"
 verticalSeparator: "^\\*\\*\\*"
 ---
 
@@ -11,8 +11,7 @@ verticalSeparator: "^\\*\\*\\*"
 <img src="./images/react.png" width="300px"/><br>
 
 <small>
-by Peter Cosemans<br>
-Copyright (c) 2018 Euricom nv.
+Copyright (c) 2018-2019 Euricom nv.
 </small>
 
 <!-- markdownlint-disable -->
@@ -107,8 +106,8 @@ index.html
 <body>
   <!-- entry point of the app -->
   <div id="root"></div>
-  <!-- bundle is create by webpack -->
-  <script src="bundle/bundle.js"></script>
+  <!-- default bundle, create by webpack -->
+  <script src="dist/main.js"></script>
 </body>
 ```
 
@@ -116,21 +115,20 @@ Install dependencies
 
 ```bash
 yarn install react react-dom
-yarn install babel-preset-react --dev
 ```
 
 index.js
 
 ```jsx
 // import the dependenciess
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
 // create your App component
 const App = () => <h1>My React App</h1>;
 
 // render the app
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById("root"));
 ```
 
 <!-- prettier-ignore -->
@@ -141,14 +139,14 @@ ReactDOM.render(<App />, document.getElementById('root'));
 Install dependencies
 
 ```bash
-yarn install babel-preset-react --dev
+yarn install @babel/core @babel/preset-env @babel/preset-react --dev
 ```
 
 .babelrc
 
 ```json
 {
-  "presets": ["env", "react"]
+  "presets": ["@babel/preset-env", "@babel/react"]
 }
 ```
 
@@ -157,24 +155,32 @@ yarn install babel-preset-react --dev
 
 ## webpack
 
-webpack.conf.js
+Install
 
 ```bash
+yarn install webpack webpack-cli babel-loader webpack-dev-server --dev
+```
+
+webpack.conf.js
+
+```js
 module.exports = {
-  entry: './src/index.js',
-  output: { path: __dirname, filename: 'bundle.js' },
+  mode: "development",
+  output: {
+    publicPath: "dist"
+  },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-      },
-    ],
+        loader: "babel-loader",
+        exclude: /node_modules/
+      }
+    ]
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
-  },
+    extensions: [".js", ".jsx"]
+  }
 };
 ```
 
@@ -187,7 +193,7 @@ package.json
 
 ```json
 "scripts": {
-    "serve": "webpack-dev-server --open --inline --hot",
+    "serve": "webpack-dev-server --open --inline",
     "build": "webpack",
     "build:prod": "webpack -p",
 }
@@ -221,14 +227,14 @@ yarn build:prod
 
 ```jsx
 // import the dependenciess
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
 // create a template with JSX
 const template = <h1>My First React App</h1>;
 
 // get element '<div id="root"></div>'
-const appRoot = document.getElementById('app');
+const appRoot = document.getElementById("app");
 
 // render (bootstrap) the app
 ReactDom.render(template, appRoot);
@@ -356,7 +362,7 @@ An object can't be rendered
 ternary operator
 
 ```jsx
-const template = <p>User: {user.name ? user.name : 'no-name'}</p>;
+const template = <p>User: {user.name ? user.name : "no-name"}</p>;
 ```
 
 logical and operator
@@ -375,13 +381,13 @@ const template = (
 switch
 
 ```jsx
-const template = notification({ text: 'hello', state: 'info' });
+const template = notification({ text: "hello", state: "info" });
 
 function notification({ text, state }) {
   switch (state) {
-    case 'info':
+    case "info":
       return <Info text={text} />;
-    case 'warning':
+    case "warning":
       return <Warning text={text} />;
   }
   return null;
@@ -400,9 +406,9 @@ const template = (
   <div>
     {(function() {
       switch (state) {
-        case 'info':
+        case "info":
           return <Info text={text} />;
-        case 'warning':
+        case "warning":
           return <Warning text={text} />;
       }
       return null;
@@ -463,8 +469,8 @@ Ouptut
 
 ```html
 <ul>
-    <li>item1</li>
-    <li>item2</li>
+  <li>item1</li>
+  <li>item2</li>
 </ul>
 ```
 
@@ -476,7 +482,7 @@ Ouptut
 create array of jsx (reactElements)
 
 ```jsx
-const names = ['john', 'peter', 'bob'];
+const names = ["john", "peter", "bob"];
 const listItems = names.map(name => {
   return <li>{name}</li>;
 });
@@ -492,7 +498,7 @@ const template = (
 or
 
 ```jsx
-const names = ['john', 'peter', 'bob'];
+const names = ["john", "peter", "bob"];
 const template = (
   <ul>
     {names.map(name => {
@@ -604,7 +610,7 @@ See [React Supported DOM Elements](https://reactjs.org/docs/dom-elements.html)
 ```jsx
 let counter = 0;
 const addOne = event => {
-  console.log('clicked', event);
+  console.log("clicked", event);
 };
 const template = (
   <div>
@@ -629,7 +635,7 @@ This doesn't work
 ```jsx
 let counter = 0;
 const addOne = () => {
-  console.log('clicked');
+  console.log("clicked");
   counter = counter + 1;
 };
 const template = (
@@ -656,7 +662,7 @@ Fix
 ```jsx
 let counter = 0;
 const addOne = () => {
-  console.log('clicked');
+  console.log("clicked");
   counter = counter + 1;
 };
 render();
@@ -670,7 +676,7 @@ function render() {
       <button onClick={() => counter--}>-</button>
     </div>
   );
-  ReactDOM.render(template, document.getElementById('root'));
+  ReactDOM.render(template, document.getElementById("root"));
 }
 ```
 
@@ -699,18 +705,15 @@ Direct DOM manipulation is slow. Through the virtual DOM we only apply a patch f
 <br>
 ### Tips
 
-```
-// install bootstrap 3.x
+```bash
+# install bootstrap 3.x
+yarn add bootstrap@3
 
-  yarn add bootstrap@3
+#import bootstrap
+import 'bootstrap/dist/css/bootstrap.css';
 
-// import bootstrap
-
-  import 'bootstrap/dist/css/bootstrap.css';
-
-// doc: styling
-
-  https://www.w3schools.com/bootstrap/bootstrap_tables.asp
+# doc: styling
+https://www.w3schools.com/bootstrap/bootstrap_tables.asp
 ```
 
 ---
@@ -771,7 +774,7 @@ const Welcome = () => {
 <!-- prettier-ignore -->
 ***
 
-## Functional Component
+## Functional Or Stateless Component
 
 You can use the component in any JSX expression
 
@@ -815,11 +818,11 @@ Class Components can have state
 
 ```jsx
 // app.js
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 export default class App extends Component {
   state: {
-    message: 'world',
+    message: "world"
   };
   render() {
     return <h1>Hello {this.state.message}</h1>;
@@ -851,7 +854,7 @@ export default class MyComponent extends Component {
   constructor() {
     super();
     state = {
-      counter: 0,
+      counter: 0
     };
   }
   // ...
@@ -882,7 +885,7 @@ Via callback the previous state & props are available.
 ```jsx
 class MyComponent extends React {
   onClick() {
-    console.log('clicked');
+    console.log("clicked");
   }
   render() {
     return (
@@ -911,15 +914,15 @@ class MyComponent extends React {
 
   onClick() {
     // BAD: this is not referencing the component
-    console.log('props', this.props);
+    console.log("props", this.props);
   }
 
   onClickFix1() {
-    console.log('props', this.props);
+    console.log("props", this.props);
   }
 
   onClickFix2 = () => {
-    console.log('props', this.props);
+    console.log("props", this.props);
   };
 }
 ```
@@ -960,9 +963,9 @@ class MyComponent extends React {
 
 ```jsx
 // App.js
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import Welcome from './Welcome';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import Welcome from "./Welcome";
 
 class App extends Component {
   render() {
@@ -974,7 +977,7 @@ class App extends Component {
     );
   }
 }
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById("root"));
 ```
 
 <!-- prettier-ignore -->
@@ -1065,7 +1068,7 @@ const MyComponent = props => {
     <div>
       <h1>{props.title}</h1>
       <button onClick={props.onUpdate} />
-      <button onClick={() => props.onUpdate('hello')} />
+      <button onClick={() => props.onUpdate("hello")} />
     </div>
   );
 };
@@ -1107,16 +1110,20 @@ const FancyButton = (props) => {
 ```jsx
 export default class MyComponent extends Component {
   constructor(props) {
-    console.log('construction', props);
+    console.log("construction", props);
   }
   componentDidMount() {
-    console.log('mounted');
+    console.log("mounted");
+  }
+  shouldComponentUpdate() {
+    console.log("should update");
+    return true; // decide here if the component need an update (default true!)
   }
   componentDidUpdate(oldProps) {
-    console.log('props changed', { oldProps, props: this.props });
+    console.log("props changed", { oldProps, props: this.props });
   }
   componentWillUnmount() {
-    console.log('bye-bye');
+    console.log("bye-bye");
   }
   render() {
     return <p>Hello</p>;
@@ -1133,6 +1140,35 @@ export default class MyComponent extends Component {
 
 [React lifecycle methods diagram](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
 
+<!-- prettier-ignore -->
+***
+
+## Pure Components
+
+```js
+// Classic Component
+class Welcome extends React.Component {
+  render() {
+    return <h1>Welcome</h1>;
+  }
+}
+```
+
+```
+// Pure Component
+class Welcome extends React.PureComponent {
+  render() {
+    return <h1>Welcome</h1>;
+  }
+}
+```
+
+A pure component will only re-render if the props or state is changed.
+
+React is using a shallowEqual.
+
+See Todo's sample
+
 ---
 
 # Exercise 3
@@ -1147,13 +1183,6 @@ export default class MyComponent extends Component {
 <Alert type="warning" onClosed={alertClosed}>
     <strong>Warning!</strong> Better check yourself, you're not looking too good.
 </Alert>
-```
-
-<br>
-### Tips
-
-```
-// T.B.D
 ```
 
 ---
@@ -1176,14 +1205,14 @@ console.log(user);
 
 ```js
 // log multiple vars
-console.log(name + ' ' + age); // don't use this
+console.log(name + " " + age); // don't use this
 console.log(name, age); // both are logged
 console.log({ name, age }); // with names
 ```
 
 ```js
 // log in table form
-const users = [{ id: 1, name: 'peter' }, { id: 2, name: 'bob' }];
+const users = [{ id: 1, name: "peter" }, { id: 2, name: "bob" }];
 console.table(users);
 ```
 
@@ -1196,16 +1225,16 @@ others
 
 ```js
 // timing
-console.time('myTiming');
+console.time("myTiming");
 longRunningTask();
-console.endTime('myTiming'); // OUTPUT: myTiming xxxxms
+console.endTime("myTiming"); // OUTPUT: myTiming xxxxms
 ```
 
 ```js
 // grouping
-console.group('URL Details');
-console.log('Scheme: ', schema);
-console.log('Host: ', host);
+console.group("URL Details");
+console.log("Scheme: ", schema);
+console.log("Host: ", host);
 console.groupEnd();
 ```
 
@@ -1228,19 +1257,43 @@ Make sure to generate source maps to view source in debugger
 ```js
 // webpack.config.js
 module.exports = {
-  mode: 'development',
+  mode: "development",
   output: {
     // ...
   },
   // eval: fast build & generated code
   // cheap-module-eval-source-map: slower build & orginal code
   // source-map: full source map files
-  devtool: 'cheap-module-eval-source-map',
+  devtool: "cheap-module-eval-source-map"
 };
 ```
 
 More info see
 [WebPack DevTool](https://webpack.js.org/configuration/devtool/#devtool)
+
+<!-- prettier-ignore -->
+***
+
+### VSCode Debugging
+
+Install [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)
+
+Configure Launch Config (launch.json)
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:8080",
+      "webRoot": "${workspaceFolder}"
+    }
+  ]
+}
+```
 
 <!-- prettier-ignore -->
 ***
@@ -1277,13 +1330,13 @@ More info see
 ## Axios
 
 ```js
-import axios from 'axios';
+import axios from "axios";
 
 axios
-  .get('https://swapi.co/api/starships')
+  .get("https://swapi.co/api/starships")
   .then(res => {
     // success
-    console.log('result', res.data);
+    console.log("result", res.data);
   })
   .catch(error => {
     if (error.response) {
@@ -1294,7 +1347,7 @@ axios
       console.log(error.response.headers);
     } else {
       // Something happened in setting up the request
-      console.log('Error', error.message);
+      console.log("Error", error.message);
     }
   });
 ```
@@ -1309,12 +1362,12 @@ post
 ```js
 const todo = {
   userId: 1,
-  title: 'write some code',
-  completed: false,
+  title: "write some code",
+  completed: false
 };
-const url = 'http://jsonplaceholder.typicode.com/todos';
+const url = "http://jsonplaceholder.typicode.com/todos";
 axios.post(url, todo).then(res => {
-  console.log('result', res.data);
+  console.log("result", res.data);
 });
 ```
 
@@ -1323,7 +1376,7 @@ delete
 ```js
 const url = `http://jsonplaceholder.typicode.com/todos/${id}`;
 axios.delete(url).then(res => {
-  console.log('result', res.data);
+  console.log("result", res.data);
 });
 ```
 
@@ -1336,11 +1389,11 @@ custom config
 
 ```js
 // api.js
-import axios from 'axios';
+import axios from "axios";
 export default axios.create({
-  baseURL: 'https://some-domain.com/api/',
+  baseURL: "https://some-domain.com/api/",
   timeout: 1000,
-  headers: { 'X-Custom-Header': 'foobar' },
+  headers: { "X-Custom-Header": "foobar" }
 });
 ```
 
@@ -1348,13 +1401,13 @@ use
 
 ```js
 // api/contact.js
-import api from './api';
+import api from "./api";
 
 export default {
   async getById(id) {
     const res = await api.get(`contacts/${id}`);
     return res.data;
-  },
+  }
 };
 ```
 
@@ -1364,16 +1417,16 @@ export default {
 ## Axios in React
 
 ```jsx
-import contactApi from './api/contacts';
+import contactApi from "./api/contacts";
 
 export default class MyComponent extends Component {
   state = {
-    contact: {},
+    contact: {}
   };
   async componentDidMount() {
     const contact = await contactApi.getById(1);
     setState({
-      contact,
+      contact
     });
   }
   render() {
@@ -1429,7 +1482,7 @@ during build you get an uptimized build to production.
 for example:
 
 ```js
-if (process.NODE_ENV === 'production') {
+if (process.NODE_ENV === "production") {
   // production mode
 }
 ```
@@ -1449,14 +1502,14 @@ yarn install loglevel
 use
 
 ```js
-import log from 'loglevel';
+import log from "loglevel";
 
 // Set the logLevel
-log.setLevel(process.NODE_ENV === 'production' ? 'warn' : 'info');
+log.setLevel(process.NODE_ENV === "production" ? "warn" : "info");
 
 // some other place in the program
-log.warn('something is wrong here');
-log.debug('details', result);
+log.warn("something is wrong here");
+log.debug("details", result);
 ```
 
 ---
