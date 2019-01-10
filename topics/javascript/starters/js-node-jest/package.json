@@ -33,6 +33,7 @@
   },
   "jest": {
     "verbose": false,
+    "testEnvironment": "node",
     "setupTestFrameworkScriptFile": "<rootDir>/test/setupJest.js",
     "watchPlugins": [
       "jest-watch-typeahead/filename",

@@ -214,6 +214,70 @@ yarn build:prod
 
 ---
 
+# CreateReactApp
+
+> Set up a modern web app by running one command
+
+<!-- prettier-ignore -->
+***
+
+## Setup
+
+```bash
+# install globally
+npm install create-react-app -g
+
+# create app
+create-react-app my-app
+
+# Run it
+cd my-app
+yarn start
+```
+
+<!-- prettier-ignore -->
+***
+
+Initial project structure
+
+```
+my-app
+├── README.md
+├── node_modules
+├── package.json
+├── .gitignore
+├── public
+│   ├── favicon.ico
+│   ├── index.html
+│   └── manifest.json
+└── src
+    ├── App.css
+    ├── App.js
+    ├── App.test.js
+    ├── index.css
+    ├── index.js
+    ├── logo.svg
+    └── serviceWorker.js
+```
+
+<!-- prettier-ignore -->
+***
+
+Commands
+
+```bash
+# startup web app
+yarn test
+
+# build for production
+yarn build
+
+# run  unit tests
+yarn lint
+```
+
+---
+
 # JSX
 
 > Writing HTML with JSX
@@ -690,6 +754,17 @@ The (virtual) DOM is rendered on every change!
 <img src="./images/vdom.png" width="600px">
 
 Direct DOM manipulation is slow. Through the virtual DOM we only apply a patch for the diff.
+
+<!-- prettier-ignore -->
+***
+
+## Reconciliation
+
+Reconciliation is the process through which React updates the DOM. When a component's state changes,
+React has to calculate if it is necessary to update the DOM. It does this by creating a virtual
+DOM and comparing it with the current DOM
+
+See also: [How React Reconciliation Works](https://css-tricks.com/how-react-reconciliation-works/)
 
 ---
 
@@ -1168,6 +1243,7 @@ A pure component will only re-render if the props or state is changed.
 React is using a shallowEqual.
 
 See Todo's sample
+See [A checklist for eliminating common React performance issues](https://logrocket.com/blog/death-by-a-thousand-cuts-a-checklist-for-eliminating-common-react-performance-issues/)
 
 ---
 
@@ -1184,125 +1260,6 @@ See Todo's sample
     <strong>Warning!</strong> Better check yourself, you're not looking too good.
 </Alert>
 ```
-
----
-
-# Debugging
-
-> Get that app under control
-
-<!-- prettier-ignore -->
-***
-
-## Console.log
-
-console logging is your friend
-
-```js
-// you can log an object
-console.log(user);
-```
-
-```js
-// log multiple vars
-console.log(name + " " + age); // don't use this
-console.log(name, age); // both are logged
-console.log({ name, age }); // with names
-```
-
-```js
-// log in table form
-const users = [{ id: 1, name: "peter" }, { id: 2, name: "bob" }];
-console.table(users);
-```
-
-<!-- prettier-ignore -->
-***
-
-## Console.log
-
-others
-
-```js
-// timing
-console.time("myTiming");
-longRunningTask();
-console.endTime("myTiming"); // OUTPUT: myTiming xxxxms
-```
-
-```js
-// grouping
-console.group("URL Details");
-console.log("Scheme: ", schema);
-console.log("Host: ", host);
-console.groupEnd();
-```
-
-<!-- prettier-ignore -->
-***
-
-## Debugger
-
-The chrome debugger is your best friend.
-
-<img src="./images/react-debugger.png" width="600px">
-
-<!-- prettier-ignore -->
-***
-
-### Debugger
-
-Make sure to generate source maps to view source in debugger
-
-```js
-// webpack.config.js
-module.exports = {
-  mode: "development",
-  output: {
-    // ...
-  },
-  // eval: fast build & generated code
-  // cheap-module-eval-source-map: slower build & orginal code
-  // source-map: full source map files
-  devtool: "cheap-module-eval-source-map"
-};
-```
-
-More info see
-[WebPack DevTool](https://webpack.js.org/configuration/devtool/#devtool)
-
-<!-- prettier-ignore -->
-***
-
-### VSCode Debugging
-
-Install [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)
-
-Configure Launch Config (launch.json)
-
-```json
-{
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Chrome",
-      "type": "chrome",
-      "request": "launch",
-      "url": "http://localhost:8080",
-      "webRoot": "${workspaceFolder}"
-    }
-  ]
-}
-```
-
-<!-- prettier-ignore -->
-***
-
-## React Dev Tools
-
-<img src="./images/devtools-full.gif">
-
-[React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
 
 ---
 
@@ -1477,13 +1434,13 @@ new webpack.DefinePlugin({
 new webpack.optimize.UglifyJsPlugin()
 ```
 
-during build you get an uptimized build to production.
+during build you get an optimized build for production.
 
 for example:
 
 ```js
 if (process.NODE_ENV === "production") {
-  // production mode
+  // production only code
 }
 ```
 
@@ -1511,6 +1468,19 @@ log.setLevel(process.NODE_ENV === "production" ? "warn" : "info");
 log.warn("something is wrong here");
 log.debug("details", result);
 ```
+
+<!-- prettier-ignore -->
+***
+
+## Other optimizations
+
+- Minified production build (WebPack)
+- Avoid Reconciliation (Pur Components)
+- Virtualize Long Lists
+  - [react-window](https://react-window.now.sh/#/examples/list/fixed-size)
+  - [react-virtualized](https://bvaughn.github.io/react-virtualized/#/components/List)
+- Enabling Gzip on Your Web Server
+- Employ code splitting (WebPack)
 
 ---
 
