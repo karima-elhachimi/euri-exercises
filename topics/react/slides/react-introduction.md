@@ -884,10 +884,16 @@ JSX assumes a React object is available, so make sure to import it.
 
 Place all components in separated files (capitalized)
 
+---
+
+# State
+
+> No behavior without state
+
 <!-- prettier-ignore -->
 ***
 
-## Component State
+## State
 
 Class Components can have state
 
@@ -908,21 +914,7 @@ export default class App extends Component {
 <!-- prettier-ignore -->
 ***
 
-## Component State
-
-Default state
-
-```jsx
-export default class MyComponent extends Component {
-  state = {
-    title: 'My Component Title'
-    counter: this.props.initialValue || 0,
-  };
-  // ...
-}
-```
-
-Default state through constructor
+## Default state
 
 ```jsx
 export default class MyComponent extends Component {
@@ -939,7 +931,57 @@ export default class MyComponent extends Component {
 <!-- prettier-ignore -->
 ***
 
-## Component State
+## Default state
+
+Default state with class property
+
+```jsx
+export default class MyComponent extends Component {
+  state = {
+    title: 'My Component Title'
+    counter: this.props.initialValue || 0,
+  };
+  // ...
+}
+```
+
+> static class members requires @babel/plugin-proposal-class-properties
+
+<!-- prettier-ignore -->
+***
+
+### Calculated fields
+
+Don't use state for calculated fields
+
+```jsx
+export default class MyComponent extends Component {
+  constructor(props) {
+    this.state = {
+      fullName: `${props.firstName} ${props.lastName}`
+    };
+  }
+  render() {
+    return <p>{this.state.fullName}</p>;
+  }
+}
+```
+
+Better
+
+```jsx
+export default class MyComponent extends Component {
+  render() {
+    const fullName = `${this.props.firstName} ${this.props.lastName}`;
+    return <p>{fullName}</p>;
+  }
+}
+```
+
+<!-- prettier-ignore -->
+***
+
+## SetState callback
 
 Set state via callback
 
@@ -951,6 +993,34 @@ this.setState((state, props) => ({
 ```
 
 Via callback the previous state & props are available.
+
+<!-- prettier-ignore -->
+***
+
+## SetState is async
+
+```js
+this.setState({
+  ...this.state,
+  counter: 1
+});
+console.log(this.state); // State is not updated yet
+```
+
+Fix: result callback
+
+```js
+this.setState(
+    (state, props) => ({
+        ...state
+        counter: 1,
+    }),
+    (state) => {
+        // now the state is changed
+        consoler.log('new state: ', state)
+    }
+);
+```
 
 <!-- prettier-ignore -->
 ***
@@ -1152,24 +1222,227 @@ const MyComponent = props => {
 <!-- prettier-ignore -->
 ***
 
-## Children prop
+## Children props
+
+```js
+const Panel = props => (
+  <div className="panel">
+    <h1>{props.title}</h1>
+    <div>{props.children}</div>
+  </div>
+);
+```
+
+```js
+const App = () => (
+  <Panel title="Hello world">
+    <p>Lorem ipsum dolor sit amet</p>
+    <strong>Finibus Bonorum</strong>
+  </Panel>
+);
+```
 
 <!-- prettier-ignore -->
+***
+
+## Spreading props
+
 ```jsx
-const FancyButton = (props) => {
-  return (
-    <button className="FancyButton">
-      {props.children}
-    </button>
-  );
+class App extends Component {
+  const obj = { firstName="peter", lastName="jansens" }
+  render() {
+    return (
+        <Greeting firstName={obj.firstName}
+                  lastName={obj.lastName} />
+        )
+  }
 }
 ```
 
+with spreading props
+
 ```jsx
-<FancyButton>
-  <strong>Click Me</strong>
-</FancyButton>
+class App extends Component {
+  const obj = { firstName="peter", lastName="jansens" }
+  render() {
+    return <Greeting {...obj} />;
+  }
+}
 ```
+
+<!-- prettier-ignore -->
+***
+
+### Passing down props
+
+```
+const App = () => (
+  <Layout
+    title="I'm here to stay"
+    language="JavaScript"
+    name="Alex"
+  />
+);
+```
+
+```js
+const Layout = ({ title, ...props }) => (
+  <div>
+    <h1>{title}</h1>
+    <Details {...props} />
+  </div>
+);
+```
+
+```js
+const Details = ({ name, language }) => (
+  <p>
+    {name} works with {language}
+  </p>
+);
+```
+
+<!-- prettier-ignore -->
+***
+
+## Props are Read-only
+
+```jsx
+class MyComponent extends Component {
+  constructor(props) {
+    super(props);
+    // BAD: Error is thrown
+    props.title = `-- ${props.title} --`;
+  }
+}
+```
+
+Copy it over to state
+
+```jsx
+class MyComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+        title: `-- ${props.title} --`;
+    }
+  }
+}
+```
+
+<!-- prettier-ignore -->
+***
+
+## Props as function
+
+```jsx
+const MyComponent = props => (
+  <Fragment>
+    <p>{name}</p>
+    <button disabled={!props.isActive(props.name)}>Close</button>
+  </Fragment>
+);
+```
+
+```jsx
+class App extends Component {
+  isActive = (name) => {
+    return (name === 'default')
+  }
+  render() {
+    return (
+      <MyComponent name="default" isActive={this.isActive} />
+      <MyComponent name="primary" isActive={this.isActive} />
+    )
+  }
+}
+```
+
+<!-- prettier-ignore -->
+***
+
+## Props Validating
+
+Validate props
+
+```jsx
+import PropTypes from 'prop-types';
+
+function MyComponent(props) {
+  return (
+    <h3>{this.props.title}<h3>
+  );
+}
+
+MyComponent.propTypes = {
+  title: PropTypes.string.isRequired,
+  count: PropTypes.number,
+};
+
+MyComponent.defaultProps = {
+  count: 10
+};
+```
+
+[React prop-types](https://github.com/facebook/prop-types)
+
+This syntax can also be used on class components
+
+<!-- prettier-ignore -->
+***
+
+## Props Validating
+
+Validate with static members
+
+```jsx
+import PropTypes from 'prop-types';
+
+class MyComponent extends Component {
+
+  static propTypes = {
+    title:PropTypes.string.isRequired,
+    count:PropTypes.number,
+  };
+
+  static defaultProps = {
+    count: 10
+  };
+
+  render() {
+    const { title } = this.props;
+    return (
+       <h3>{title}<h3>
+       <p>{count * 100}</p>
+    );
+  }
+}
+```
+
+> static class members requires @babel/plugin-proposal-class-properties
+
+<!-- prettier-ignore -->
+***
+
+## Exercise 3
+
+Create a Button component with specific style
+
+<!-- prettier-ignore -->
+```html
+<!-- bootstrap default button; class="btn btn-default" -->
+<Button>Default</Button>
+
+<!-- bootstrap primary button; class="btn btn-primary" -->
+<Button primary>Primary</Button>
+
+<!-- bootstrap danger button; class="btn btn-danger" -->
+<Button danger>Don't click me</Button>
+```
+
+<img src="./images/buttons.png "/>
+
+Optionally you can add validation
 
 ---
 
@@ -1247,7 +1520,7 @@ See [A checklist for eliminating common React performance issues](https://logroc
 
 ---
 
-# Exercise 3
+# Exercise 4
 
 ### Alert Component (Props)
 
@@ -1260,227 +1533,6 @@ See [A checklist for eliminating common React performance issues](https://logroc
     <strong>Warning!</strong> Better check yourself, you're not looking too good.
 </Alert>
 ```
-
----
-
-# Http Requests
-
-> Get the data
-
-<!-- prettier-ignore -->
-***
-
-## Http in React
-
-> React doens't provide a Http library.
-
-#### 3th party libraries
-
-- [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) (standardized)
-- [Axios](https://github.com/axios/axios) (most popular)
-- [SuperAgent](https://visionmedia.github.io/superagent/)
-- [Request](https://github.com/request/request)
-
-<!-- prettier-ignore -->
-***
-
-## Axios
-
-```js
-import axios from "axios";
-
-axios
-  .get("https://swapi.co/api/starships")
-  .then(res => {
-    // success
-    console.log("result", res.data);
-  })
-  .catch(error => {
-    if (error.response) {
-      // The request was made and status code
-      // that falls out of the range of 2xx
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else {
-      // Something happened in setting up the request
-      console.log("Error", error.message);
-    }
-  });
-```
-
-<!-- prettier-ignore -->
-***
-
-## Axios
-
-post
-
-```js
-const todo = {
-  userId: 1,
-  title: "write some code",
-  completed: false
-};
-const url = "http://jsonplaceholder.typicode.com/todos";
-axios.post(url, todo).then(res => {
-  console.log("result", res.data);
-});
-```
-
-delete
-
-```js
-const url = `http://jsonplaceholder.typicode.com/todos/${id}`;
-axios.delete(url).then(res => {
-  console.log("result", res.data);
-});
-```
-
-<!-- prettier-ignore -->
-***
-
-## Axios
-
-custom config
-
-```js
-// api.js
-import axios from "axios";
-export default axios.create({
-  baseURL: "https://some-domain.com/api/",
-  timeout: 1000,
-  headers: { "X-Custom-Header": "foobar" }
-});
-```
-
-use
-
-```js
-// api/contact.js
-import api from "./api";
-
-export default {
-  async getById(id) {
-    const res = await api.get(`contacts/${id}`);
-    return res.data;
-  }
-};
-```
-
-<!-- prettier-ignore -->
-***
-
-## Axios in React
-
-```jsx
-import contactApi from "./api/contacts";
-
-export default class MyComponent extends Component {
-  state = {
-    contact: {}
-  };
-  async componentDidMount() {
-    const contact = await contactApi.getById(1);
-    setState({
-      contact
-    });
-  }
-  render() {
-    const { contact } = this.state;
-    return (
-      <div>
-        <h1>Contact</h1>
-        <Contact contact={contact} />;
-      </div>
-    );
-  }
-}
-```
-
----
-
-# Exercise
-
-### Web Shop
-
-- Create app to show products grid
-- Load products from API
-  [https://euri-test-api.now.sh](https://euri-test-api.now.sh)
-- Show following fields
-  - Image, Sku, Title, Stock, Price, Discount
-- Style with bootstrap
-- Optional: add an error message when the communication fails
-- Optional: load more products when scrolling down, use [react-infinite-scroller](https://cassetterocks.github.io/react-infinite-scroller/demo/)
-
----
-
-# Production
-
-> Don't put your development in production
-
-<!-- prettier-ignore -->
-***
-
-### NODE_ENV === "production"
-
-The environment at build time is controlled by
-
-```
-// webpack.config.js
-new webpack.DefinePlugin({
-  'process.env.NODE_ENV': JSON.stringify('production')
-}),
-new webpack.optimize.UglifyJsPlugin()
-```
-
-during build you get an optimized build for production.
-
-for example:
-
-```js
-if (process.NODE_ENV === "production") {
-  // production only code
-}
-```
-
-<!-- prettier-ignore -->
-***
-
-## Loglevel
-
-Minimal lightweight logging for JavaScript
-
-```bash
-# Add dependencies
-yarn install loglevel
-```
-
-use
-
-```js
-import log from "loglevel";
-
-// Set the logLevel
-log.setLevel(process.NODE_ENV === "production" ? "warn" : "info");
-
-// some other place in the program
-log.warn("something is wrong here");
-log.debug("details", result);
-```
-
-<!-- prettier-ignore -->
-***
-
-## Other optimizations
-
-- Minified production build (WebPack)
-- Avoid Reconciliation (Pur Components)
-- Virtualize Long Lists
-  - [react-window](https://react-window.now.sh/#/examples/list/fixed-size)
-  - [react-virtualized](https://bvaughn.github.io/react-virtualized/#/components/List)
-- Enabling Gzip on Your Web Server
-- Employ code splitting (WebPack)
 
 ---
 

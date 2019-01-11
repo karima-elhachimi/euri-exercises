@@ -1,6 +1,6 @@
 ---
 title: React Patterns
-transition: 'fade'
+transition: "fade"
 verticalSeparator: "^\\*\\*\\*"
 ---
 
@@ -48,210 +48,6 @@ Copyright (c) 2018 Euricom nv.
 
 ---
 
-# Props In Depth
-
-> Know your props
-
-<!-- prettier-ignore -->
-***
-
-## Spreading props
-
-```jsx
-class App extends Component {
-  const obj = { firstName="peter", lastName="jansens" }
-  render() {
-    return (
-        <Greeting firstName={obj.firstName}
-                  lastName={obj.lastName} />
-        )
-  }
-}
-```
-
-with spreading the props
-
-```jsx
-class App extends Component {
-  const obj = { firstName="peter", lastName="jansens" }
-  render() {
-    return <Greeting {...obj} />;
-  }
-}
-```
-
-passing props from parent
-
-```jsx
-const FancyButton = props => (
-  <button className="FancyButton" {...props}>
-    {props.children}
-  </button>
-);
-
-<FancyButton title="save the user">Save</FancyButton>;
-```
-
-<!-- prettier-ignore -->
-***
-
-## Read-only Props
-
-All Props are Read-Only
-
-```jsx
-class MyComponent extends Component {
-  constructor(props) {
-    super(props);
-    // BAD: Error is thrown
-    props.title = `-- ${props.title} --`;
-  }
-}
-```
-
-Copy it over to state
-
-```jsx
-class MyComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-        title: `-- ${props.title} --`;
-    }
-  }
-}
-```
-
-<!-- prettier-ignore -->
-***
-
-## Validating
-
-Validate props
-
-```jsx
-import PropTypes from 'prop-types';
-
-function MyComponent(props) {
-  return (
-    <h3>{this.props.title}<h3>
-  );
-}
-
-MyComponent.propTypes = {
-  title: PropTypes.string.isRequired,
-  count: PropTypes.number,
-};
-
-MyComponent.defaultProps = {
-  count: 10
-};
-```
-
-[React prop-types](https://github.com/facebook/prop-types)
-
-This syntax can also be used on class components
-
-<!-- prettier-ignore -->
-***
-
-## Validating
-
-Validate with static members
-
-```jsx
-import PropTypes from 'prop-types';
-
-class MyComponent extends Component {
-
-  static propTypes = {
-    title:PropTypes.string.isRequired,
-    count:PropTypes.number,
-  };
-
-  static defaultProps = {
-    count: 10
-  };
-
-  render() {
-    const { title } = this.props;
-    return (
-       <h3>{title}<h3>
-       <p>{count * 100}</p>
-    );
-  }
-}
-```
-
-> static members requires babel-preset-stage-2
-
----
-
-# State In Depth
-
-> Know your state
-
-<!-- prettier-ignore -->
-***
-
-### Calculated state fields
-
-Don't use state for calculated fields
-
-```jsx
-export default class MyComponent extends Component {
-  constructor(props) {
-    this.state = {
-      fullName: `${props.firstName} ${props.lastName}`,
-    };
-  }
-  render() {
-    return <p>{this.state.fullName}</p>;
-  }
-}
-```
-
-Better
-
-```jsx
-export default class MyComponent extends Component {
-  render() {
-    const fullName = `${this.props.firstName} ${this.props.lastName}`;
-    return <p>{fullName}</p>;
-  }
-}
-```
-
-<!-- prettier-ignore -->
-***
-
-## SetState is async
-
-```js
-this.setState({
-  ...this.state,
-  counter: 1,
-});
-console.log(this.state); // State is not updated yet
-```
-
-Fix: result callback
-
-```js
-this.setState(
-    (state, props) => ({
-        ...state
-        counter: 1,
-    }),
-    (state) => {
-        // now the state is changed
-        consoler.log('new state: ', state)
-    }
-);
-```
-
----
-
 # Higher-Order Components
 
 > A higher-order component is a function that takes a component and returns a new component.
@@ -259,23 +55,38 @@ this.setState(
 <!-- prettier-ignore -->
 ***
 
-## Higher-Order Component (HOC)
+### Simple Component
 
-> A higher-order component is a function that accepts a component as an argument and returns an extended version of that component.
+```jsx
+import React from "react";
 
-Sample
+const SimpleComponent = props => {
+  return <p>SecretToLife: {props.secretToLife}</p>;
+};
 
+export default SimpleComponent;
+```
+
+<!-- prettier-ignore -->
+***
+
+### Higher-Order Component (HOC)
+
+A sample
+
+<!-- prettier-ignore -->
 ```jsx
 import React from 'react';
 
-const withSecretToLife = WrappedComponent => {
-  class HOC extends Component {
-    render() {
-      return <WrappedComponent secretToLife={42} {...this.props} />;
+const withSecretToLife = (WrappedComponent) => {
+  const HigherOrderComponent = props => {
+      const msg = 'If it feels good, do it';
+      return (
+        <WrappedComponent secretToLife={msg} {...props} />
+      );
     }
   }
-
-  return HOC;
+  return HigherOrderComponent;
 };
 export default withSecretToLife;
 ```
@@ -283,7 +94,7 @@ export default withSecretToLife;
 <!-- prettier-ignore -->
 ***
 
-## Higher-Order Component
+### Using HOC
 
 <!-- prettier-ignore -->
 ```js
@@ -292,7 +103,7 @@ import withSecretToLife from './withSecretToLife';
 
 const App = props => (
   <div>
-    The secret to life is {props.secretToLife}.
+    Hi {props.name}, the secret to life is {props.secretToLife}.
   </div>
 )
 
@@ -302,9 +113,38 @@ export default withSecretToLife(App);
 And use as a normal app component
 
 ```js
-import App from './app.js';
-render(<App />, element);
+import App from "./app.js";
+render(<App name="peter" />, element);
 ```
+
+<!-- prettier-ignore -->
+***
+
+### Class based HOC
+
+<!-- prettier-ignore -->
+```jsx
+import React from 'react';
+
+const withSecretToLife = (WrappedComponent) => {
+  return class HOC extends Component {
+    constructor(props) {
+      super(props)
+      this.msg = 'If it feels good, do it';
+    }
+    render() {
+      return (
+        <WrappedComponent secretToLife={this.msg}
+                          {...this.props} />
+      );
+    }
+  }
+};
+
+export default withSecretToLife;
+```
+
+[More Samples](https://medium.com/dailyjs/react-composing-higher-order-components-hocs-3a5288e78f55)
 
 <!-- prettier-ignore -->
 ***
@@ -314,7 +154,7 @@ render(<App />, element);
 The HOC
 
 ```js
-const withLogger = (prefix = '') => WrappedComponent => {
+const withLogger = (prefix = "") => WrappedComponent => {
   const WithLogger = props => {
     console.log(`${prefix}[Props]:`, props);
     return <WrappedComponent {...props} />;
@@ -339,6 +179,26 @@ Logs props to the console on every render of the WrappedComponent.
 
 [More Samples](https://medium.com/dailyjs/react-composing-higher-order-components-hocs-3a5288e78f55)
 
+<!-- prettier-ignore -->
+***
+
+## Exercise
+
+Create a HOC to logs all props to the console on every render of the WrappedComponent.
+
+```js
+const Button = () => (
+  ...
+)
+export default withLogger(Button);
+```
+
+Optional: make if configurable
+
+```js
+export default withLogger("prefix")(Button);
+```
+
 ---
 
 # Context
@@ -353,7 +213,7 @@ Logs props to the console on every render of the WrappedComponent.
 Provide a value
 
 ```jsx
-const { Provider, Consumer } = React.createContext('');
+const { Provider, Consumer } = React.createContext("");
 class App extends React.Component {
   render() {
     return (
@@ -374,9 +234,7 @@ const Toolbar = props => <ThemedButton />;
 Use a Consumer to read the current theme context. <br>React will find the closest theme Provider above and use its value.
 
 ```jsx
-const ThemedButton = props => (
-  <Consumer>{theme => <Button {...props} theme={theme} />}</Consumer>
-);
+const ThemedButton = props => <Consumer>{theme => <Button {...props} theme={theme} />}</Consumer>;
 ```
 
 <!-- prettier-ignore -->
@@ -388,10 +246,10 @@ Context can be a complex object
 
 ```jsx
 export const ThemeContext = React.createContext({
-  theme: 'dark',
-  maxWidth: '800px',
-  font: 'Helvetica',
-  toggleTheme: () => {},
+  theme: "dark",
+  maxWidth: "800px",
+  font: "Helvetica",
+  toggleTheme: () => {}
 });
 ```
 
@@ -403,18 +261,14 @@ export const ThemeContext = React.createContext({
 You can consuming Context with a HOC
 
 ```js
-const ThemeContext = React.createContext('light');
+const ThemeContext = React.createContext("light");
 
 export default (withTheme = Component => {
   // ...and returns another component...
   return props => {
     // ... and renders the wrapped component with the context theme!
     // Notice that we pass through any additional props as well
-    return (
-      <ThemeContext.Consumer>
-        {theme => <Component {...props} theme={theme} />}
-      </ThemeContext.Consumer>
-    );
+    return <ThemeContext.Consumer>{theme => <Component {...props} theme={theme} />}</ThemeContext.Consumer>;
   };
 });
 ```
@@ -436,25 +290,21 @@ const ThemedButton = withTheme(Button);
 <!-- prettier-ignore -->
 ***
 
-## Basic Sample
+### ErrorBoundery
 
 ```jsx
 export default class ErrorBoundery extends Component {
-  static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.node,
-      PropTypes.arrayOf(PropTypes.node),
-    ]),
-  };
-
   state = {
-    hasError: false,
-    error: null,
-    errorInfo: null,
+    hasError: false
   };
 
-  componentDidCatch(error, errorInfo) {
-    this.setState({ hasError: true, error, errorInfo });
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, info) {
+    console.log("Error:", error, info);
   }
 
   render() {
@@ -508,8 +358,20 @@ Error Bounderies can be placed on any level
 ## Basic Sample
 
 <!-- prettier-ignore -->
+```js
+const App = () => (
+  <ShareSecretToLife render={({ secretToLife }) => (
+      <h1>
+        <b>{secretToLife}</b>
+      </h1>
+    )}
+  />
+);
+```
+
+<!-- prettier-ignore -->
 ```jsx
-const SECRET_TO_LIFE = 42;
+const SECRET_TO_LIFE = 'If it feels good, do it';
 
 default export class ShareSecretToLife extends Component {
   render() {
@@ -521,14 +383,33 @@ default export class ShareSecretToLife extends Component {
 ```
 
 <!-- prettier-ignore -->
+***
+
+### Render props - children
+
+<!-- prettier-ignore -->
+```jsx
+const SECRET_TO_LIFE = 42;
+
+default export class ShareSecretToLife extends Component {
+  render() {
+    return <div>
+        {this.props.children({ secretToLife: SECRET_TO_LIFE })}
+    </div>;
+  }
+}
+```
+
+<!-- prettier-ignore -->
 ```js
 const ShareSecretWithWorld = () => (
-  <ShareSecretToLife render={({ secretToLife }) => (
+  <ShareSecretToLife>
+    {({ secretToLife }) => (
       <h1>
         <b>{secretToLife}</b>
       </h1>
     )}
-  />
+  </ShareSecretToLife>
 );
 ```
 
@@ -537,7 +418,35 @@ const ShareSecretWithWorld = () => (
 <!-- prettier-ignore -->
 ***
 
-## Practical usecase
+## Exercise
+
+Modify the ErrorBoudery with an render prop so we can have an optional customized error rendering
+
+Optional: Create Repeat component
+
+```html
+<Repeat numTimes={10} render={
+  (total, index) => <p>number {index} of {total}</p>
+}
+</Repeat>
+```
+
+Optional: Create ForEach component
+
+```html
+<ul>
+  <ForEach data="{myArray}">
+    {(item) =>
+    <li>{item.name}</li>
+    }
+  </ForEach>
+</ul>
+```
+
+<!-- prettier-ignore -->
+***
+
+## Solution
 
 ErrorBoundery with custom rendering
 
@@ -570,7 +479,7 @@ export default class ErrorBoundery extends Component {
 <!-- prettier-ignore -->
 ***
 
-### Practical usecase
+### Solution
 
 Use of ErrorBoundery
 
@@ -587,11 +496,290 @@ ReactDOM.render(
 
 ---
 
-# Other Topics
+# Context
 
-- [Portals](https://reactjs.org/docs/portals.html)
-- [Fragments](https://reactjs.org/docs/fragments.html)
-- [Context](https://reactjs.org/docs/context.html)
+Using context, we can avoid passing props through intermediate elements
+
+<!-- prettier-ignore -->
+***
+
+## Context
+
+<img src="./images/prop-drilling-v-context.png">
+
+<!-- prettier-ignore -->
+***
+
+## Context Provider
+
+Provide a value
+
+```jsx
+// Create the context
+export const ThemeContext = React.createContext("light");
+
+// Component providing the context value
+export default class App extends React.Component {
+  render() {
+    return (
+      <ThemeContext.Provider value="dark">
+        <Toolbar />
+      </ThemeContext.Provider>
+    );
+  }
+}
+```
+
+<!-- prettier-ignore -->
+***
+
+### Context Consumer
+
+Some component deeper in the hierarchy...
+
+Use a Consumer to read the current theme context. <br>React will find the closest theme Provider above and use its value.
+
+```jsx
+import { ThemeContext } from "./app";
+
+const ThemedButton = props => (
+  <ThemeContext.Consumer>{theme => <Button {...props} theme={theme} />}</ThemeContext.Consumer>
+);
+```
+
+A "render prop" is used to get the value.
+
+<!-- prettier-ignore -->
+***
+
+### contextType
+
+Context simplified (available on React 16.6)
+
+```jsx
+import { ThemeContext } from "./app";
+```
+
+```jsx
+class ThemedButton2 extends React.Component {
+  static contextType = ThemeContext;
+  render() {
+    <Button {...this.props} theme={this.context.theme} />}
+  }
+}
+```
+
+This method only allows you to consume one context.
+
+<!-- prettier-ignore -->
+***
+
+### Context
+
+Context can be a complex object
+
+```jsx
+export const ThemeContext = React.createContext({
+  theme: "dark",
+  maxWidth: "800px",
+  font: "Helvetica",
+  toggleTheme: () => {}
+});
+```
+
+<!-- prettier-ignore -->
+***
+
+## Exercise
+
+Avoid prop drilling by using StateProvider
+
+From
+
+```html
+<div>
+  <Red number="{this.state.number}" />
+  <Green number="{this.state.number}" onIncrement="{this.handleIncrement}" />
+</div>
+```
+
+To
+
+```html
+<StateProvider initialValue={10}>
+  <Red>
+  <Green>
+</StateProvider>
+```
+
+<!-- prettier-ignore -->
+***
+
+### Consume Context with a HOC
+
+```js
+const ThemeContext = React.createContext('light');
+
+export default withTheme = Component => {
+  return props => {
+    return (
+      <ThemeContext.Consumer>
+        {theme => <Component {...props} theme={theme} />}
+      </ThemeContext.Consumer>
+    );
+  };
+});
+```
+
+```js
+const Button = ({ theme, ...rest }) => {
+  return <button className={theme} {...rest} />;
+};
+
+const ThemedButton = withTheme(Button);
+```
+
+<!-- prettier-ignore -->
+***
+
+Unstaged: Simplified state managment
+
+### Unstated
+
+```js
+import { Provider, Subscribe, Container } from "unstated";
+class CounterContainer extends Container {
+  state = {
+    count: 0
+  };
+  increment() {
+    this.setState({ count: this.state.count + 1 });
+  }
+}
+```
+
+```js
+<Subscribe to={[CounterContainer]}>
+  {counter => (
+    <div>
+      <button onClick={() => counter.decrement()}>-</button>
+      <span>{counter.state.count}</span>
+    </div>
+  )}
+</Subscribe>
+```
+
+```html
+<Provider> <Counter /> </Provider>
+```
+
+---
+
+# Hooks
+
+> Hooks are a new feature proposal that lets you use state and other React features without writing a class
+
+for React 16.8 (Alpha) 🙁
+
+<!-- prettier-ignore -->
+***
+
+### A Classic component
+
+```js
+import React, { Component } from "react";
+
+export class Users extends Component {
+  state = {
+    users: []
+  };
+
+  async componentDidMount() {
+    const res = await axios.get("users.json");
+    this.setState({
+      users: res.data
+    });
+  }
+
+  render() {
+    return (
+      <ul>
+        {this.state.users.map(user => {
+          return <li key={user.id}>{user.name}</li>;
+        })}
+      </ul>
+    );
+  }
+}
+```
+
+<!-- prettier-ignore -->
+***
+
+### Using hooks
+
+```js
+import React, { Component, useState } from "react";
+
+export const Users = () => {
+  const [users, setUsers] = useState([]);
+
+  useEffect(async () => {
+    const res = await axios.get("users.json");
+    setUsers(res.data);
+  });
+
+  return (
+    <ul>
+      {users.map(user => {
+        return <li key={user.id}>{user.name}</li>;
+      })}
+    </ul>
+  );
+};
+```
+
+<!-- prettier-ignore -->
+***
+
+### Render Props vs Hooks
+
+```jsx
+<ScrollPosition>
+  {position => (
+    <div>
+      <p>You are at {position}</p>
+    </div>
+  )}
+</ScrollPosition>
+```
+
+vs
+
+```js
+const MyComp = () => {
+  let position = useScrollPosition();
+  return (
+    <div>
+      <p>You are at {position}</p>
+    </div>
+  );
+};
+```
+
+See also [awesome-react-hooks](https://github.com/rehooks/awesome-react-hooks)
+
+---
+
+# Portals
+
+T.B.D
+
+---
+
+# Lazy and Suspense
+
+T.B.D
 
 ---
 
@@ -619,3 +807,7 @@ Patterns
 - [ReactJS: Code Reuse Patterns](https://www.youtube.com/watch?v=0BNgi9vofaw)
 - [React Patterns in a Nutshell](https://www.youtube.com/watch?v=C6w7R501oug)
 - [Simple React Patterns](https://lucasmreis.github.io/blog/simple-react-patterns/)
+
+---
+
+# Ready to build you React Apps

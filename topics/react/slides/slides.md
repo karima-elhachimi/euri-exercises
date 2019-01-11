@@ -1,71 +1,76 @@
 ---
-title: React Workshop
-transition: 'fade'
+title: React
+transition: "fade"
+verticalSeparator: "^\\*\\*\\*"
 ---
 
-# React Workshop
+# React
 
-<small>by Peter Cosemans</small>
-<br>
-<br>
-<small>
-Copyright (c) 2018 Euricom nv. Licensed under the [MIT license](https://opensource.org/licenses/MIT).
-</small>
+> A JavaScript library for building user interfaces
 
 ---
 
-## Prerequisites
+# Slides
 
-- Knowledge / Experience
-  - Good knowledge of ES6
-  - HTML / CSS / BootStrap
-  - Chrome Dev Tools
-- System Setup
-  - Visual Studio Code - https://code.visualstudio.com
-  - Node.js 10.6 (or higher) - https://nodejs.org/en/
-  - Git - https://git-scm.com/download/win
-  - ConEmu: https://conemu.github.io/
+<!-- prettier-ignore -->
+***
 
----
+## Core
 
-# Content
+- [React Introduction](./react-introduction.md)
+- [React http](./react-http.md)
+- [React Styling](./react-styling.md)
+- [React DevTools](./react-devTools.md)
+- Exercise WebShop - Part 1
+- [React production](./react-production.md)
+- [React Patterns](./react-patterns.md)
 
-### [https://github.com/Euricom/training-workshop-ES-React-2018Q3](https://github.com/Euricom/training-workshop-ES-React-2018Q3)
+<!-- prettier-ignore -->
+***
 
-- Slides
-- Starters
-- Samples
-- Resources
-- Exercises
+## Patterns and Practises
 
----
+- [React Forms](./react-forms.md)
+- [React Router](./react-router.md)
+- Exercise WebShop - Part 2
+- Exercise WebShop - Part 3
 
-# Agenda
+<!-- prettier-ignore -->
+***
 
-- JavaScript & Tooling
-  - [JavaScript Tooling and Editor](./javaScript-tooling-and-editor.md)
-  - [Javascript Refresh](./javascript-refresh.md)
-- React
-  - [React Introduction](./react-introduction.md)
-  - [React Styling](./react-styling.md)
-  - [React Patterns](./react-patterns.md)
-  - [React Forms](./react-forms.md)
-  - [React Router](./react-router.md)
-  - [React State Management](./react-state-management.md)
+## State Management
+
+- [React State Management](./react-state-management.md)
 
 ---
 
-# Your Trainer
+# Exercises
 
-### Peter Cosemans
+<!-- prettier-ignore -->
+***
 
-- Contact
-  - peter.cosemans@euri.com
-  - https://github.com/mjrio
-  - http://github.com/euricom
-- 12 year .NET Development
-- 5 year Full Stack JavaScript
-- Architect, Tech Coach, Trainer, TeamLead
-  - JavaScript
-  - Angular, React, VueJS
-  - NodeJS, MongoDB
+### Web Shop - Part 1
+
+- Create app to show products grid
+- Load products from API
+  [https://euri-test-api.now.sh](https://euri-test-api.now.sh)
+- Show following fields
+  - Image, Sku, Title, Stock, Price, Discount
+- Style with bootstrap
+- Optional: add an error message when the communication fails
+- Optional: load more products when scrolling down, use [react-infinite-scroller](https://cassetterocks.github.io/react-infinite-scroller/demo/)
+
+<!-- prettier-ignore -->
+***
+
+### Web Shop - Part 2
+
+- Add routing home/admin
+- Add product edit form
+
+<!-- prettier-ignore -->
+***
+
+### Web Shop - Part 3
+
+- Add shopping basket
