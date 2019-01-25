@@ -4,7 +4,7 @@
   "description": "ES Node Template",
   "scripts": {
     "build": "npm run clean && babel ./src -d ./dist --ignore node_modules",
-    "clean": " rimraf dist",
+    "clean": "rimraf dist",
     "lint": "eslint \"src/**/*.js\"",
     "precommit": "lint-staged",
     "start": "nodemon src/main.js --exec babel-node"
