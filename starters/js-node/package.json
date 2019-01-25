@@ -28,6 +28,6 @@
     "rimraf": "^2.6.3"
   },
   "lint-staged": {
-    "src/*.js": "npm run lint -- --quiet"
+    "src/**/*.js": "npm run lint -- --quiet"
   }
 }
