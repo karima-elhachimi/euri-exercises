@@ -2,18 +2,18 @@
 
 Home of the npm based starters
 
-* npm
-* eslint
-* lint-staged
-* husky
+- npm
+- eslint
+- lint-staged
+- husky
 
 ## js-node
 
-[x] node
-[x] babel
+- [x] node
+- [x] babel
 
 ## js-node-jest
 
-[x] node
-[x] babel
-[x] jest
+- [x] node
+- [x] babel
+- [x] jest
