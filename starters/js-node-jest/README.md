@@ -36,6 +36,7 @@ $ npm test -- --watch
 
 - [x] Basic Node setup with ES6+ transpiling and bundeling
 - [x] Npm Scripts: serve, build, lint, test
-- [x] VSCode recommended extensions and settings for auto save/fix eslint & prettier formatting
+- [x] VSCode recommended extensions and settings for auto save
 - [x] Unit Testing with Jest
 - [x] ES linting with ESLint and [AirBnb Style Guide](https://github.com/airbnb/javascript)
+- [x] Husky and lint-staged precommit hook
