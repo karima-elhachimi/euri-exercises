@@ -19,11 +19,13 @@ Home of the npm based starters
 - [x] jest
 
 ## js-webpack
+
 - [x] babel
 - [x] jest
 - [x] webpack
 
 ## js-webpack-react
+
 - [x] babel
 - [x] jest
 - [x] webpack
