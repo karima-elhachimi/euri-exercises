@@ -1,4 +1,4 @@
-import { sum, substract } from './calc';
+import { sum, sumAsync, substract } from './calc';
 
 describe('calculator', () => {
   it('adds 1 + 2 to equal 3', () => {
@@ -7,6 +7,11 @@ describe('calculator', () => {
 
   it('substract 2 - 1 to equal 1', () => {
     expect(substract(2, 1)).toBe(1);
+  });
+
+  it('adds 1 + 2 async', async () => {
+    const total = await sumAsync(1, 2);
+    expect(total).toBe(3);
   });
 
   it('verify if jest extended works', () => {
