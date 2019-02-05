@@ -41,7 +41,7 @@ module.exports = (env, args) => {
         chunks: 'all',
         name: 'vendors',
       },
-      // Keep the runtime chunk seperated to enable long term caching
+      // Keep the runtime chunk separated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
       runtimeChunk: true,
     },
