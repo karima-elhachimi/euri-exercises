@@ -6,8 +6,7 @@
     "build": "webpack --mode development",
     "build:prod": "NODE_ENV=production webpack --mode production",
     "clean": "rimraf dist",
-    "lint": "eslint \"src/js/**/*.js\"",
-    "precommit": "lint-staged",
+    "lint": "eslint \"src/**/*.js\"",
     "start": "webpack-dev-server --mode development --open",
     "test": "jest"
   },
@@ -37,6 +36,11 @@
     "webpack": "^4.29.1",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.1.14"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "src/**/*.js": "npm run lint -- --quiet"
