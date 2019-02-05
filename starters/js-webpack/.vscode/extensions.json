@@ -6,5 +6,7 @@
     "msjsdiag.debugger-for-chrome",
     "EditorConfig.editorconfig",
     "dbaeumer.vscode-eslint",
+    "mrmlnc.vscode-scss",
+    "sibiraj-s.vscode-scss-formatter"
   ]
 }
