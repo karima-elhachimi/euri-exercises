@@ -8,6 +8,6 @@ export async function sumAsync(a, b) {
   });
 }
 
-export function substract(a, b) {
+export function subtract(a, b) {
   return a - b;
 }
