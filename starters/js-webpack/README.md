@@ -1,13 +1,10 @@
-# js-node-jest
+# js-webpack
 
-This is a starter project to get up and running with ES6+ and Babel quick and easy.
-
-More info about this setup can be found [here]( https://medium.freecodecamp.org/these-tools-will-help-you-write-clean-code-da4b5401f68e)
+This is a starter project to get up and running with webpack, ES6+ and Babel quick and easy.
 
 ## Prerequisites
 
 - [Node 8.x](https://nodejs.org/en/) or higher
-- [Yarn Package Manager](https://yarnpkg.com/en/) (an alternative to npm)
 - [Visual Studio Code](https://code.visualstudio.com/)
 
 ## Getting Started
@@ -16,14 +13,20 @@ More info about this setup can be found [here]( https://medium.freecodecamp.org/
 # install all dependencies
 $ npm install
 
-# run with auto watch & relaunch
+# compile, bundle and launch app in browser
 $ npm start
 
 # run linter
 $ npm run lint
 
-# build to dist folder
+# build to dist folder in development mode
 $ npm run build
+
+# build to dist folder in development mode
+$ npm run build:prod
+
+# view bundle size (dev & prod)
+$ npm run analyze
 
 # run tests
 $ npm test
@@ -34,8 +37,8 @@ $ npm test -- --watch
 
 ## Features
 
-- [x] Basic Node setup with ES6+ transpiling and bundeling
-- [x] Npm Scripts: serve, build, lint, test
+- [x] Full webpack setup with ES6+ transpiling and bundeling
+- [x] Npm Scripts: start, build, lint, test, analye
 - [x] VSCode recommended extensions and settings for auto save
 - [x] Unit Testing with Jest
 - [x] ES linting with ESLint and [AirBnb Style Guide](https://github.com/airbnb/javascript)

@@ -1,6 +1,18 @@
 const path = require('path');
 const webpack = require('webpack');
 
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+
+const packageJson = require('./package.json');
+
 // Constant with our paths
 const paths = {
   DIST: path.resolve(__dirname, 'dist'),
@@ -10,6 +22,8 @@ const paths = {
 
 const mainEntry = path.join(paths.JS, 'index.js');
 const polyfillsEntry = path.join(paths.SRC, 'polyfills.js');
+
+const allNodeModulesExcept = nodeModulesToInclude => new RegExp(`node_modules[\\/|\\\\](?!(${nodeModulesToInclude.join('|')})).*`, 'i');
 
 // Webpack configuration
 module.exports = (env, args) => {
@@ -45,13 +59,141 @@ module.exports = (env, args) => {
       // https://twitter.com/wSokra/status/969679223278505985
       runtimeChunk: true,
     },
-    plugins: [],
+    module: {
+      rules: [
+        {
+          test: /\.(js|jsx)$/,
+          exclude: allNodeModulesExcept([]),
+          loader: 'babel-loader',
+        },
+        {
+          test: /\.(sa|sc|c)ss$/,
+          use: [
+            !isProduction ? 'style-loader' : MiniCssExtractPlugin.loader,
+            'css-loader',
+            'sass-loader',
+          ],
+        },
+        {
+          test: /\.(png|jpg|gif|woff|woff2|eot|svg|ttf|ico|pdf)$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: 'static/media/[name].[hash:8].[ext]',
+              },
+            },
+          ],
+        },
+      ],
+    },
+    plugins: [
+      new CleanWebpackPlugin(paths.DIST),
+      new HtmlWebpackPlugin({
+        template: path.join(paths.SRC, 'index.html'),
+        meta: {
+          version: packageJson.version,
+        },
+      }),
+      new CopyWebpackPlugin([
+        {
+          from: `${paths.SRC}/robots.txt`,
+          to: paths.DIST,
+        },
+      ]),
+      new webpack.DefinePlugin({
+        VERSION: JSON.stringify(packageJson.version),
+      }),
+      new webpack.IgnorePlugin(/^(fsevents|terser)$/),
+
+      // show progress during build
+      new webpack.ProgressPlugin(),
+
+      // write stats file for later
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'disabled',
+        generateStatsFile: true,
+      }),
+
+      // show friendly build errors
+      new FriendlyErrorsWebpackPlugin(),
+    ],
   };
 
-  if (!isProduction) {
+  if (isProduction) {
+    // Add hash to filenames
+    config.output.filename = 'static/js/[name].[chunkhash:8].js';
+    config.output.chunkFilename = 'static/js/[name].[chunkhash:8].chunk.js';
+
+    config.optimization.minimizer = [
+      new TerserPlugin({
+        terserOptions: {
+          parse: {
+            // we want terser to parse ecma 8 code. However, we don't want it
+            // to apply any minfication steps that turns valid ecma 5 code
+            // into invalid ecma 5 code. This is why the 'compress' and 'output'
+            // sections only apply transformations that are ecma 5 safe
+            // https://github.com/facebook/create-react-app/pull/4234
+            ecma: 8,
+          },
+          compress: {
+            ecma: 5,
+            warnings: false,
+            // Disabled because of an issue with Uglify breaking seemingly valid code:
+            // https://github.com/facebook/create-react-app/issues/2376
+            // Pending further investigation:
+            // https://github.com/mishoo/UglifyJS2/issues/2011
+            comparisons: false,
+            // Disabled because of an issue with Terser breaking valid code:
+            // https://github.com/facebook/create-react-app/issues/5250
+            // Pending futher investigation:
+            // https://github.com/terser-js/terser/issues/120
+            inline: 2,
+          },
+          mangle: {
+            safari10: true,
+          },
+          output: {
+            ecma: 5,
+            comments: false,
+            // Turned on because emoji and regex is not minified properly using default
+            // https://github.com/facebook/create-react-app/issues/2488
+            ascii_only: true,
+          },
+        },
+        // Use multi-process parallel running to improve the build speed
+        // Default number of concurrent runs: os.cpus().length - 1
+        parallel: true,
+        // Enable file caching
+        cache: true,
+        sourceMap: true,
+      }),
+      new OptimizeCSSAssetsPlugin({
+        cssProcessorOptions: {
+          map: {
+            // `inline: false` forces the sourcemap to be output into a
+            // separate file
+            inline: false,
+            // `annotation: true` appends the sourceMappingURL to the end of
+            // the css file, helping the browser find the sourcemap
+            annotation: true,
+          },
+        },
+      }),
+    ];
+
+    config.plugins.push(new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: 'static/css/[name].[contenthash:8].css',
+      chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+    }));
+  } else {
+    config.plugins.push(new webpack.NamedModulesPlugin());
     config.plugins.push(new webpack.HotModuleReplacementPlugin());
 
     config.devServer = {
+      contentBase: paths.SRC,
       // Enable gzip compression of generated files.
       compress: true,
       // Enable hot reloading server. It will provide /sockjs-node/ endpoint
@@ -60,19 +202,6 @@ module.exports = (env, args) => {
       // in the Webpack development configuration. Note that only changes
       // to CSS are currently hot reloaded. JS changes will refresh the browser.
       hot: true,
-      // WebpackDevServer is noisy by default so we emit custom message instead
-      // by listening to the compiler events with `compiler.hooks[...].tap` calls above.
-      quiet: true,
-      // Enable/disable HTTPS
-      https: false,
-      // WebPackDev server serves physical files from
-      contentBase: './public',
-      path: paths.DIST,
-      // It is important to tell WebpackDevServer to use the same "root" path
-      // as we specified in the config. In development, we always serve from /.
-      publicPath: '/',
-      // By default files from `contentBase` will not trigger a page reload.
-      watchContentBase: true,
     };
   }
 
