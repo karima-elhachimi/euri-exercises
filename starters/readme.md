@@ -17,3 +17,14 @@ Home of the npm based starters
 - [x] node
 - [x] babel
 - [x] jest
+
+## js-webpack
+- [x] babel
+- [x] jest
+- [x] webpack
+
+## js-webpack-react
+- [x] babel
+- [x] jest
+- [x] webpack
+- [x] react
