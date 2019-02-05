@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: gray;
+}
+
+#root {
+  background: white;
+  padding: 5px;
+  h1 {
+    display: flex;
+    span {
+      margin: auto 10px;
+    }
+  }
+}
