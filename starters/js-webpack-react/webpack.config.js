@@ -88,7 +88,7 @@ module.exports = (env, args) => {
       ],
     },
     plugins: [
-      new CleanWebpackPlugin(paths.DIST),
+      new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         template: path.join(paths.SRC, 'index.html'),
         meta: {

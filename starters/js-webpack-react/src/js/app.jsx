@@ -1,5 +1,5 @@
 import React from 'react';
-import { hot } from 'react-hot-loader';
+import { hot } from 'react-hot-loader/root';
 import jsImage from '../favicon.png';
 
 export const App = () => (
@@ -9,4 +9,4 @@ export const App = () => (
   </h1>
 );
 
-export default hot(module)(React.memo(App));
+export default hot(App);
