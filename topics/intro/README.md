@@ -2,8 +2,16 @@
 
 ## Overview
 
-- [System Setup](./system-setup/README.md)
-- [Slides](./slides)
-  - The state of Javascript 2017
-  - Web Fundamentals
-  - GraphQL
+- [ ] Welcome
+- [ ] [System Setup](./system-setup/README.md)
+- [ ] The state of Javascript
+- [ ] HTTP
+- [ ] WebServices
+- [ ] REST
+
+### Slides
+
+```
+# To open slides
+$ npx reveal-md ./slides/overview.md
+```
