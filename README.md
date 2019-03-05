@@ -5,6 +5,7 @@
 - [x] [Agenda](./agenda.md)
 - [ ] [Team](./team.md) TODO
 - [x] [Licenses](./licenses.md)
+- [x] [Starters](./starters/readme.md)
 
 # Content
 
