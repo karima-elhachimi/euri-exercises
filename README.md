@@ -4,7 +4,7 @@
 
 - [Agenda](./agenda.md)
 - [Team](./team.md) TODO
-- [Licenses](./licenses.md) TODO
+- [Licenses](./licenses.md)
 
 # Content
 
