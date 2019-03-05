@@ -1,4 +1,4 @@
-# The Team
+# Team
 
 ## Bootcamp Manager
 
