@@ -53,7 +53,7 @@ node --version
 npm --version
 ```
 
-Usefull node utils
+Useful node utils
 
 ```
 npm install rimraf -g
@@ -89,15 +89,11 @@ The best editor for (Javascript) development: [Visual Studio Code](https://code.
 csinst visualstudiocode
 ```
 
-To make it even better install the following extenstions
+To make it even better install the following extensions
 
 - EditorConfig for VS Code
 - ESLint
-- npm Intellisense
-- Path Intellisense
 - Spelling and Grammer Checker
-- Prettier
-- C# for Visual Studio Code
 
 Alternative you can install Sublime or Atom.
 
