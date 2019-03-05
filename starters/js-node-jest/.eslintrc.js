@@ -13,9 +13,8 @@ module.exports = {
     jest: true,
   },
   rules: {
-    'linebreak-style': 'off', // Don't play nicely with Windows.
-
     'consistent-return': 'off', // Not our taste?
+    'linebreak-style': 'off', // Don't play nicely with Windows.
     'no-plusplus': 'off', // Not our taste?
   },
 };
