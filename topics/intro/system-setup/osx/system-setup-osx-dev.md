@@ -7,31 +7,83 @@ A fresh OSX isn't entirely ready for modern development, but all the tools you n
 System Preferences - Language & Region - Preferred language
 Set to English (if not already)
 
-### XCode
+## XCode
 
 A must have for any Mac development, even for just the command line tools
 
-Install from AppStore
-[https://itunes.apple.com/be/app/xcode/id497799835?mt=12
-](https://itunes.apple.com/be/app/xcode/id497799835?mt=12)
+* Install xcode from [AppStore](https://itunes.apple.com/be/app/xcode/id497799835?mt=12)
 
-## System Package Manager: Homebrew
+* Install command line utilities
+```bash
+xcode-select --install
+```
 
-Install Homebrew (http://brew.sh/)
-Copy and past into terminal:
+* Accept the license agreement
+```bash
+sudo xcodebuild -license accept
+```
 
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+## [Homebrew](http://brew.sh)
+The missing package manager for macOS (or Linux)
 
-    # Sample commands
-    brew list
-    brew search
-    brew update # upgrade brew itself
-    brew upgrade myApp
-    brew doctor
+``` bash
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" 
+```
 
-    # Install some other usefull utilities
-    brew install tree
-    brew install autojump # don't configure, it's done later
+### Sample commands
+    brew cleanup       -- uninstall unused and old versions of packages
+    brew commands      -- show a list of commands
+    brew config        -- show homebrew and system configuration
+    brew doctor        -- audits your installation for common issues
+    brew info          -- information about a formula
+    brew install       -- install a formula
+    brew list          -- list files in a formula or not-installed formulae
+    brew outdated      -- list formulae for which a newer version is available
+    brew pin           -- pin specified formulae
+    brew reinstall     -- install a formula anew; re-using its current options
+    brew search        -- search for a formula or cask (/regex/ or string)
+    brew tap           -- tap a new formula repository from GitHub, or list existing taps
+    brew uninstall     -- uninstall a formula
+    brew unpin         -- unpin specified formulae
+    brew untap         -- remove a tapped repository
+    brew update        -- fetch latest version of Homebrew and all formulae
+    brew upgrade       -- upgrade outdated formulae
+
+### Cask
+Cask is a Homebrew plugin that allow to install OSX applications distributed as binaries. Usually you get a dmg file and then drag-n-drop into /Applications - with Cask this process can be automated using the command line.
+
+```bash
+brew tap caskroom/cask
+```
+```bash
+# Just hold the ⌘-Key a bit longer to get a list of all active short cuts of the current application.
+brew cask install cheatsheet
+
+# A Quick Look plugin for source code with syntax highlighting
+brew cask install qlcolorcode
+
+# A Quick Look plugin for Markdown files
+brew cask install qlmarkdown
+
+# A Quick Look plugin for json files
+brew cask install quicklook-json
+```
+
+### Brew Cask update 
+brew-cask-upgrade is a command-line tool for upgrading every outdated app installed by Homebrew Cask.
+
+Homebrew Cask extends Homebrew and brings its elegance, simplicity, and speed to the installation and management of GUI macOS applications and large binaries alike.
+
+brew-cask-upgrade is an external command to replace the native upgrade by offering interactivity, an improved interface, and higher granularity of what to upgrade.
+
+```bash
+brew tap buo/cask-upgrade
+```
+```bash
+# Upgrade outdated apps
+brew cu
+```
+---
 
 ## NodeJS
 
