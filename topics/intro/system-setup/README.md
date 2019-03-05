@@ -27,7 +27,7 @@ And install Office 2016 (there is a Windows and a OSX version)
 
 ## Slack
 
-Our workgroup communication platform
+Our collaboration hub for work
 [https://slack.com/](https://slack.com/)
 
 > Sign-in with domain: euricom
@@ -37,14 +37,11 @@ Install your desktop app and sign-in
 
 [https://slack.com/downloads](https://slack.com/downloads)
 
-Usefull channels (you have to add them)
+Useful channels (you have to add them)
 
+- `general`
 - `js-frontend`
 - `js-frontend-react`
-- `js-frontend-angular`
-- `js-frontend-vuejs`
-- `js-frontend`
-- `js-frontend-node`
 
 ### Google Chrome
 
