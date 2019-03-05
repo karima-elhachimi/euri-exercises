@@ -3,11 +3,12 @@
 # General
 
 - [Agenda](./agenda.md)
-- [Team](./team.md)
+- [Team](./team.md) TODO
+- [Licenses](./licenses.md) TODO
 
 # Content
 
-- [Introduction](./topics/intro/README.md)
-- [Javascript](./topics/javascript/README.md)
-- [Styling & Layout](./topics/styling-layout/README.md)
-- [React](./topics/react/README.md)
+- [Introduction](./topics/intro/README.md) TODO
+- [Javascript](./topics/javascript/README.md) TODO
+- [Styling & Layout](./topics/styling-layout/README.md) TODO
+- [React](./topics/react/README.md) TODO
