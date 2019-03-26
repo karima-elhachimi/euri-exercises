@@ -4,7 +4,8 @@ exports[`App it renders as expected 1`] = `
 <h1>
   <img
     alt="javascript"
-    src="favicon.png"
+    height="100"
+    src="public/images/js-logo.png"
   />
   <span>
     Hello from ES2015+

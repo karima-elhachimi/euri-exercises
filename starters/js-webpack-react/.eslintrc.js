@@ -16,11 +16,12 @@ module.exports = {
   },
   rules: {
     'linebreak-style': 'off', // Don't play nicely with Windows.
-
     'consistent-return': 'off', // Not our taste?
     'no-plusplus': 'off', // Not our taste?
     'import/no-named-as-default': 'off',
     'react/forbid-prop-types': 'off',
-    'jest/no-focused-tests': 'error'
+    'jest/no-focused-tests': 'error',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn'
   },
 };
