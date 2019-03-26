@@ -11,26 +11,63 @@ Set to English (if not already)
 
 A must have for any Mac development, even for just the command line tools
 
-* Install xcode from [AppStore](https://itunes.apple.com/be/app/xcode/id497799835?mt=12)
+- Install xcode from [AppStore](https://itunes.apple.com/be/app/xcode/id497799835?mt=12)
 
-* Install command line utilities
+- Install command line utilities
+
 ```bash
 xcode-select --install
 ```
 
-* Accept the license agreement
+- Accept the license agreement
+
 ```bash
 sudo xcodebuild -license accept
 ```
 
 ## [Homebrew](http://brew.sh)
+
 The missing package manager for macOS (or Linux)
 
-``` bash
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" 
+```bash
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+
+### Install bash completion
+
+```bash
+brew install bash-completion
+```
+
+After the installation completes verify your ~/.bashrc and ~/.bash_profile
+
+### ~./bashrc
+
+```bash
+vi ~/.bashrc
+
+## content
+[ -n "$PS1" ] && source ~/.bash_profile;
+
+## i = insert, esc :wq to save
+```
+
+### ~./bash_profile
+
+```bash
+vi ~/.bash_profile
+
+## content
+# Add tab completion for many Bash commands
+if which brew &> /dev/null && [ -f "$(brew --prefix)/share/bash-completion/bash_completion" ]; then
+	source "$(brew --prefix)/share/bash-completion/bash_completion";
+elif [ -f /etc/bash_completion ]; then
+	source /etc/bash_completion;
+fi;
 ```
 
 ### Sample commands
+
     brew cleanup       -- uninstall unused and old versions of packages
     brew commands      -- show a list of commands
     brew config        -- show homebrew and system configuration
@@ -50,11 +87,13 @@ The missing package manager for macOS (or Linux)
     brew upgrade       -- upgrade outdated formulae
 
 ### Cask
+
 Cask is a Homebrew plugin that allow to install OSX applications distributed as binaries. Usually you get a dmg file and then drag-n-drop into /Applications - with Cask this process can be automated using the command line.
 
 ```bash
 brew tap caskroom/cask
 ```
+
 ```bash
 # Just hold the ⌘-Key a bit longer to get a list of all active short cuts of the current application.
 brew cask install cheatsheet
@@ -69,7 +108,8 @@ brew cask install qlmarkdown
 brew cask install quicklook-json
 ```
 
-### Brew Cask update 
+### Brew Cask update
+
 brew-cask-upgrade is a command-line tool for upgrading every outdated app installed by Homebrew Cask.
 
 Homebrew Cask extends Homebrew and brings its elegance, simplicity, and speed to the installation and management of GUI macOS applications and large binaries alike.
@@ -79,37 +119,85 @@ brew-cask-upgrade is an external command to replace the native upgrade by offeri
 ```bash
 brew tap buo/cask-upgrade
 ```
+
 ```bash
 # Upgrade outdated apps
 brew cu
 ```
----
 
 ## NodeJS
 
-A bunch of tools are powered by Node and installed via npm. This applies to you even if you don't care about Node development. If you want to install tools for React, Azure, TypeScript, or Cordova, you'll need this.
+A bunch of tools are powered by Node and installed via npm. This applies to you even if you don't care about Node development. If you want to install tools for modern web application development you will need this.
 
-Install latest version from <br> [https://nodejs.org/en/](https://nodejs.org/en/)
+Although you could install NodeJS directly following the steps outlined on the [NodeJS](https://nodejs.org/en/) site, we suggest you to use a version manager for Node.
 
-Changing ownership of usr/local. This will benefit you when using node’s package manager, and will mean you won’t have to use sudo when installing into /usr/local:
+For MacOs the following version managers exist:
 
-    sudo chown -R $USER /usr/local
+- [nvm](https://github.com/creationix/nvm)
+- [n](https://github.com/tj/n)
 
-To switch to multiple NodeJS versions
+I prefer nvm instead of n because of the global package isolation, but some people tend to disagree ;), so from here on we will follow this path
 
 ```bash
-# install
-npm install n -g
-
-# use
-n 6.9.4
-n
-    node/6.2.0
-    node/6.5.0
-    node/6.7.0
-  ο node/6.9.4
-    node/7.4.0
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
 ```
+
+After the installation completes verify your ~/.bash_profile
+
+### ~./bash_profile
+
+```bash
+vi ~/.bash_profile
+
+## content
+# Add tab completion for many Bash commands
+if which brew &> /dev/null && [ -f "$(brew --prefix)/share/bash-completion/bash_completion" ]; then
+	source "$(brew --prefix)/share/bash-completion/bash_completion";
+elif [ -f /etc/bash_completion ]; then
+	source /etc/bash_completion;
+fi;
+
+# Necessary for nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+```
+
+### Verify installation
+
+```bash
+command -v nvm
+# this should print nvm
+```
+
+### Install latest lts
+
+```bash
+nvm install lts/dubnium
+```
+
+### Sample commands
+
+    --version           -- print out the latest released version of nvm
+    alias               -- show or set aliases
+    current             -- list installed versions
+    deactivate          -- undo effects of `nvm` on current shell
+    exec                -- run <command> on <version>. Uses .nvmrc if available
+    help                -- show help
+    install             -- download and install a version in <node|iojs|node version number>
+    ls                  -- list installed versions or versions matching a given description
+    ls-remote           -- list remote versions available for install
+    reinstall-packages  -- reinstall global `npm` packages contained in <version> to current version
+    run                 -- run `node` on <version> with <args> as arguments. Uses .nvmrc if available
+    unalias             -- deletes an alias
+    uninstall           -- uninstall a version
+    unload              -- unload `nvm` from shell
+    use                 -- modify PATH to use <version>. Uses .nvmrc if available
+    version             -- resolve the given description to a single local version
+    version-remote      -- resolve the given description to a single remote version
+    which               -- display path to installed node version. Uses .nvmrc if available
+
+---
 
 ## Better terminal window
 
