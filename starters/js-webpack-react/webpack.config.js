@@ -196,6 +196,9 @@ module.exports = (env, args) => {
       contentBase: paths.SRC,
       // Enable gzip compression of generated files.
       compress: true,
+      // When using the HTML5 History API, the index.html page will likely have to be served
+      // in place of any 404 responses.
+      historyApiFallback: true,
       // Enable hot reloading server. It will provide /sockjs-node/ endpoint
       // for the WebpackDevServer client so it can learn when the files were
       // updated. The WebpackDevServer client is included as an entry point
