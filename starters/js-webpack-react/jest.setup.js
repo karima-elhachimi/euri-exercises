@@ -1,6 +1,5 @@
-import 'jest-extended'; // eslint-disable-line import/no-extraneous-dependencies
+/* eslint-disable import/no-extraneous-dependencies */
+import 'jest-extended';
 
-import { configure } from 'enzyme'; // eslint-disable-line import/no-extraneous-dependencies
-import Adapter from 'enzyme-adapter-react-16'; // eslint-disable-line import/no-extraneous-dependencies
-
-configure({ adapter: new Adapter() });
+import 'jest-dom/extend-expect';
+import 'react-testing-library/cleanup-after-each';

@@ -5,8 +5,8 @@ import jsImage from '../public/images/js-logo.png';
 export function App() {
   return (
     <h1>
-      <img src={jsImage} alt="javascript" height="100" />
-      <span>Hello from ES2015+</span>
+      <img src={jsImage} alt="JS Logo" height="100" />
+      <span data-testid="welcome-message">Hello from ES2015+</span>
     </h1>
   );
 }
