@@ -7,6 +7,7 @@
     "EditorConfig.editorconfig",
     "dbaeumer.vscode-eslint",
     "mrmlnc.vscode-scss",
-    "sibiraj-s.vscode-scss-formatter"
+    "sibiraj-s.vscode-scss-formatter",
+    "christian-kohler.path-intellisense"
   ]
 }
