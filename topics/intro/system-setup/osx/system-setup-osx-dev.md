@@ -197,11 +197,9 @@ nvm install lts/dubnium
     version-remote      -- resolve the given description to a single remote version
     which               -- display path to installed node version. Uses .nvmrc if available
 
----
+## Terminal
 
-## Better terminal window
-
-iterm2, a must have for your development.
+MacOs already has a pretty decent terminal built-in but if you want to use an alternative try ITerm2
 
     brew cask install iterm2
 
@@ -215,7 +213,39 @@ brew install git
 
 # configure credential manager
 git config --global credential.helper cache
+
+# configure user name
+git config --global user.name "Mona Lisa"
+
+# configure commit email
+git config --global user.email "email@example.com"
 ```
+
+### Sample commands
+
+    add             -- add file contents to the index
+    bisect          -- find by binary search the change that introduced a bug
+    branch          -- list, create, or delete branches
+    checkout        -- checkout a branch or paths to the working tree
+    clone           -- clone a repository into a new directory
+    commit          -- record changes to the repository
+    diff            -- show changes between commits, commit and working tree, etc
+    fetch           -- download objects and refs from another repository
+    grep            -- print lines matching a pattern
+    init            -- create an empty Git repository or reinitialize an existing one
+    log             -- show commit logs
+    merge           -- join two or more development histories together
+    mv              -- move or rename a file, a directory, or a symlink
+    pull            -- fetch from and merge with another repository or a local branch
+    push            -- update remote refs along with associated objects
+    rebase          -- forward-port local commits to the updated upstream head
+    reset           -- reset current HEAD to the specified state
+    rm              -- remove files from the working tree and from the index
+    show            -- show various types of objects
+    status          -- show the working tree status
+    tag             -- create, list, delete or verify a tag object signed with GPG
+
+### GUI
 
 If the git command line gets to complicated you can install the following tools
 
@@ -223,6 +253,8 @@ If the git command line gets to complicated you can install the following tools
 brew cask install gitkraken   # preferred
 brew cask install sourcetree
 ```
+
+---
 
 ## Code Editor: VS Code
 
