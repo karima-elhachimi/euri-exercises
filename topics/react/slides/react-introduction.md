@@ -489,62 +489,146 @@ Everything between `{ .... }` is JavaScript code.
 <!-- prettier-ignore -->
 ***
 
-## Conditional rendering (<==HERE==>)
+## Conditional rendering
 
-ternary operator
-
-```jsx
-const template = <p>User: {user.name ? user.name : 'no-name'}</p>;
-```
-
-logical and operator
-
-```jsx
-const template = (
-	{user.age && user.age >= 18 && <p>Age: user.age</p>}
-)
-```
-
-<!-- prettier-ignore -->
-***
-
-### Conditional rendering
-
-switch
-
-```jsx
-const template = notification({ text: 'hello', state: 'info' });
-
-function notification({ text, state }) {
-  switch (state) {
-    case 'info':
-      return <Info text={text} />;
-    case 'warning':
-      return <Warning text={text} />;
+```js
+{
+  name: 'John Doe',
+  age: 25,
+  address: {
+    street: 'Main Street 25',
   }
-  return null;
 }
 ```
 
+### Logical OR Operator
+
+```jsx
+const template = (
+  <p>
+    User:
+    {user.name || 'unnamed'}
+  </p>
+);
+```
+
 <!-- prettier-ignore -->
 ***
 
-### Conditional rendering
-
-inline switch (with iife)
+### Logical AND Operator
 
 ```jsx
+const template = (
+  <p>
+    Street:
+    {user.address && user.address.street}
+  </p>
+);
+```
+
+<!-- prettier-ignore -->
+***
+
+### Ternary Operator
+
+```jsx
+const template = (
+  <p>
+    Minor:
+    {user.age && user.age < 18 ? 'yes' : 'no'}
+  </p>
+);
+```
+
+<!-- prettier-ignore -->
+***
+
+### Switch case Operator
+
+#### Inline (with iife)
+
+```jsx
+const state = 'info';
+const text = 'This is an alert';
+
 const template = (
   <div>
     {(function() {
       switch (state) {
         case 'info':
-          return <Info text={text} />;
+          return (
+            <div className="alert alert-info" role="alert">
+              {text}
+            </div>
+          );
         case 'warning':
-          return <Warning text={text} />;
+          return (
+            <div className="alert alert-warning" role="alert">
+              {text}
+            </div>
+          );
+        default:
+          return null;
       }
-      return null;
     })()}
+  </div>
+);
+```
+
+<!-- prettier-ignore -->
+***
+
+#### Function
+
+```jsx
+const state = 'info';
+const text = 'This is an alert';
+
+function notification() {
+  switch (state) {
+    case 'info':
+      return (
+        <div className="alert alert-info" role="alert">
+          {text}
+        </div>
+      );
+    case 'warning':
+      return (
+        <div className="alert alert-warning" role="alert">
+          {text}
+        </div>
+      );
+    default:
+      return null;
+  }
+}
+
+const template = <div>{notification()}</div>;
+```
+
+<!-- prettier-ignore -->
+***
+
+#### Object map
+
+```jsx
+const state = 'info';
+const text = 'This is an alert';
+
+const template = (
+  <div>
+    {{
+      info: (
+        <div className="alert alert-info" role="alert">
+          {text}
+        </div>
+      ),
+      warning: (
+        <div className="alert alert-warning" role="alert">
+          {text}
+        </div>
+      )
+    }[state] || null}
   </div>
 );
 ```
@@ -556,7 +640,7 @@ need more?
 <!-- prettier-ignore -->
 ***
 
-## Arrays
+## Arrays (<==HERE==>)
 
 Render a Array
 
