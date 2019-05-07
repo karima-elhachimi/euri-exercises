@@ -246,7 +246,7 @@ npm run build:prod
 
 ---
 
-# CreateReactApp
+# Create React App
 
 > Set up a modern web app by running one command
 
@@ -331,7 +331,7 @@ render(template, document.getElementById('root'));
 <!-- prettier-ignore -->
 ***
 
-## CreateElement
+## Create Element
 
 This
 
@@ -420,26 +420,27 @@ const template = (
 <!-- prettier-ignore -->
 ***
 
-## Embedding Expressions (<---HERE>)
+## Expressions
 
 ```jsx
-const name = 'peter';
+const fullName = 'John Doe';
 const url = 'https://placeimg.com/200/200/animals';
-const imageWidth = 500;
-const customer = {
+const euricom = {
   name: 'euricom',
-  location: 'mechelen',
+  location: 'mechelen'
 };
+
 function formatCustomer(customer) {
-    return `${customer.name}: ${customer.location}`;
+  return `${customer.name}: ${customer.location}`;
 }
+
 const template = (
   <div>
-    <p>{user}</p>
-    <p>{customer.name}</p>
-    <p>{user.toUpperCase()}</p>
-    <p>{formatCustomer(customer)</p>
-    <img src={url} />
+    <p>{fullName}</p>
+    <p>{euricom.name}</p>
+    <p>{fullName.toUpperCase()}</p>
+    <p>{formatCustomer(euricom)}</p>
+    <img alt="animal" src={url} />
   </div>
 );
 ```
@@ -451,39 +452,44 @@ Everything between `{ .... }` is JavaScript code.
 
 ## Not everything is rendered
 
-Booleans, Null, and Undefined Are Ignored
+### Booleans, Null, and Undefined Are Ignored
 
 ```jsx
 <div />
-<div></div>
 <div>{false}</div>
 <div>{null}</div>
 <div>{undefined}</div>
 <div>{true}</div>
 ```
 
-A comment
+<!-- prettier-ignore -->
+***
+
+### Comments
 
 ```jsx
-<!-- This wont work -->
-{ /* Single line: Single line */ }
-{ /* Multi line: this will work also :)
+{
+  /* Single line: Single line */
+}
+{
+  /* Multi line: this will work also :)
     <div>
 
     </div>
- */}
+ */
+}
 ```
 
-An object can't be rendered
+### Objects can't be rendered
 
 ```jsx
-<p>customer</p>    { /* this throws an error */ }
+<p>euricom</p>  { /* this throws an error */ }
 ```
 
 <!-- prettier-ignore -->
 ***
 
-## Conditional rendering
+## Conditional rendering (<==HERE==>)
 
 ternary operator
 
