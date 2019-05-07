@@ -4,10 +4,17 @@ import jsImage from '../public/images/js-logo.png';
 
 export function App() {
   return (
-    <h1>
-      <img src={jsImage} alt="JS Logo" height="100" />
-      <span data-testid="welcome-message">Hello from ES2015+</span>
-    </h1>
+    <>
+      <h1>
+        <img src={jsImage} alt="JS Logo" height="100" />
+        <span data-testid="welcome-message">Hello from ES2015+</span>
+      </h1>
+      <div className="container-fluid">
+        <button type="button" className="btn btn-primary">
+          Test
+        </button>
+      </div>
+    </>
   );
 }
 
