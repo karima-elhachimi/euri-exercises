@@ -121,7 +121,7 @@ brew tap buo/cask-upgrade
 ```
 
 ```bash
-# Upgrade outdated apps
+# Update outdated casks
 brew cu
 ```
 
@@ -224,14 +224,12 @@ git config --global user.email "email@example.com"
 ### Sample commands
 
     add             -- add file contents to the index
-    bisect          -- find by binary search the change that introduced a bug
     branch          -- list, create, or delete branches
     checkout        -- checkout a branch or paths to the working tree
     clone           -- clone a repository into a new directory
     commit          -- record changes to the repository
     diff            -- show changes between commits, commit and working tree, etc
     fetch           -- download objects and refs from another repository
-    grep            -- print lines matching a pattern
     init            -- create an empty Git repository or reinitialize an existing one
     log             -- show commit logs
     merge           -- join two or more development histories together
@@ -245,33 +243,41 @@ git config --global user.email "email@example.com"
     status          -- show the working tree status
     tag             -- create, list, delete or verify a tag object signed with GPG
 
-### GUI
+### Diff/Merge tool
 
-If the git command line gets to complicated you can install the following tools
+I personally recommend [p4merge](https://www.perforce.com/downloads/visual-merge-tool) as merge tool, but you could also use BeyondCompare see below for more info
 
 ```bash
-brew cask install gitkraken   # preferred
-brew cask install sourcetree
+# ~/.gitconfig
+[merge]
+	tool = p4merge
+[mergetool "p4merge"]
+  	keepTemporaries = false
+	prompt = false
+	trustExitCode = false
 ```
 
----
+### GUI
+
+If the git command line gets too complicated you can install the following tools
+
+- [Gitkraken](https://www.gitkraken.com/)
+- [SourceTree](https://www.sourcetreeapp.com/)
 
 ## Code Editor: VS Code
 
 The best editor for (Javascript) development: [Visual Studio Code](https://code.visualstudio.com/)
 
-```
-brew cask install visual-studio-code
-```
+Although there is a cask for visual studio code, i recommend against it. As all autoupdating apps should never be installed using brew, as they would be outdated.
 
 To make it even better install the following extenstions
 
 - EditorConfig for VS Code
 - ESLint
-- npm Intellisense
 - Path Intellisense
 - Spelling and Grammer Checker
-- Prettier
+
+---
 
 ## Marked2 (Markdown Viewer)
 
@@ -299,44 +305,10 @@ Setup SourceTree for Beyond Compare:
 > License: see license file
 
 ## Other usefull utilities
-
-First you need to pre-install 'caskroom' (see above)
-
-    brew tap caskroom/cask
-
-Then you can
-
-    brew cask install grandperspective
     brew cask install spectacle
-    brew cask install appcleaner
-    brew cask install beyond-compare  (license required)
 
     ## Always good to perform cleanup at the end
     brew cleanup
-
-And
-
-- http://pilotmoon.com/popclip/ (easy copy/past)
-- http://marked2app.com/ (markdown)
-- http://cord.sourceforge.net/ (remote desktop)
-- https://cyberduck.io/ (FTP, SFTP, WebDav, ...)
-- http://www.videolan.org (the video player)
-
-## Dot files
-
-Auto configure:
-
-    cd ./bootstrap
-    ./bootstrap.sh
-
-More utilities:
-See https://github.com/mathiasbynens/dotfiles
-See https://github.com/KingScooty/dotfiles
-
-## Quick Look
-
-Copy \*.qlgenerator to /Library/QuickLook or ~/Library/QuickLook
-And restart finder
 
 ## Some short-cuts & tips
 
@@ -362,7 +334,7 @@ Short-cuts
 Tips
 
 - Us keyboard 'US-international' for all those french characters. Show 'Character viewer' and/or 'Keyboard Viewer' for other symbols.
-- When you have a file open (sublime, photoshop, word), you can drap the icon to move the file.
+- When you have a file open (sublime, photoshop, word), you can drag the icon to move the file.
 - When you have a file open (sublime, photoshop, word), you can cmd + click the filename in the title to view its location.
 - When **Cmd + Tab** switch between application, press **Q** to quit app, **H** to hide it.
 - The spotlight search has a calculator build in.
@@ -402,5 +374,3 @@ More: http://www.danrodney.com/mac/index.html
 
     # Show the ~/Library folder
     chflags nohidden ~/Library
-
-More info: https://github.com/mathiasbynens/dotfiles/blob/master/.osx

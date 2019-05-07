@@ -3,7 +3,7 @@
 ## Overview
 
 - [ ] Welcome
-- [ ] [System Setup](./system-setup/README.md)
+- [x] [System Setup](./system-setup/README.md)
 - [ ] The state of Javascript
 - [ ] HTTP
 - [ ] WebServices
