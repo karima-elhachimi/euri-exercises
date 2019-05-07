@@ -23,27 +23,19 @@ Copyright (c) 2018-2019 Euricom nv.
     box-shadow:none;
 }
 .reveal h1 {
-    font-size: 3.0em;
+    font-size: 2.5em;
 }
 .reveal h2 {
-    font-size: 2.00em;
+    font-size: 2em;
 }
 .reveal h3 {
-    font-size: 1.00em;
+    font-size: 1em;
 }
 .reveal p {
-    font-size: 70%;
+    font-size: 0.7em;
 }
 .reveal blockquote {
-    font-size: 100%;
-}
-.reveal pre code {
-    display: block;
-    padding: 5px;
-    overflow: auto;
-    max-height: 800px;
-    word-wrap: normal;
-    font-size: 100%;
+    font-size: 1em;
 }
 </style>
 
@@ -100,35 +92,53 @@ Copyright (c) 2018-2019 Euricom nv.
 
 ## Getting started
 
-index.html
-
-```html
-<body>
-  <!-- entry point of the app -->
-  <div id="root"></div>
-  <!-- default bundle, create by webpack -->
-  <script src="dist/main.js"></script>
-</body>
+```bash
+npm init
 ```
+
+src/public/index.html
+
+<!-- prettier-ignore -->
+```html
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport"content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>My first react app</title>
+  </head>
+
+  <body>
+    <noscript>
+      <h1>This application requires Javascript</h1>
+    </noscript>
+    <div id="root"></div>
+  </body>
+</html>
+```
+<!-- prettier-ignore -->
+***
 
 Install dependencies
 
 ```bash
-yarn install react react-dom
+npm i --save react react-dom
 ```
 
-index.js
+src/js/index.jsx
 
 ```jsx
-// import the dependenciess
-import React from "react";
-import ReactDOM from "react-dom";
+// import dependencies
+import React from `react`;
+import { render } from 'react-dom';
 
-// create your App component
-const App = () => <h1>My React App</h1>;
+// create your app component
+function App() {
+  return <h1>My react app</h1>;
+}
 
-// render the app
-ReactDOM.render(<App />, document.getElementById("root"));
+// mount the react app
+render(<App />, document.getElementById('root'));
 ```
 
 <!-- prettier-ignore -->
@@ -139,7 +149,7 @@ ReactDOM.render(<App />, document.getElementById("root"));
 Install dependencies
 
 ```bash
-yarn install @babel/core @babel/preset-env @babel/preset-react --dev
+ npm i --save-dev @babel/core @babel/preset-env @babel/preset-react
 ```
 
 .babelrc
@@ -158,29 +168,46 @@ yarn install @babel/core @babel/preset-env @babel/preset-react --dev
 Install
 
 ```bash
-yarn install webpack webpack-cli babel-loader webpack-dev-server --dev
+npm i --save-dev webpack webpack-cli babel-loader webpack-dev-server html-webpack-plugin
 ```
 
 webpack.conf.js
 
 ```js
-module.exports = {
-  mode: "development",
-  output: {
-    publicPath: "dist"
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/,
-        loader: "babel-loader",
-        exclude: /node_modules/
-      }
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+// Constant with our paths
+const paths = {
+  DIST: path.resolve(__dirname, "dist"),
+  SRC: path.resolve(__dirname, "src"),
+};
+
+const mainEntry = path.join(paths.SRC, "/js/index.jsx");
+
+// Webpack configuration
+module.exports = (env, args) => {
+  const config = {
+    entry: [mainEntry],
+    resolve: {
+      extensions: [".js", ".jsx"]
+    },
+    module: {
+      rules: [
+        {
+          test: /\.(js|jsx)$/,
+          loader: "babel-loader"
+        }
+      ]
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: path.join(paths.SRC, "/public/index.html")
+      })
     ]
-  },
-  resolve: {
-    extensions: [".js", ".jsx"]
-  }
+  };
+
+  return config;
 };
 ```
 
@@ -192,10 +219,12 @@ module.exports = {
 package.json
 
 ```json
-"scripts": {
-    "serve": "webpack-dev-server --open --inline",
-    "build": "webpack",
-    "build:prod": "webpack -p",
+{
+  "scripts": {
+    "build": "webpack --mode development",
+    "build:prod": "NODE_ENV=production webpack --mode production",
+    "start": "webpack-dev-server --mode development --open"
+  }
 }
 ```
 
@@ -203,13 +232,13 @@ commands
 
 ```bash
 # run in development
-yarn serve
+npm start
 
 # build (development)
-yarn build
+npm run build
 
 # build for production
-yarn build:prod
+npm run build:prod
 ```
 
 ---
@@ -224,11 +253,8 @@ yarn build:prod
 ## Setup
 
 ```bash
-# install globally
-npm install create-react-app -g
-
 # create app
-create-react-app my-app
+npx create-react-app my-app
 
 # Run it
 cd my-app
@@ -267,18 +293,18 @@ Commands
 
 ```bash
 # startup web app
-yarn test
+yarn start
 
 # build for production
 yarn build
 
-# run  unit tests
-yarn lint
+# run unit tests
+yarn test
 ```
 
 ---
 
-# JSX
+# JSX (<---HERE>)
 
 > Writing HTML with JSX
 
