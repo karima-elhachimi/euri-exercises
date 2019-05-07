@@ -640,35 +640,35 @@ need more?
 <!-- prettier-ignore -->
 ***
 
-## Arrays (<==HERE==>)
-
-Render a Array
+## Arrays
 
 ```jsx
 const names = ['john', 'peter', 'bob'];
 const template = (
-	names: { names }
-)
+  <p>
+    names:
+    {names}
+  </p>
+);
 ```
 
-Ouput
-
-```
-names: johnpeterbob
-```
-
-Identical to
+Is identical to
 
 ```jsx
 const template = (
-	names: {'john'}{'peter'}{'bob'}
-)
+  <p>
+    names:
+    {'john'}
+    {'peter'}
+    {'bob'}
+  </p>
+);
 ```
 
 <!-- prettier-ignore -->
 ***
 
-### Arrays
+### In JSX
 
 You can render JSX in JSX
 
@@ -681,7 +681,7 @@ const template = (
 );
 ```
 
-Ouptut
+Output
 
 ```html
 <ul>
@@ -693,67 +693,43 @@ Ouptut
 <!-- prettier-ignore -->
 ***
 
-### Arrays
-
-create array of jsx (reactElements)
-
-```jsx
-const names = ['john', 'peter', 'bob'];
-const listItems = names.map(name => {
-  return <li>{name}</li>;
-});
-```
-
-<!-- prettier-ignore -->
-```jsx
-const template = (
-  <ul>{listItems}</ul>
-)
-```
-
-or
+### Create array of jsx (react Elements)
 
 ```jsx
 const names = ['john', 'peter', 'bob'];
 const template = (
   <ul>
-    {names.map(name => {
-      return <li>{name}</li>;
-    })}
+    {names.map(name => (
+      <li>{name}</li>
+    ))}
   </ul>
 );
 ```
 
-<!-- prettier-ignore -->
-***
-
-### Arrays
-
-Oops, we have an error
+Generates following warning
 
 <img src="./images/react-array-errror.png">
 
-fix
+<!-- prettier-ignore -->
+***
+
+#### Fix
 
 ```jsx
 const names = ['john', 'peter', 'bob'];
 const template = (
   <ul>
-    {names.map(((name, index) => {
-      return <li key={index}>{name}</li>;
-    })}
+    {names.map((name, index) => (
+      <li key={index}>{name}</li>
+    ))}
   </ul>
 );
 ```
 
-<!-- prettier-ignore -->
-***
+> Try to avoid map index when possible!
 
-### Arrays
+#### Better
 
-Typical use
-
-<!-- prettier-ignore -->
 ```jsx
 const users = [
     { id: 1, name: 'john' }
@@ -767,14 +743,12 @@ const template = (
 );
 ```
 
-> Try to avoid map index when possible!
-
 [More info](https://reactjs.org/docs/lists-and-keys.html#keys)
 
 <!-- prettier-ignore -->
 ***
 
-## JSX vs DOM elements
+## JSX vs DOM elements (<==HERE==>)
 
 ```jsx
 const template = (
