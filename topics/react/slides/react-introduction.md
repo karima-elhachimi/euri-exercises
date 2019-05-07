@@ -1,6 +1,6 @@
 ---
 title: React Introduction
-transition: "fade"
+transition: fade
 verticalSeparator: "^\\*\\*\\*"
 ---
 
@@ -98,13 +98,15 @@ npm init
 
 src/public/index.html
 
-<!-- prettier-ignore -->
 ```html
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport"content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <title>My first react app</title>
   </head>
 
@@ -116,6 +118,7 @@ src/public/index.html
   </body>
 </html>
 ```
+
 <!-- prettier-ignore -->
 ***
 
@@ -129,7 +132,7 @@ src/js/index.jsx
 
 ```jsx
 // import dependencies
-import React from `react`;
+import React from 'react';
 import { render } from 'react-dom';
 
 // create your app component
@@ -174,35 +177,35 @@ npm i --save-dev webpack webpack-cli babel-loader webpack-dev-server html-webpac
 webpack.conf.js
 
 ```js
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // Constant with our paths
 const paths = {
-  DIST: path.resolve(__dirname, "dist"),
-  SRC: path.resolve(__dirname, "src"),
+  DIST: path.resolve(__dirname, 'dist'),
+  SRC: path.resolve(__dirname, 'src')
 };
 
-const mainEntry = path.join(paths.SRC, "/js/index.jsx");
+const mainEntry = path.join(paths.SRC, '/js/index.jsx');
 
 // Webpack configuration
 module.exports = (env, args) => {
   const config = {
     entry: [mainEntry],
     resolve: {
-      extensions: [".js", ".jsx"]
+      extensions: ['.js', '.jsx']
     },
     module: {
       rules: [
         {
           test: /\.(js|jsx)$/,
-          loader: "babel-loader"
+          loader: 'babel-loader'
         }
       ]
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: path.join(paths.SRC, "/public/index.html")
+        template: path.join(paths.SRC, '/public/index.html')
       })
     ]
   };
@@ -304,30 +307,25 @@ yarn test
 
 ---
 
-# JSX (<---HERE>)
+# JSX
 
 > Writing HTML with JSX
 
 <!-- prettier-ignore -->
 ***
 
-## JSX
-
-### It's Javascript ++
+## It's Javascript ++
 
 ```jsx
-// import the dependenciess
-import React from "react";
-import ReactDOM from "react-dom";
+// import the dependencies
+import React from 'react';
+import { render } from 'react-dom';
 
-// create a template with JSX
-const template = <h1>My First React App</h1>;
+// Create a template with JSX
+const template = <h1>My first react app</h1>;
 
-// get element '<div id="root"></div>'
-const appRoot = document.getElementById("app");
-
-// render (bootstrap) the app
-ReactDom.render(template, appRoot);
+// mount the app
+render(template, document.getElementById('root'));
 ```
 
 <!-- prettier-ignore -->
@@ -337,10 +335,9 @@ ReactDom.render(template, appRoot);
 
 This
 
-<!-- prettier-ignore -->
 ```jsx
-const template = <h1>My Title</h1>;
-ReactDom.render(template, document.getElementById('app'));
+const template = <h1>My First React App</h1>;
+render(template, document.getElementById('root'));
 ```
 
 is translated into
@@ -348,14 +345,14 @@ is translated into
 <!-- prettier-ignore -->
 ```js
 var template = React.createElement(
-  'h1',
+  "h1",
   null,
-  'My First React App'
+  "My First React App"
 );
-ReactDom.render(template, document.getElementById('app'));
+ReactDom.render(template, document.getElementById("root"));
 ```
 
-See also [Babel REPL](https://babeljs.io/repl/#?babili=false&browsers=&build=&builtIns=false&spec=false&loose=false&code_lz=MYewdgzgLgBFCmBbADgGwIYJgXhgCgCgYYAeACwEYA-I4mAWQE8YAxASwCdoYAledYLACCyZLRIB6SjQCUAbgJ8BUACIhEAOg7wwAE3gc8CFBgQAaGLpDAAroh1QNAc3hQAoqiQOAQowCSungA5OiiQTLyQA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&sourceType=module&lineWrap=true&presets=es2015%2Creact%2Cstage-2&prettier=false&targets=&version=6.26.0&envVersion=)
+See also [Babel REPL](https://babeljs.io/repl#?babili=false&browsers=&build=&builtIns=false&spec=false&loose=false&code_lz=MYewdgzgLgBFCmBbADgGwIYJgXhgHgAsBGAPgFkBPGAMQEsAnaGAJXnWFgEFlk8B6YiQDcAKHrwwAE3j0AFAhQYEAGhiSQwAK6IJUAHQBzeFACiqJLoBCFAJKTZAcnogQUBwEp3QoA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=es2015%2Creact%2Cstage-2&prettier=false&targets=&version=7.4.4&externalPlugins=)
 
 <!-- prettier-ignore -->
 ***
@@ -363,12 +360,22 @@ See also [Babel REPL](https://babeljs.io/repl/#?babili=false&browsers=&build=&bu
 ## One Root Element
 
 ```jsx
-const template = <h1>My Title</h1><p>May the Force be with you</p>;
-
-// --> ERROR: Adjacent JSX elements must be wrapped in an enclosing tag
+const template = <h1>My Title</h1><p>May the Force</p>;
 ```
 
-Valid JSX has only one root element
+```bash
+ERROR: Adjacent JSX elements must be wrapped in an enclosing tag.
+Did you want a JSX fragment <>...</>
+```
+
+> Valid JSX has only one root element
+
+<!-- prettier-ignore -->
+***
+
+### Wrap it in a div
+
+The container div will be in the DOM.
 
 ```js
 const template = (
@@ -384,7 +391,36 @@ const template = (
 <!-- prettier-ignore -->
 ***
 
-### Embedding Expressions
+### Wrap it in a fragment
+
+The fragment has no footprint in the DOM.
+
+```js
+import { Fragment } from 'react';
+
+const template = (
+  <Fragment>
+    <h1>My Title</h1>
+    <p>May the Force be with you</p>
+  </Fragment>
+);
+```
+
+OR
+
+```js
+const template = (
+  <>
+    <h1>My Title</h1>
+    <p>May the Force be with you</p>
+  </>
+);
+```
+
+<!-- prettier-ignore -->
+***
+
+## Embedding Expressions (<---HERE>)
 
 ```jsx
 const name = 'peter';
@@ -413,7 +449,7 @@ Everything between `{ .... }` is JavaScript code.
 <!-- prettier-ignore -->
 ***
 
-### Not everything is rendered
+## Not everything is rendered
 
 Booleans, Null, and Undefined Are Ignored
 
@@ -452,7 +488,7 @@ An object can't be rendered
 ternary operator
 
 ```jsx
-const template = <p>User: {user.name ? user.name : "no-name"}</p>;
+const template = <p>User: {user.name ? user.name : 'no-name'}</p>;
 ```
 
 logical and operator
@@ -471,13 +507,13 @@ const template = (
 switch
 
 ```jsx
-const template = notification({ text: "hello", state: "info" });
+const template = notification({ text: 'hello', state: 'info' });
 
 function notification({ text, state }) {
   switch (state) {
-    case "info":
+    case 'info':
       return <Info text={text} />;
-    case "warning":
+    case 'warning':
       return <Warning text={text} />;
   }
   return null;
@@ -496,9 +532,9 @@ const template = (
   <div>
     {(function() {
       switch (state) {
-        case "info":
+        case 'info':
           return <Info text={text} />;
-        case "warning":
+        case 'warning':
           return <Warning text={text} />;
       }
       return null;
@@ -572,7 +608,7 @@ Ouptut
 create array of jsx (reactElements)
 
 ```jsx
-const names = ["john", "peter", "bob"];
+const names = ['john', 'peter', 'bob'];
 const listItems = names.map(name => {
   return <li>{name}</li>;
 });
@@ -588,7 +624,7 @@ const template = (
 or
 
 ```jsx
-const names = ["john", "peter", "bob"];
+const names = ['john', 'peter', 'bob'];
 const template = (
   <ul>
     {names.map(name => {
@@ -700,7 +736,7 @@ See [React Supported DOM Elements](https://reactjs.org/docs/dom-elements.html)
 ```jsx
 let counter = 0;
 const addOne = event => {
-  console.log("clicked", event);
+  console.log('clicked', event);
 };
 const template = (
   <div>
@@ -725,7 +761,7 @@ This doesn't work
 ```jsx
 let counter = 0;
 const addOne = () => {
-  console.log("clicked");
+  console.log('clicked');
   counter = counter + 1;
 };
 const template = (
@@ -752,7 +788,7 @@ Fix
 ```jsx
 let counter = 0;
 const addOne = () => {
-  console.log("clicked");
+  console.log('clicked');
   counter = counter + 1;
 };
 render();
@@ -766,7 +802,7 @@ function render() {
       <button onClick={() => counter--}>-</button>
     </div>
   );
-  ReactDOM.render(template, document.getElementById("root"));
+  ReactDOM.render(template, document.getElementById('root'));
 }
 ```
 
@@ -925,11 +961,11 @@ Class Components can have state
 
 ```jsx
 // app.js
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 export default class App extends Component {
   state: {
-    message: "world"
+    message: 'world'
   };
   render() {
     return <h1>Hello {this.state.message}</h1>;
@@ -1056,7 +1092,7 @@ this.setState(
 ```jsx
 class MyComponent extends React {
   onClick() {
-    console.log("clicked");
+    console.log('clicked');
   }
   render() {
     return (
@@ -1085,15 +1121,15 @@ class MyComponent extends React {
 
   onClick() {
     // BAD: this is not referencing the component
-    console.log("props", this.props);
+    console.log('props', this.props);
   }
 
   onClickFix1() {
-    console.log("props", this.props);
+    console.log('props', this.props);
   }
 
   onClickFix2 = () => {
-    console.log("props", this.props);
+    console.log('props', this.props);
   };
 }
 ```
@@ -1134,9 +1170,9 @@ class MyComponent extends React {
 
 ```jsx
 // App.js
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import Welcome from "./Welcome";
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import Welcome from './Welcome';
 
 class App extends Component {
   render() {
@@ -1148,7 +1184,7 @@ class App extends Component {
     );
   }
 }
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
 <!-- prettier-ignore -->
@@ -1239,7 +1275,7 @@ const MyComponent = props => {
     <div>
       <h1>{props.title}</h1>
       <button onClick={props.onUpdate} />
-      <button onClick={() => props.onUpdate("hello")} />
+      <button onClick={() => props.onUpdate('hello')} />
     </div>
   );
 };
@@ -1484,20 +1520,20 @@ Optionally you can add validation
 ```jsx
 export default class MyComponent extends Component {
   constructor(props) {
-    console.log("construction", props);
+    console.log('construction', props);
   }
   componentDidMount() {
-    console.log("mounted");
+    console.log('mounted');
   }
   shouldComponentUpdate() {
-    console.log("should update");
+    console.log('should update');
     return true; // decide here if the component need an update (default true!)
   }
   componentDidUpdate(oldProps) {
-    console.log("props changed", { oldProps, props: this.props });
+    console.log('props changed', { oldProps, props: this.props });
   }
   componentWillUnmount() {
-    console.log("bye-bye");
+    console.log('bye-bye');
   }
   render() {
     return <p>Hello</p>;
