@@ -9,11 +9,7 @@ export function App() {
         <img src={jsImage} alt="JS Logo" height="100" />
         <span data-testid="welcome-message">Hello from ES2015+</span>
       </h1>
-      <div className="container-fluid">
-        <button type="button" className="btn btn-primary">
-          Test
-        </button>
-      </div>
+      <div className="main container-fluid" />
     </>
   );
 }

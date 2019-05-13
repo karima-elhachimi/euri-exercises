@@ -14,5 +14,8 @@ exports[`App it renders as expected 1`] = `
       Hello from ES2015+
     </span>
   </h1>
+  <div
+    class="main container-fluid"
+  />
 </div>
 `;
