@@ -1,6 +1,6 @@
 # React
 
-###Chapter 1 The basics
+### Chapter 1 The basics
 - [Introduction](docs/Chapter%201%20The%20basics/1.1%20Intro.md)
 - [Building our first component](docs/Chapter%201%20The%20basics/1.2%20Building%20our%20first%20component.md)
 - [JSX](docs/Chapter%201%20The%20basics/1.3%20JSX.md)
