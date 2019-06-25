@@ -62,7 +62,6 @@ Install what you like and have.
 - Google Drive
 - ICloud Drive
 
-## Setup Modern/Hipster Development System
+## Setup Development System
 
-- for [Windows](./win/system-setup-win10-dev.md)
-- for [OSX](./osx/system-setup-osx-dev.md)
+- see [OSX](./osx/system-setup-osx-dev.md)
