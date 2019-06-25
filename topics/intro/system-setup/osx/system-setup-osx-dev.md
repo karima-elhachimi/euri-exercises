@@ -283,6 +283,11 @@ To make it even better install the following extenstions
 - ESLint
 - Path Intellisense
 - Spelling and Grammer Checker
+- REST Client
+
+## Postman
+
+[https://www.getpostman.com/downloads/](https://www.getpostman.com/downloads/)
 
 ## Marked2 (Markdown Viewer)
 
