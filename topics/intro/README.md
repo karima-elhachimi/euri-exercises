@@ -4,7 +4,7 @@
 
 - [ ] Welcome
 - [x] [System Setup](./system-setup/README.md)
-- [ ] Git introduction
+- [x] [Git introduction](./slides/git.md)
 - [ ] Remote Procedure Calls
 
 ### Slides
