@@ -4,10 +4,8 @@
 
 - [ ] Welcome
 - [x] [System Setup](./system-setup/README.md)
-- [ ] The state of Javascript
-- [ ] HTTP
-- [ ] WebServices
-- [ ] REST
+- [ ] Git introduction
+- [ ] Remote Procedure Calls
 
 ### Slides
 

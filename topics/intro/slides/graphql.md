@@ -1,13 +1,5 @@
 ---
 title: GraphQL
-revealOptions:
-    transition: 'fade'
-    transition-speed: 'slow'
-    width: 1200
-    height: 1000
-    margin: 0.1
-    minScale: 0.5
-    maxScale: 1.0
 ---
 
 # GraphQL, the future of REST API's
@@ -18,53 +10,59 @@ revealOptions:
 
 ## Problems of REST API
 
-* Starts simple and pure but outgrow itself quickly
-<!-- .element: class="fragment" data-fragment-index="1" -->
+- Starts simple and pure but outgrow itself quickly
 
-* Over fetching as API requirements grow
-<!-- .element: class="fragment" data-fragment-index="2" -->
+  <!-- .element: class="fragment" data-fragment-index="1" -->
 
-* Multiple round trips to render single views
-<!-- .element: class="fragment" data-fragment-index="3" -->
+- Over fetching as API requirements grow
 
-* Documentation is none existing or outdated
-<!-- .element: class="fragment" data-fragment-index="4" -->
+  <!-- .element: class="fragment" data-fragment-index="2" -->
 
-----
+- Multiple round trips to render single views
+
+  <!-- .element: class="fragment" data-fragment-index="3" -->
+
+- Documentation is none existing or outdated
+  <!-- .element: class="fragment" data-fragment-index="4" -->
+
+---
 
 ## GraphQL solves many of the REST problems
 
-* There is no under or over fetching. You get what you ask.
-<!-- .element: class="fragment" data-fragment-index="1" -->
+- There is no under or over fetching. You get what you ask.
 
-* No more multiple round trips
-<!-- .element: class="fragment" data-fragment-index="2" -->
+  <!-- .element: class="fragment" data-fragment-index="1" -->
 
-* Versioning made easy.
-<!-- .element: class="fragment" data-fragment-index="3" -->
+- No more multiple round trips
 
-* It's strongly-typed, self-documenting & has introspection
-<!-- .element: class="fragment" data-fragment-index="4" -->
+  <!-- .element: class="fragment" data-fragment-index="2" -->
 
-----
+- Versioning made easy.
+
+  <!-- .element: class="fragment" data-fragment-index="3" -->
+
+- It's strongly-typed, self-documenting & has introspection
+  <!-- .element: class="fragment" data-fragment-index="4" -->
+
+---
 
 ## It's more then a hype
 
-* Used at facebook for more then 4 year, recently release as open source.
-* Used by
-    * Twitter
-    * GitHub
-    * Pintrest
-    * Financial Times
-    * Thomas Cook Group
-    * and [many more](http://graphql.org/users/).
-* Available in many languages and frameworks (JS, .NET, Ruby, ...)
+- Used at facebook for more then 4 year, recently release as open source.
+- Used by
+  - Twitter
+  - GitHub
+  - Pintrest
+  - Financial Times
+  - Thomas Cook Group
+  - and [many more](http://graphql.org/users/).
+- Available in many languages and frameworks (JS, .NET, Ruby, ...)
 
 ---
 
 # How it works
 
-----
+---
 
 ### A graphql query
 
@@ -79,16 +77,17 @@ revealOptions:
 > GraphQL queries look a lot like JSON objects without data.
 
 ```javascript
-    // JSON result
-    data: {
-        me: {
-            name: "Peter"
-        }
-    }
+// JSON result
+data: {
+  me: {
+    name: 'Peter';
+  }
+}
 ```
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-----
+---
 
 ### Another graphql query
 
@@ -113,7 +112,7 @@ Get list of users
     }
 ```
 
-----
+---
 
 ### A GraphQL type
 
@@ -142,7 +141,7 @@ mapped to code
     }
 ```
 
-----
+---
 
 ### GraphiQL
 
@@ -154,7 +153,7 @@ mapped to code
 
 > Lets go in detail
 
-----
+---
 
 ### Query with field argument
 
@@ -177,7 +176,7 @@ mapped to code
     }
 ```
 
-----
+---
 
 ### Query with complex field (or join)
 
@@ -208,7 +207,7 @@ mapped to code
     }
 ```
 
-----
+---
 
 ### Every field can have an argument
 
@@ -225,7 +224,7 @@ mapped to code
     }
 ```
 
-----
+---
 
 ### Query with aliases
 
@@ -260,7 +259,7 @@ mapped to code
     }
 ```
 
-----
+---
 
 ### Query with variables
 
@@ -279,17 +278,19 @@ mapped to code
         }
     }
 ```
+
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 ```javascript
-    // variables
-    {
-        userId: 1
-    }
+// variables
+{
+  userId: 1;
+}
 ```
+
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
-----
+---
 
 ### Query with paging and filtering
 
@@ -307,7 +308,7 @@ mapped to code
     }
 ```
 
-----
+---
 
 ### Query Fragments
 
@@ -326,6 +327,8 @@ mapped to code
         email
     }
 ```
+
+---
 
 ### We can use interfaces and union types
 
@@ -361,7 +364,7 @@ We can use interfaces and union types
 
 > Mutation is like an action in Redux
 
-----
+---
 
 ## Simple mutation
 
@@ -384,7 +387,7 @@ We can use interfaces and union types
     }
 ```
 
-----
+---
 
 ## Complex mutation
 
@@ -412,7 +415,7 @@ We can use interfaces and union types
 
 > We all love types, why not on our API's
 
-----
+---
 
 ## The GraphQL Schema
 
@@ -430,6 +433,7 @@ We can use interfaces and union types
     }
 
 ```
+
 ```json
     type ProfilePicture {
         height: Int,
@@ -448,7 +452,7 @@ We can use interfaces and union types
     }
 ```
 
-----
+---
 
 ### We can query the types
 
@@ -471,7 +475,7 @@ We can use interfaces and union types
     }
 ```
 
-----
+---
 
 ## Help and Information
 
@@ -482,7 +486,7 @@ We can use interfaces and union types
 - [awesome-graphql](https://github.com/chentsulin/awesome-graphql)
 - [launchpad.graphql.com](https://launchpad.graphql.com)
 
-----
+---
 
 ## Api's
 
