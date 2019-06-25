@@ -1,0 +1,66 @@
+{
+  "users": [
+    {
+      "isFamily": true,
+      "birthDate": "2009-01-19T23:00:00.000Z",
+      "gender": "M",
+      "lastName": "Simpson",
+      "firstName": "Bart",
+      "id": 1
+    },
+    {
+      "isFamily": true,
+      "birthDate": "2011-08-13T22:00:00.000Z",
+      "gender": "F",
+      "lastName": "Simpson",
+      "firstName": "Lisa",
+      "id": 2
+    },
+    {
+      "isFamily": true,
+      "birthDate": "1990-06-08T22:00:00.000Z",
+      "gender": "F",
+      "lastName": "Simpson",
+      "firstName": "Marge",
+      "id": 3
+    },
+    {
+      "isFamily": true,
+      "gender": "M",
+      "lastName": "Simpson",
+      "firstName": "Homer",
+      "id": 4,
+      "birthDate": "1977-04-11T22:00:00.000Z"
+    },
+    {
+      "isFamily": true,
+      "birthDate": "2018-03-10T23:00:00.000Z",
+      "gender": "F",
+      "lastName": "Simpson",
+      "firstName": "Maggie",
+      "id": 5
+    },
+    {
+      "isFamily": true,
+      "birthDate": "1977-10-23T23:00:00.000Z",
+      "gender": "F",
+      "lastName": "Bouvier",
+      "firstName": "Patty",
+      "id": 6
+    },
+    {
+      "isFamily": false,
+      "gender": "M",
+      "lastName": "Skinner",
+      "firstName": "Seymour",
+      "id": 7
+    },
+    {
+      "isFamily": false,
+      "gender": "F",
+      "lastName": "Krabappel",
+      "firstName": "Edna",
+      "id": 8
+    }
+  ]
+}
