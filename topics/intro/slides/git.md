@@ -281,12 +281,24 @@ git push
 
 ---//
 
-### Remove online and local branch
+### Remove remote and local branch
 
 ```bash
-# Delete the online branch
+# Delete the remote branch
 git push origin :FEAT-1
 
 # Delete the local branch
 git branch -d FEAT-1
 ```
+
+---//
+
+## Want to learn more?
+
+- local
+
+```bash
+git help {command}
+```
+
+- [online](https://git-scm.com/)
