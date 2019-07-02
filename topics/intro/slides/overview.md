@@ -1,6 +1,5 @@
 ## Introduction Slides
 
 - [Git](./git.md)
-- [Http](./http.md)
-- [Rest](./rest.md)
+- [Http & Rest](./http.md)
 - [GraphQL](./graphql.md)

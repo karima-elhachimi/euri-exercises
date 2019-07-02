@@ -1,5 +1,5 @@
 ---
-title: HTTP Basics
+title: HTTP & Rest
 verticalSeparator: ---//
 ---
 
@@ -242,9 +242,70 @@ The Content-Length entity header indicates the size of the entity-body, in bytes
 Content-Length: <length>
 ```
 
+---//
+
+#### Set-Cookie
+
+The Set-Cookie HTTP response header is used to send cookies from the server to the user agent.
+
+```http
+Set-Cookie: <cookie-name>=<cookie-value>
+Set-Cookie: <cookie-name>=<cookie-value>; Expires=<date>
+Set-Cookie: <cookie-name>=<cookie-value>; Max-Age=<non-zero-digit>
+Set-Cookie: <cookie-name>=<cookie-value>; Domain=<domain-value>
+Set-Cookie: <cookie-name>=<cookie-value>; Path=<path-value>
+Set-Cookie: <cookie-name>=<cookie-value>; Secure
+Set-Cookie: <cookie-name>=<cookie-value>; HttpOnly
+
+Set-Cookie: <cookie-name>=<cookie-value>; SameSite=Strict
+Set-Cookie: <cookie-name>=<cookie-value>; SameSite=Lax
+
+# Multiple directives are also possible, for example:
+Set-Cookie: <cookie-name>=<cookie-value>; Domain=<domain-value>; Secure; HttpOnly
+```
+
 ---
 
-## Exercices
+# REST
+
+REST stands for REpresentational State Transfer, and it is an architectural style, or design pattern for API's.
+
+> REST was defined by Roy Fielding, a computer scientist. He presented the REST principles in his PhD dissertation in 2000.
+
+The representation of the state can be in a JSON format (mostly), XML or HTML format.
+
+---//
+
+What the server does when you, the client, call one of its APIs depends on 2 things that you need to provide to the server:
+
+1. An identifier for the resource you are interested in. This is the URL for the resource, also known as the endpoint. In fact, URL stands for Uniform Resource Locator.
+2. The operation you want the server to perform on that resource, in the form of an HTTP method, or verb. The common HTTP methods are GET, POST, PUT, and DELETE
+
+---//
+
+## Basic principles
+
+- **Client-Server Communication** distinct separation of concerns
+- **Stateless** each client request to the server requires that its state be fully represented.
+- **Cacheable** cache constraints may be used, thus enabling response data to to be marked as cacheable or not-cachable.
+
+---//
+
+## Resource Identifier
+
+Each resource is identified by its resource identifier. For example:
+
+```
+Car: http://www.automart.com/cars/12345
+
+Part: http://www.automart.com/part/12345
+
+Part: http://www.automart.com/engine/12345
+```
+
+---
+
+# Exercices
 
 ```bash
 # Ensure you have checked out the bootcamp source
@@ -284,6 +345,7 @@ Open the [API](http://localhost:3000/) and use postman to complete the following
 > Create a new user with the data of yourself
 
 ---//
+
 ### Exercise 5
 
 > Remove yourself again
