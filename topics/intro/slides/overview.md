@@ -1,5 +1,6 @@
 ## Introduction Slides
 
 - [Git](./git.md)
-- Remote Procedure Calls
+- [Http](./http.md)
+- [Rest](./rest.md)
 - [GraphQL](./graphql.md)
