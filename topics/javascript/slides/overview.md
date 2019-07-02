@@ -1,5 +1,9 @@
 # JavaScript Overview
 
+- [ ] [Javascript Fundamentals](./fundamentals.md)
+
+## Old
+
 - [Javascript Fundamentals](./javascript-fundamentals.md)
 - [Functional Javascript](./javascript-functional.md)
 - [Javascript Modules Systems](./javascript-modules.md)
