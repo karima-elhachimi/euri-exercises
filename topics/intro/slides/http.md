@@ -287,7 +287,7 @@ What the server does when you, the client, call one of its APIs depends on 2 thi
 
 - **Client-Server Communication** distinct separation of concerns
 - **Stateless** each client request to the server requires that its state be fully represented.
-- **Cacheable** cache constraints may be used, thus enabling response data to to be marked as cacheable or not-cachable.
+- **Cacheable** cache constraints may be used, thus enabling response data to to be marked as cacheable or not-cacheable.
 
 ---//
 
