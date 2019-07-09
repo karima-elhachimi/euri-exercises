@@ -1,6 +1,6 @@
 ---
 title: Javascript Fundamentals
-transition: "fade"
+transition: 'fade'
 verticalSeparator: "^\\*\\*\\*"
 ---
 
@@ -74,8 +74,8 @@ Copyright (c) 2017-2019 Euricom nv.
 - 1995 (sept): Mocha was renamed to LiveScript
 - 1995 (dec): LiveScript was later renamed to JavaScript
 - 1996: People start using Javascript
-- 1996: Microsoft is comming with IE. Netscape in problem.
-- 1997: Netscape reches out to Ecma. JS was standardized: Ecmascript
+- 1996: Microsoft is coming with IE. Netscape in problem.
+- 1997: Netscape reaches out to Ecma. JS was standardized: Ecmascript
 
 <!-- prettier-ignore -->
 ***
@@ -114,7 +114,7 @@ Copyright (c) 2017-2019 Euricom nv.
 
 - 2008
   - TC39 agree to postpone ES4 and to implement ES3.1 (and rename to ES5)
-  - Commitee is working together now. New features set: Harmony
+  - Committee is working together now. New features set: Harmony
 - 2009: ES5 is official
 - 2015: TC39 has finalized ES6
   - Renamed ES6 to ES2015
@@ -193,15 +193,6 @@ The Ecma TC39 committee is responsible for evolving the ECMAScript programming l
 <!-- prettier-ignore -->
 ***
 
-## What about TypeScript
-
-> It's just ECMAScript 6+ and typings
-
-https://github.com/Microsoft/TypeScript/wiki/Roadmap
-
-<!-- prettier-ignore -->
-***
-
 ## ES Today
 
 <img src="./images/compatibility-table.png" width="800px" /><br>
@@ -226,7 +217,7 @@ Your JS file
 
 ```js
 // main.js
-console.log("Hello nodeJS");
+console.log('Hello nodeJS');
 ```
 
 To run
@@ -250,7 +241,7 @@ npm install nodemon -g
 
 # run app with nodemon
 nodemon main.js
-[nodemon] 1.18.9
+[nodemon] 1.19.1
 [nodemon] to restart at any time, enter `rs`
 [nodemon] watching: *.*
 [nodemon] starting `node main.js`
@@ -281,7 +272,7 @@ Node is/has:
 
   + module object (to export a module)
   + everything is a module (every file)
-  + required function (to load other modules)
+  + require function (to load other modules)
 ```
 
 <!-- prettier-ignore -->
@@ -351,7 +342,7 @@ Answer!
     name;           // undefined
     foo;            // 'bar'
     bam;            // 'yay'
-    baz();          // Error!
+    baz();          // Uncaught ReferenceError: baz is not defined
 ```
 
 > The answer is defined by the hoisting behavior of Javascript.
@@ -427,7 +418,7 @@ console.log(foo + bar); // output: throws error, 2, 3 of undefined
 for(var i = 0; i < 10; i++) {
     ...
 }
-console.log(i)           // output: throws error, 11, undefined
+console.log(i)           // output: throws error, 10, 11, undefined
 ```
 
 > No block scoping when using var!
@@ -460,7 +451,7 @@ What if I use it before it is declared?
 
 ```javascript
 console.log(name); // WHAT HAPPENS HERE?
-var name = "marc";
+var name = 'marc';
 ```
 
 Result
@@ -469,15 +460,15 @@ Result
 
 ```javascript
 console.log(name); // undefined
-name = "marc";
+name = 'marc';
 ```
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 ```javascript
-"use strict";
+'use strict';
 console.log(name); // Error!
-name = "marc";
+name = 'marc';
 ```
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -495,14 +486,7 @@ var a = 1;
 console.log(a); // error, 0, 1?
 ```
 
-Loop
-
-```javascript
-for(var i = 0; i < 10; i++) {
-    ...
-}
-console.log(i);     // undefined, error, 0, 10, 11
-```
+> Remember our for loop (BlockScoping slide 5) ;)
 
 <!-- prettier-ignore -->
 ***
@@ -580,11 +564,11 @@ foo();
 var foo = 2;
 
 function foo() {
-  console.log("bar");
+  console.log('bar');
 }
 
 function foo() {
-  console.log("foo");
+  console.log('foo');
 }
 ```
 
@@ -659,7 +643,7 @@ Function baz has access to variable bar in higher (lexical) scope.
 
 ```js
 function foo() {
-  const bar = "bar";
+  const bar = 'bar';
   function baz() {
     console.log(bar);
   }
@@ -677,7 +661,7 @@ A Closure is when a function "remember" its lexical scope even when the function
 
 ```javascript
 function foo() {
-  const bar = "bar";
+  const bar = 'bar';
   return function() {
     console.log(bar);
   };
@@ -700,13 +684,15 @@ Another example
 
 ```javascript
 function foo() {
-  const bar = "bar";
-  $("#btn").click(function(evt) {
+  const bar = 'bar';
+  $('#btn').click(function(evt) {
     console.log(bar);
   });
 }
 
-foo(); // 'bar'
+foo();
+
+// What is the output when clicking on the button?
 ```
 
 <!-- prettier-ignore -->
@@ -719,7 +705,7 @@ What is the output of the following function?
 ```javascript
 for (var i = 0; i <= 5; i++) {
   setTimeout(function() {
-    console.log("i: " + i);
+    console.log('i: ' + i);
   }, i * 1000);
 }
 ```
@@ -729,12 +715,12 @@ Answer:
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 ```
-    i: 6
-    i: 6
-    i: 6
-    i: 6
-    i: 6
-    i: 6
+i: 6
+i: 6
+i: 6
+i: 6
+i: 6
+i: 6
 ```
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -750,57 +736,57 @@ How to fix this?
 
 Immediately-Invoked Function Expression (IIFE)
 
-    function doSomething() {
-        // ...
-        // simulate block scoping
-        (function() {
-            var a = 0;
-            // ...
-        })();
-        // ...
-    }
+```javascript
+function doSomething() {
+  // ...
+  // simulate block scoping
+  (function() {
+    var a = 0;
+    // ...
+  })();
+  // ...
+}
+```
 
+```javascript
 Is used to isolate from global scope
 
-    var myModule = (function($, global) {
-        var myVar = '';
-        function doThis() {
-            ...
-        }
-    })(jquery, window);
+var myModule = (function($, global) {
+    var myVar = '';
+    function doThis() {
+        ...
+    }
+})(jquery, window);
+```
 
 <!-- prettier-ignore -->
 ***
 
 ### The Revealing Module Pattern
 
-```js
-var myRevealingModule = (function () {
-    var privateVar = "Ben Cherry",
+```javascript
+var myRevealingModule = (function() {
+  var privateVar = 'Ben Cherry';
 
-    function privateFunction() {
-        console.log( "Name:" + privateVar );
-    }
+  function privateFunction() {
+    console.log('Name:' + privateVar);
+  }
 
-    function publicSetName( strName ) {
-        privateVar = strName;
-    }
+  function publicSetName(strName) {
+    privateVar = strName;
+  }
 
-    function publicGetName() {
-        privateFunction();
-    }
-```
+  function publicGetName() {
+    privateFunction();
+  }
 
-```js
-    // Reveal public pointers to private functions and properties
-    return {
-        setName: publicSetName,
-        greeting: publicVar,
-        getName: publicGetName
-    };
+  return {
+    setName: publicSetName,
+    getName: publicGetName
+  };
 })();
 
-myRevealingModule.setName( "Paul Kinlan" );
+myRevealingModule.setName('Paul Kinlan');
 ```
 
 See also [JavaScript Design Patterns](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
@@ -821,16 +807,19 @@ More on this later!
 <!-- prettier-ignore -->
 ***
 
+---here---
+
 # Exercise
 
 > Build a calculator module and use it the browser
 
 - Use index.html, main.js & calc.js
-- Isolate the calculator with an iffe
+- Isolate the calculator with an iife
 - HTML Tips
 
 ```html
-<input type="text" id="val1" /> <input type="text" id="val2" /> <button id="myBtn">Add</button>
+<input type="text" id="val1" /> <input type="text" id="val2" />
+<button id="myBtn">Add</button>
 ```
 
 ```js
@@ -891,9 +880,9 @@ doThis();
 function foo() {
   console.log(this.bar);
 }
-const bar = "bar1";
-const o2 = { bar: "bar2", foo: foo };
-const o3 = { bar: "bar3", foo: foo };
+const bar = 'bar1';
+const o2 = { bar: 'bar2', foo: foo };
+const o3 = { bar: 'bar3', foo: foo };
 foo(); // ???
 o2.foo(); // ???
 o3.foo(); // ???
@@ -918,13 +907,13 @@ o3.foo(); // 'bar3' explicit binding
 
 ```javascript
 const o1 = {
-  bar: "bar1",
+  bar: 'bar1',
   foo: function() {
     console.log(this.bar);
   }
 };
-const o2 = { bar: "bar2", foo: o1.foo };
-const bar = "bar3";
+const o2 = { bar: 'bar2', foo: o1.foo };
+const bar = 'bar3';
 const foo = o1.foo;
 
 o1.foo(); // ???
@@ -953,8 +942,8 @@ foo(); // 'bar3'
 function foo(arg1, arg2) {
   console.log(this.bar, arg1, arg2);
 }
-const bar = "bar1";
-const obj = { bar: "bar2" };
+const bar = 'bar1';
+const obj = { bar: 'bar2' };
 const a = [5, 6, 7];
 
 foo(1, 2); // 'bar1', 1, 2
@@ -971,13 +960,13 @@ foo.apply(obj, a); // 'bar2', 5, 6
 
 ```javascript
 function foo(baz, bam) {
-  console.log(this.bar + " " + baz + " " + bam);
+  console.log(this.bar + ' ' + baz + ' ' + bam);
 }
 
-const obj = { bar: "bar" };
-const foo2 = foo.bind(obj, "baz");
+const obj = { bar: 'bar' };
+const foo2 = foo.bind(obj, 'baz');
 
-foo2("bam"); // 'bar baz bam'
+foo2('bam'); // 'bar baz bam'
 ```
 
 <!-- prettier-ignore -->
@@ -1010,7 +999,7 @@ car.start();        // output: Bmw started
 function User(name) {
   this.name = name;
 }
-const user = new User("peter");
+const user = new User('peter');
 user.name; // 'peter'
 ```
 
@@ -1036,7 +1025,7 @@ function New(func) {
     res.__proto__ = func.prototype;
   }
   const ret = func.apply(res, Array.prototype.slice.call(arguments, 1));
-  if ((typeof ret === "object" || typeof ret === "function") && ret !== null) {
+  if ((typeof ret === 'object' || typeof ret === 'function') && ret !== null) {
     return ret;
   }
   return res;
@@ -1088,11 +1077,11 @@ So to know the value of `this`:
 # Exercise
 
 ```js
-global.fullname = "John Doe";
+global.fullname = 'John Doe';
 const obj = {
-  fullname: "Colin Ihrig",
+  fullname: 'Colin Ihrig',
   prop: {
-    fullname: "Aurelio De Rosa",
+    fullname: 'Aurelio De Rosa',
     getFullname: function() {
       return this.fullname;
     }
@@ -1125,14 +1114,14 @@ var person = Object.create(null); // this creates an empty objects
 In JavaScript, objects are pairs of keys and values
 
 ```javascript
-person["name"] = "john";
-person["age"] = 12;
+person['name'] = 'john';
+person['age'] = 12;
 ```
 
 You can also use the dot form
 
 ```javascript
-person.name = "john";
+person.name = 'john';
 person.age = 12;
 ```
 
@@ -1145,9 +1134,9 @@ In fact, JavaScript objects also have one additional attribute: a pointer to ano
 
 ```javascript
 const dev = Object.create(null);
-dev.role = "dev";
+dev.role = 'dev';
 dev.code = function() {
-  console.log("writing code");
+  console.log('writing code');
 };
 
 const peter = Object.create(dev);
@@ -1178,8 +1167,8 @@ JavaScript provides a literal syntax for creating an object and assigning proper
 
 ```javascript
 const person = {
-  firstName: "Paul",
-  lastName: "Irish"
+  firstName: 'Paul',
+  lastName: 'Irish'
 };
 ```
 
@@ -1187,8 +1176,8 @@ This syntax is approximately sugar for:
 
 ```javascript
 const person = Object.create(Object.prototype);
-person.firstName = "Paul";
-person.lastName = "Irish";
+person.firstName = 'Paul';
+person.lastName = 'Irish';
 ```
 
 The default `Object.prototype` dictionary comes with a number of the methods we have come to expect objects to contain
@@ -1212,7 +1201,7 @@ person.toString(); // "[object Object]"
 function Person(name) {
   this.name = name;
 }
-const person = new Person("Paul");
+const person = new Person('Paul');
 ```
 
 ---
@@ -1230,19 +1219,19 @@ const person = new Person("Paul");
 function Person(name) {
   this.name = name;
   this.shoutYourName = function() {
-    return "Shouting " + this.name;
+    return 'Shouting ' + this.name;
   };
 }
 Person.prototype.identity = function() {
-  return "I am " + this.name;
+  return 'I am ' + this.name;
 };
 ```
 
 ```javascript
-var john = new Person("John");
-var luna = new Person("Luna");
+var john = new Person('John');
+var luna = new Person('Luna');
 john.speak = function() {
-  alert("Hello, " + this.identity() + ".");
+  alert('Hello, ' + this.identity() + '.');
 };
 
 john.identify(); // 'I am John'
@@ -1268,7 +1257,7 @@ class Person {
   }
 
   identity() {
-    return "I am" + this.name;
+    return 'I am' + this.name;
   }
 
   static create(name) {
@@ -1290,7 +1279,7 @@ var Person = (function() {
     this.name = name;
   }
   Person.prototype.identity = function() {
-    return "I am" + this.name;
+    return 'I am' + this.name;
   };
   Person.create = function(name) {
     return new Person(name);
@@ -1393,8 +1382,8 @@ All clear
 ```js
 typeof 89; // 'number'
 typeof true; // 'boolean'
-typeof "some text"; // 'string'
-typeof { name: "123" }; // 'object'
+typeof 'some text'; // 'string'
+typeof { name: '123' }; // 'object'
 typeof function() {}; // 'function'
 
 let val;
@@ -1416,7 +1405,7 @@ typeof []; // 'object'
 correct way of testing for an object
 
 ```js
-if (myValue && typeof myValue === "object") {
+if (myValue && typeof myValue === 'object') {
   // my_value is an object or an array!
 }
 ```
@@ -1427,18 +1416,18 @@ if (myValue && typeof myValue === "object") {
 ## parseInt
 
 ```js
-parseInt("16"); // 16
-parseInt("16 tons"); // 16
+parseInt('16'); // 16
+parseInt('16 tons'); // 16
 
-parseInt("08"); // 0 (on some browsers)
-parseInt("09"); // 0 (on some browsers)
+parseInt('08'); // 0 (on some browsers)
+parseInt('09'); // 0 (on some browsers)
 ```
 
 Better to use
 
 ```js
-parseInt("08", 10); // 8
-Number("08") + "08"; // 8 // 8
+parseInt('08', 10); // 8
+Number('08') + '08'; // 8 // 8
 ```
 
 <!-- prettier-ignore -->
@@ -1463,11 +1452,11 @@ console.log(0.1 * 100 + 0.2 * 100 == 0.3 * 100); // true!
 ## NaN
 
 ```js
-+"0" + "oops"; // 0 // NaN
-Number("oops"); // NaN
++'0' + 'oops'; // 0 // NaN
+Number('oops'); // NaN
 0 / 0; // NaN
 
-typeof NaN === "number"; // true
+typeof NaN === 'number'; // true
 NaN === NaN; // false
 NaN !== NaN; // true
 ```
