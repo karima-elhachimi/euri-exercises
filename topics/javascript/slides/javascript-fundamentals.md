@@ -813,14 +813,19 @@ More on this later!
 
 - Use index.html, main.js & calc.js
 - Isolate the calculator with an iife
+
+<!-- prettier-ignore -->
+***
+
 - HTML Tips
 
 ```html
-<input type="text" id="val1" /> <input type="text" id="val2" />
+<input type="text" id="val1" />
+<input type="text" id="val2" />
 <button id="myBtn">Add</button>
 ```
 
-```js
+```javascript
 // response to button click
 document.getElementById("myBtn").addEventListener("click", function() {
     const val1 = document.getElementById('val1').value;
@@ -850,12 +855,13 @@ node main.js 1 2
 
 ## this
 
-Every function, **_while executing_**, has a reference to its current executing context, called `this`
+Every function has a reference to its current executing context, called `this`
 
 ```javascript
 function doThis() {
   console.log(this.name); // output?
 }
+
 doThis();
 ```
 
@@ -865,7 +871,7 @@ doThis();
 - explicit binding
 - hard binding
 - arrow function
-- new keyboard
+- new keyword
 
 > 'this' in Javascript is different from 'this' in C# or Java
 
@@ -878,17 +884,20 @@ doThis();
 function foo() {
   console.log(this.bar);
 }
+
 const bar = 'bar1';
 const o2 = { bar: 'bar2', foo: foo };
 const o3 = { bar: 'bar3', foo: foo };
+
 foo(); // ???
 o2.foo(); // ???
 o3.foo(); // ???
 ```
 
-The 'this' points to the object where it is called from (its context), if there is no object fallback to the global (window in browser).
+<!-- prettier-ignore -->
+***
 
-<!-- .element: class="fragment" data-fragment-index="2" -->
+The 'this' points to the object where it is called from (its context), if there is no object fallback to the global (window in browser).
 
 ```javascript
 foo(); // 'bar1' default binding (none strict)
@@ -896,7 +905,7 @@ o2.foo(); // 'bar2' explicit binding
 o3.foo(); // 'bar3' explicit binding
 ```
 
-<!-- .element: class="fragment" data-fragment-index="3" -->
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 <!-- prettier-ignore -->
 ***
@@ -910,6 +919,7 @@ const o1 = {
     console.log(this.bar);
   }
 };
+
 const o2 = { bar: 'bar2', foo: o1.foo };
 const bar = 'bar3';
 const foo = o1.foo;
@@ -940,6 +950,7 @@ foo(); // 'bar3'
 function foo(arg1, arg2) {
   console.log(this.bar, arg1, arg2);
 }
+
 const bar = 'bar1';
 const obj = { bar: 'bar2' };
 const a = [5, 6, 7];
@@ -957,14 +968,14 @@ foo.apply(obj, a); // 'bar2', 5, 6
 ## This - Hard binding
 
 ```javascript
-function foo(baz, bam) {
-  console.log(this.bar + ' ' + baz + ' ' + bam);
+function foo(ba, lam) {
+  console.log(this.bam + ' ' + ba + ' ' + lam);
 }
 
-const obj = { bar: 'bar' };
-const foo2 = foo.bind(obj, 'baz');
+const obj = { bam: 'bam' };
+const foo2 = foo.bind(obj, 'ba');
 
-foo2('bam'); // 'bar baz bam'
+foo2('lam'); // 'bam ba lam'
 ```
 
 <!-- prettier-ignore -->
@@ -972,19 +983,22 @@ foo2('bam'); // 'bar baz bam'
 
 ### This - Hard binding
 
-Typicall used in this context
+Typically used in this context
 
 ```javascript
 const car = {
-    name: 'Bmw'
-    start() {
-        setTimeout(function() {
-            console.log(this.name + ' started')
-        }.bind(this), 1000)
-    }
-}
+  name: 'Bmw',
+  start() {
+    setTimeout(
+      function() {
+        console.log(this.name + ' started');
+      }.bind(this),
+      1000
+    );
+  }
+};
 
-car.start();        // output: Bmw started
+car.start(); // output: Bmw started
 ```
 
 <!-- prettier-ignore -->
@@ -993,7 +1007,7 @@ car.start();        // output: Bmw started
 ### This - `new` keyword
 
 ```javascript
-// construtor function (mark the pascal casing)
+// constructor function (mark the pascal casing)
 function User(name) {
   this.name = name;
 }
@@ -1001,47 +1015,21 @@ const user = new User('peter');
 user.name; // 'peter'
 ```
 
+<!-- prettier-ignore -->
+***
+
 Following is happening:
 
 - A new object is created
 - (The `__proto__` property is set to the function prototype)
 - The `this` point to the newly created object
 - The constructor function is executed
-- The newly created object is returned (except when the constuctor returns none null)
+- The newly created object is returned (except when the constructor returns none null)
 
 <!-- prettier-ignore -->
 ***
 
-### This - `new` keyword
-
-So in simulation we get the following
-
-```javascript
-function New(func) {
-  const res = {};
-  if (func.prototype !== null) {
-    res.__proto__ = func.prototype;
-  }
-  const ret = func.apply(res, Array.prototype.slice.call(arguments, 1));
-  if ((typeof ret === 'object' || typeof ret === 'function') && ret !== null) {
-    return ret;
-  }
-  return res;
-}
-```
-
-While
-
-    var obj = New(A, 1, 2)
-
-is equivalent to
-
-    var obj = new A(1, 2)
-
-<!-- prettier-ignore -->
-***
-
-### arrow function
+### Arrow function
 
 ```js
 const car = {
@@ -1075,7 +1063,8 @@ So to know the value of `this`:
 # Exercise
 
 ```js
-global.fullname = 'John Doe';
+var fullname = 'John Doe';
+
 const obj = {
   fullname: 'Colin Ihrig',
   prop: {
@@ -1085,6 +1074,7 @@ const obj = {
     }
   }
 };
+
 const test = obj.prop.getFullname;
 console.log(test());
 ```
@@ -1152,8 +1142,10 @@ console.log(Object.getPrototypeOf(peter)); // returns the dev object
 `__proto__` points the actual object that is used in the lookup chain to resolve properties, methods, etc.
 
 ```javascript
-console.log(peter.__proto__)                // points to Object
-Object.getPrototypeOf(peter) === peter.__proto__)  // true
+console.log(peter.__proto__); // undefined or points to Object ?
+
+const isSame = Object.getPrototypeOf(peter) === peter.__proto__;
+console.log(isSame); // true or false ?
 ```
 
 <!-- prettier-ignore -->
@@ -1190,10 +1182,10 @@ person.toString(); // "[object Object]"
 ## New keyword
 
 - A new object is created
-- **_ --> The `__proto__` property is set to the function prototype_**
+- The `__proto__` property is set to the function prototype
 - The `this` point to the newly created object
 - The constructor function is executed
-- The newly created object is returned (except when the constuctor returns none null)
+- The newly created object is returned (except when the constructor returns none null)
 
 ```javascript
 function Person(name) {
@@ -1210,7 +1202,7 @@ const person = new Person('Paul');
 
 <!-- prettier-ignore -->
 ***
-
+-----------HERE-------------
 ### Prototype Linking Example
 
 ```javascript
