@@ -1,6 +1,6 @@
 ---
 title: Introduction to WebPack
-transition: "fade"
+transition: 'fade'
 verticalSeparator: "^\\*\\*\\*"
 ---
 
@@ -53,15 +53,15 @@ Copyright (c) 2017-2019 Euricom nv.
 Install webpack locally
 
 ```bash
-$ yarn add webpack webpack-cli --dev
-# npm install add webpack webpack-cli --save-dev
+$ npm i --save-dev webpack webpack-cli
+# yarn add webpack webpack-cli --dev
 ```
 
 Use
 
 ```bash
 $ npx webpack --version
-4.28.2
+4.35.3
 ```
 
 <!-- prettier-ignore -->
@@ -75,10 +75,10 @@ userService.js
 // a commonJS module
 function userService() {
   this.getById = function(id) {
-    return { id: 123, name: "peter" };
+    return { id: 123, name: 'peter' };
   };
   this.getAll = function() {
-    return [{ id: 123, name: "peter" }, { id: 222, name: "robbert" }];
+    return [{ id: 123, name: 'peter' }, { id: 222, name: 'robbert' }];
   };
 }
 module.exports = new userService();
@@ -87,7 +87,7 @@ module.exports = new userService();
 main.js
 
 ```js
-const userService = require("./userService");
+const userService = require('./userService');
 const users = userService.getAll();
 users.forEach(function(user) {
   console.log(user.id, user.name);
@@ -125,10 +125,10 @@ A minimal config file
 ```js
 // webpack.config.js
 module.exports = {
-  entry: "./main.js",
-  mode: "development",
+  entry: './main.js',
+  mode: 'development',
   output: {
-    filename: "bundle.js"
+    filename: 'bundle.js'
   }
 };
 ```
@@ -177,10 +177,10 @@ Ready for changes
 // ./userService.js
 function UserService() {
   this.getById = function(id) {
-    return { id: 123, name: "peter" };
+    return { id: 123, name: 'peter' };
   };
   this.getAll = function() {
-    return [{ id: 123, name: "peter" }, { id: 222, name: "robbert" }];
+    return [{ id: 123, name: 'peter' }, { id: 222, name: 'robbert' }];
   };
 }
 
@@ -189,7 +189,7 @@ export default new UserService();
 
 ```js
 // ./main.js
-import userService from "./userService";
+import userService from './userService';
 var users = userService.getAll();
 users.forEach(function(user) {
   console.log(user.id, user.name);
@@ -206,7 +206,7 @@ users.forEach(function(user) {
 Install
 
 ```bash
-yarn add jquery # npm install jquery
+npm i --save jquery # yarn add jquery
 ```
 
 Add some html
@@ -219,11 +219,11 @@ and use it
 
 ```js
 // main.js
-import $ from "jquery";
-import userService from "./userService";
+import $ from 'jquery';
+import userService from './userService';
 var users = userService.getAll();
 users.forEach(function(user) {
-  $("#list").append(`<li>${user.name}</li>`);
+  $('#list').append(`<li>${user.name}</li>`);
 });
 ```
 
@@ -235,15 +235,17 @@ users.forEach(function(user) {
 When running webpack we can see jquery is bundled with our own code.
 
 ```
-$ webpack
-Hash: f7e4f8b006ab65596006
-Version: webpack 4.28.2
-Time: 295ms
-    Asset    Size  Chunks                    Chunk Names
-bundle.js  271 kB       0  [emitted]  [big]  main
-   [0] ./~/jquery/dist/jquery.js 267 kB {0} [built]
-   [1] ./userService.js 621 bytes {0} [built]
-   [2] ./main.js 227 bytes {0} [built]
+$ npx webpack --display-modules
+Hash: cb268c59b64d8a4edada
+Version: webpack 4.35.3
+Time: 288ms
+Built at: 2019-07-16 2:16:00 PM
+    Asset     Size  Chunks             Chunk Names
+bundle.js  315 KiB    main  [emitted]  main
+Entrypoint main = bundle.js
+[./main.js] 186 bytes {main} [built]
+[./node_modules/jquery/dist/jquery.js] 274 KiB {main} [built]
+[./userService.js] 260 bytes {main} [built]
 ```
 
 ---
@@ -261,8 +263,8 @@ The Webpack-dev-server combines automatic refresh (after bundle rebuild), faster
 
 ```bash
 # install
-$ yarn add webpack-dev-server --dev
-# npm install webpack-dev-server --save-dev
+$ npm i --save-dev webpack-dev-server
+# yarn add webpack-dev-server --dev
 ```
 
 ```json
@@ -281,26 +283,27 @@ $ yarn add webpack-dev-server --dev
 ## Run
 
 ```bash
-yarn serve
+npm run serve
 
-yarn run v1.12.3
-$ webpack-dev-server --open
+> webpack-dev-server --open
+
 ℹ ｢wds｣: Project is running at http://localhost:8080/
 ℹ ｢wds｣: webpack output is served from /
+ℹ ｢wds｣: Content not from webpack is served from /Users/tommarien/git/temp
 ℹ ｢wdm｣: wait until bundle finished: /
-ℹ ｢wdm｣: Hash: 67b08579de3b9b2b20a6
-Version: webpack 4.28.2
-Time: 627ms
-Built at: 2018-12-28 09:20:08
+ℹ ｢wdm｣: Hash: 92f69b0f972f8ddf052a
+Version: webpack 4.35.3
+Time: 584ms
+Built at: 2019-07-16 2:20:59 PM
     Asset     Size  Chunks             Chunk Names
-bundle.js  644 KiB    main  [emitted]  main
+bundle.js  671 KiB    main  [emitted]  main
 Entrypoint main = bundle.js
-[0] multi (webpack)-dev-server/client?http://localhost:8080 ./main.js 40 bytes {main} [built]
-[./main.js] 180 bytes {main} [built]
-
-...
-
+[0] multi (webpack)-dev-server/client?http://localhost ./main.js 40 bytes {main} [built]
+[./main.js] 186 bytes {main} [built]
+[./node_modules/jquery/dist/jquery.js] 274 KiB {main} [built]
+    + 20 hidden modules
 ℹ ｢wdm｣: Compiled successfully.
+
 ```
 
 Webpack-dev-server will build and serve the app.
@@ -393,10 +396,10 @@ Install
 
 ```bash
 # Install babel7
-yarn add @babel/core @babel/preset-env --dev
+npm i --save-dev @babel/core @babel/preset-env
 
 # Install webpack babel loader
-yarn add babel-loader --dev
+npm i --save-dev babel-loader
 ```
 
 Configure babel
@@ -443,7 +446,7 @@ Install some more loaders:
 
 ```bash
 # install loaders
-yarn add style-loader css-loader --dev
+npm i --save-dev style-loader css-loader
 ```
 
 Add the css rule in your webpack.config.js
@@ -471,13 +474,13 @@ And require the file in your main.js
 ```js
 // in your modules just require the stylesheet
 // This has the side effect that a <style>-tag is added to the DOM.
-require("./style.css");
+require('./style.css');
 ```
 
 or
 
 ```js
-import "./style.css";
+import './style.css';
 ```
 
 > Re-run webpack and “ta-da”!
@@ -485,44 +488,48 @@ import "./style.css";
 <!-- prettier-ignore -->
 ***
 
-## Add LESS support
+## Add SASS support
 
 Install loader (and dependencies):
 
 ```bash
-# install less itself and the loader
-yarn add less-loader less --dev
+# install sass itself and the loader
+npm i --save-dev sass-loader node-sass
 ```
 
 Add the rule in your webpack.config.js
 
-```js
-{ test: /\.less$/, loader: 'style-loader!css-loader!less-loader' }
+```javascript
+{
+  test:  /\.(sa|sc|c)ss$/,
+  loader: 'style-loader!css-loader!sass-loader'
+}
 ```
 
 <!-- prettier-ignore -->
 ***
 
-## Add LESS support
+## Add SASS support
 
-rename your css to less
+rename your css to scss
 
 ```bash
-mv style.css style.less
+mv style.css style.scss
 ```
 
 require (or import) your scss file
 
 ```js
-require("./style.less");
+require('./style.scss');
 ```
 
-and write some less code
+and write some sass code
 
-```css
-@primary-color: LightGray;
+```scss
+$primary-color: tomato;
+
 body {
-  background: @primary-color;
+  background: $primary-color;
 }
 ```
 
@@ -534,17 +541,17 @@ body {
 Install font
 
 ```bash
-yarn add font-awesome --dev
+npm i --save font-awesome
 ```
 
 Install webpack loaders
 
 ```bash
 # the file-loader emits files
-yarn add file-loader --dev
+npm i --save-dev file-loader
 
  # the url-loader uses DataUrls
-yarn add url-loader --dev
+npm i --save-dev url-loader
 ```
 
 <!-- prettier-ignore -->
@@ -561,11 +568,11 @@ module.exports = {
       // ....
       {
         test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-        loader: "file-loader"
+        loader: 'file-loader'
       },
       {
         test: /\.(png|jpg|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "url-loader?limit=4000"
+        loader: 'url-loader?limit=4000'
       }
     ]
   }
@@ -580,7 +587,7 @@ module.exports = {
 Require (import) the css in your main file
 
 ```js
-import "font-awesome/css/font-awesome.css";
+import 'font-awesome/css/font-awesome.css';
 ```
 
 Add an icon in your html
@@ -605,11 +612,11 @@ And your icon is on your page!
 
 ## Plugins
 
-Global extentions on top of the WebPack functionality
+Global extensions on top of the WebPack functionality
 
 Plugin configuration
 
-```
+```js
 module.exports = {
     entry: './main.js',
     output: {
@@ -627,29 +634,79 @@ module.exports = {
 Injected variable into our javascript code:
 
 ```js
-const webpack = require("webpack");
+const { DefinePlugin } = require('webpack');
 ```
 
 ```js
-module.exports = {
-  entry: "./main.js",
-  output: {
-    filename: "bundle.js"
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV || "development")
-      }
-    })
-  ]
+module.exports = (env, args) => {
+    const devMode = args.mode !== 'production';
+
+    return {
+      entry: './main.js',
+      output: { ... },
+      module: { ... },
+      plugins: [
+        new DefinePlugin({
+          'process.env': {
+              NODE_ENV: JSON.stringify(devMode ? 'development' : 'production'),
+          }
+        })
+      ]
+    };
 };
 ```
 
 In your code you can use the variable:
 
 ```js
-console.log("Environment: ", process.env.NODE_ENV);
+console.log('Environment:', process.env.NODE_ENV);
+```
+
+<!-- prettier-ignore -->
+***
+
+## Clean Webpack Plugin
+
+Ensure we have a clean dist folder everytime we build
+
+Install
+
+```bash
+npm i --save-dev clean-webpack-plugin
+```
+
+Configure
+---HERE---
+
+```js
+// webpack.config.js
+
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+module.exports = (env, args) => {
+    const devMode = args.mode !== 'production';
+
+    return {
+      entry: './main.js',
+      output: { ... },
+      module: { ... },
+      plugins: [
+        new CleanWebpackPlugin({ }),
+        new DefinePlugin({
+          'process.env': {
+              NODE_ENV: JSON.stringify(devMode ? 'development' : 'production'),
+          }
+        })
+      ]
+    };
+```
+
+## Html Webpack Plugin
+
+Install
+
+```bash
+npm i --save-dev html-webpack-plugin
 ```
 
 <!-- prettier-ignore -->
@@ -657,20 +714,22 @@ console.log("Environment: ", process.env.NODE_ENV);
 
 ## Extract CSS
 
+Install
+
 ```bash
-# install
-yarn add mini-css-extract-plugin --dev
+npm i --save-dev mini-css-extract-plugin
 ```
 
 ```js
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 module.exports = {
   plugins: [
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: "[name].css",
-      chunkFilename: "[id].css"
+      filename: '[name].css',
+      chunkFilename: '[id].css'
     })
   ]
   // ...
@@ -692,7 +751,7 @@ module.exports = {
         use: [
           // need to add another loader
           MiniCssExtractPlugin.loader,
-          "css-loader"
+          'css-loader'
         ]
       }
     ];
@@ -708,7 +767,6 @@ module.exports = {
 - Utility
   - webpack.NoErrorsPlugin
   - html-webpack-plugin
-  - browser-sync-webpack-plugin
   - ...
 - Optimize
   - CopyWebpackPlugin
@@ -884,9 +942,9 @@ webpack.common.js
 ```js
 // config/webpack.common.js
 module.exports = {
-  entry: "main.js",
+  entry: 'main.js',
   resolve: {
-    extensions: [".ts", ".js"]
+    extensions: ['.ts', '.js']
   },
   module: {
     // common rules
@@ -931,7 +989,7 @@ webpack.prod.js
 ```js
 // config/webpack.prod.js
 module.exports = merge(commonConfig, {
-  devtool: "source-map",
+  devtool: 'source-map',
   module: {
     rules: [
       // prod only rules
@@ -949,13 +1007,13 @@ webpack.config.js
 
 ```js
 // webpack.config.js
-const env = process.env.NODE_ENV || "development";
+const env = process.env.NODE_ENV || 'development';
 function config() {
   switch (env) {
-    case "production":
-      return "prod";
-    case "development":
-      return "dev";
+    case 'production':
+      return 'prod';
+    case 'development':
+      return 'dev';
     default:
       throw new Error(`Invalid or unknow environment: ${env}`);
   }
@@ -997,13 +1055,13 @@ cross-env NODE_ENV=production webpack
 ```js
 module.exports = {
   entry: {
-    main: "./main.ts",
-    other: "./other.ts"
+    main: './main.ts',
+    other: './other.ts'
   },
   output: {
-    filename: "[name].js", // bundle output filename
-    path: __dirname + "/bundle",
-    publicPath: "bundle"
+    filename: '[name].js', // bundle output filename
+    path: __dirname + '/bundle',
+    publicPath: 'bundle'
   }
   // other stuff
 };
@@ -1015,7 +1073,7 @@ module.exports = {
 
 Books
 
-- [URVIVEJS — WEBPACK](https://survivejs.com/webpack/)
+- [SURVIVEJS — WEBPACK](https://survivejs.com/webpack/)
 
 Articles
 
