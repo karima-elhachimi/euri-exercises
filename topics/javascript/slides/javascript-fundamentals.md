@@ -807,8 +807,6 @@ More on this later!
 <!-- prettier-ignore -->
 ***
 
----here---
-
 # Exercise
 
 > Build a calculator module and use it the browser
