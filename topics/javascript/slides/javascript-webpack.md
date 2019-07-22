@@ -61,7 +61,7 @@ Use
 
 ```bash
 $ npx webpack --version
-4.35.3
+4.36.1
 ```
 
 <!-- prettier-ignore -->
@@ -124,12 +124,19 @@ A minimal config file
 
 ```js
 // webpack.config.js
-module.exports = {
-  entry: './main.js',
-  mode: 'development',
-  output: {
-    filename: 'bundle.js'
-  }
+const path = require('path');
+
+module.exports = (env, args) => {
+  const devMode = args.mode !== 'production';
+
+  return {
+    entry: './main.js',
+    output: {
+      filename: 'bundle.js',
+      path: path.resolve(__dirname, 'dist'),
+      publicPath: '/'
+    }
+  };
 };
 ```
 
@@ -141,17 +148,19 @@ module.exports = {
 Via command line (when installed globally)
 
 ```bash
-npx webpack         # for building once for development
-npx webpack -p      # for production (minification)
-npx webpack --watch # watch file changes and rebuild
+npx webpack --mode development   # for building once for development
+npx webpack --mode production    # for production (minification)
 ```
+
+> See [https://webpack.js.org/configuration/mode/](https://webpack.js.org/configuration/mode/) for more info
 
 Via npm script
 
 ```json
+// package.json
 "scripts": {
-    "build": "webpack",
-    "build:prod": "webpack -p"
+    "build": "webpack --mode development",
+    "build:prod": "webpack --mode production"
 }
 ```
 
@@ -163,9 +172,13 @@ Via npm script
 Open your app with [serve](https://www.npmjs.com/package/serve) or [live-server](https://www.npmjs.com/package/live-server)
 
 ```
-$ live-server
-Serving "/Users/me/temp/my-app" at http://127.0.0.1:8080
-Ready for changes
+# Install serve
+npm i -g serve
+
+$ serve ./dist/ -l 8080
+ Serving!
+   - Local:            http://localhost:8080
+   - On Your Network:  http://10.0.1.32:8080
 ```
 
 <!-- prettier-ignore -->
@@ -237,7 +250,7 @@ When running webpack we can see jquery is bundled with our own code.
 ```
 $ npx webpack --display-modules
 Hash: cb268c59b64d8a4edada
-Version: webpack 4.35.3
+Version: webpack 4.36.1
 Time: 288ms
 Built at: 2019-07-16 2:16:00 PM
     Asset     Size  Chunks             Chunk Names
@@ -271,7 +284,8 @@ $ npm i --save-dev webpack-dev-server
 // package.json
 {
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --mode development",
+    "build:prod": "webpack --mode production",
     "serve": "webpack-dev-server --open"
   }
 }
@@ -292,7 +306,7 @@ npm run serve
 ℹ ｢wds｣: Content not from webpack is served from /Users/tommarien/git/temp
 ℹ ｢wdm｣: wait until bundle finished: /
 ℹ ｢wdm｣: Hash: 92f69b0f972f8ddf052a
-Version: webpack 4.35.3
+Version: webpack 4.36.1
 Time: 584ms
 Built at: 2019-07-16 2:20:59 PM
     Asset     Size  Chunks             Chunk Names
@@ -316,47 +330,29 @@ Mark that no bundle file is created. All is done in memory.
 
 ```js
 // webpack.config.js
-module.exports = {
-    ...
-    output: {
-        filename: 'bundle.js',
-        publicPath: '/dist/'       // is required for webpack-dev-server
-    },
+const path = require('path');
+
+module.exports = (env, args) => {
+  const devMode = args.mode !== 'production';
+
+  return {
+    entry: './main.js',
+    output: {},
     devServer: {
-        historyApiFallback: true,  // support for html5 mode
-        noInfo: true,              // limit output
-        proxy: {                   // proxy all url from /api to ...
-            '/api': {
-                target: 'https://other-server.example.com',
-            }
+      historyApiFallback: true, // support for html5 mode
+      noInfo: true, // limit output
+      proxy: {
+        // proxy all url from /api to ...
+        '/api': {
+          target: 'https://other-server.example.com'
         }
+      }
     }
-    ...
-}
+  };
+};
 ```
 
 Additional config is provided via the webpack.config.js
-
-<!-- prettier-ignore -->
-***
-
-## Output to other folder
-
-```js
-    output: {
-        filename: 'bundle.js',
-        path: __dirname + '/bundle',  // separate folder
-        publicPath: '/bundle/'
-    },
-```
-
-The `publicPath` specifies the public URL address of the output files when referenced in a browser.
-
-Change the bundle folder in your html file
-
-```html
-<script src="bundle/bundle.js"></script>
-```
 
 ---
 
@@ -374,16 +370,19 @@ Webpack 'Rules' determine how the different types of modules (files) within a pr
 Rules configuration
 
 ```js
-module.exports = {
+// webpack.config.js
+const path = require('path');
+
+module.exports = (env, args) => {
+  const devMode = args.mode !== 'production';
+
+  return {
     entry: './main.js',
-    output: {
-        filename: 'bundle.js',
-        path: __dirname + '/bundle',
-        publicPath: '/bundle/'
-    },
+    output: {},
     module: {
-      rules: [...]         // <- add your rules here
+      rules: [] // <- add your rules here
     }
+  };
 };
 ```
 
@@ -419,23 +418,29 @@ Configure babel
 Configure babel-loader in webpack
 
 ```js
-  // webpack.config.js
-  output: {
-    ...
-  },
-  module: {
-    rules: [
+// webpack.config.js
+const path = require('path');
+
+module.exports = (env, args) => {
+  const devMode = args.mode !== 'production';
+
+  return {
+    entry: './main.js',
+    output: {},
+    module: {
+      rules: [
         {
-            test: /\.js$/,              // apply babel-loader for any js file
-            loader: 'babel-loader',
-            exclude: /node_modules/     // except in node_modules
+          test: /\.js$/, // apply babel-loader for any js file
+          loader: 'babel-loader',
+          exclude: /node_modules/ // except in node_modules
         }
-    ]
-  }
-  ...
+      ]
+    }
+  };
+};
 ```
 
-> More information about the babel-loader see: [https://github.com/babel/babel-loader](https://github.com/babel/babel-loader)
+> For more information see [babel-loader](https://github.com/babel/babel-loader)
 
 <!-- prettier-ignore -->
 ***
@@ -451,8 +456,11 @@ npm i --save-dev style-loader css-loader
 
 Add the css rule in your webpack.config.js
 
-```json
-{ "test": /\.css$/, "loader": "style-loader!css-loader" }
+```js
+{
+  test: /\.css$/,
+  loader: 'style-loader!css-loader'
+}
 ```
 
 Add a style sheet
@@ -497,9 +505,9 @@ Install loader (and dependencies):
 npm i --save-dev sass-loader node-sass
 ```
 
-Add the rule in your webpack.config.js
+Adapt the rule in your webpack.config.js
 
-```javascript
+```js
 {
   test:  /\.(sa|sc|c)ss$/,
   loader: 'style-loader!css-loader!sass-loader'
@@ -562,20 +570,26 @@ npm i --save-dev url-loader
 Config in webpack
 
 ```js
-module.exports = {
-  module: {
-    rules: [
-      // ....
-      {
-        test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-        loader: 'file-loader'
-      },
-      {
-        test: /\.(png|jpg|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?limit=4000'
-      }
-    ]
-  }
+module.exports = (env, args) => {
+  const devMode = args.mode !== 'production';
+
+  return {
+    entry: './main.js',
+    output: {},
+    module: {
+      rules: [
+        // ...
+        {
+          test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+          loader: 'file-loader'
+        },
+        {
+          test: /\.(png|jpg|svg)(\?v=\d+\.\d+\.\d+)?$/,
+          loader: 'url-loader?limit=4000'
+        }
+      ]
+    }
+  };
 };
 ```
 
@@ -617,12 +631,18 @@ Global extensions on top of the WebPack functionality
 Plugin configuration
 
 ```js
-module.exports = {
+// webpack.config.js
+module.exports = (env, args) => {
+  const devMode = args.mode !== 'production';
+
+  return {
     entry: './main.js',
-    output: {
-        filename: 'bundle.js'
+    output: {},
+    module: {
+      rules: []
     },
-    plugins: [...]         // <- add your plugins here
+    plugins: [] // <- add your plugins here
+  };
 };
 ```
 
@@ -631,36 +651,46 @@ module.exports = {
 
 ### Add predefined variables
 
-Injected variable into our javascript code:
+Inject the variable into our javascript code:
 
 ```js
+// webpack.config.js
 const { DefinePlugin } = require('webpack');
-```
+const packageJson = require('./package.json');
 
-```js
 module.exports = (env, args) => {
-    const devMode = args.mode !== 'production';
+  const devMode = args.mode !== 'production';
 
-    return {
-      entry: './main.js',
-      output: { ... },
-      module: { ... },
-      plugins: [
-        new DefinePlugin({
-          'process.env': {
-              NODE_ENV: JSON.stringify(devMode ? 'development' : 'production'),
-          }
-        })
-      ]
-    };
+  return {
+    entry: './main.js',
+    output: {},
+    module: {
+      rules: []
+    },
+    plugins: [
+      new DefinePlugin({
+        VERSION: JSON.stringify(packageJson.version)
+      })
+    ]
+  };
 };
 ```
 
-In your code you can use the variable:
+<!-- prettier-ignore -->
+***
+
+### Add predefined variables
+
+From now on you can use the predefined variable in your code:
 
 ```js
+console.log('Version:', VERSION);
+
+// Coming from the webpack mode preset ;)
 console.log('Environment:', process.env.NODE_ENV);
 ```
+
+> Attention: These variables are injected into webpack at compile-time not at runtime !
 
 <!-- prettier-ignore -->
 ***
@@ -669,52 +699,114 @@ console.log('Environment:', process.env.NODE_ENV);
 
 Ensure we have a clean dist folder everytime we build
 
-Install
-
 ```bash
 npm i --save-dev clean-webpack-plugin
 ```
 
-Configure
----HERE---
-
 ```js
 // webpack.config.js
-
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = (env, args) => {
-    const devMode = args.mode !== 'production';
+  const devMode = args.mode !== 'production';
 
-    return {
-      entry: './main.js',
-      output: { ... },
-      module: { ... },
-      plugins: [
-        new CleanWebpackPlugin({ }),
-        new DefinePlugin({
-          'process.env': {
-              NODE_ENV: JSON.stringify(devMode ? 'development' : 'production'),
-          }
-        })
-      ]
-    };
-```
-
-## Html Webpack Plugin
-
-Install
-
-```bash
-npm i --save-dev html-webpack-plugin
+  return {
+    entry: './main.js',
+    output: {},
+    module: {
+      rules: []
+    },
+    plugins: [new CleanWebpackPlugin()]
+  };
+};
 ```
 
 <!-- prettier-ignore -->
 ***
 
-## Extract CSS
+## Html Webpack Plugin
 
-Install
+```bash
+npm i --save-dev html-webpack-plugin
+```
+
+```js
+// webpack.config.js
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = (env, args) => {
+  const devMode = args.mode !== 'production';
+
+  return {
+    entry: './main.js',
+    output: {},
+    module: {
+      rules: []
+    },
+    plugins: [
+      new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        template: 'index.html'
+      })
+    ]
+  };
+};
+```
+
+<!-- prettier-ignore -->
+***
+
+## Html Webpack Plugin
+
+Now remove the hardcoded bundle.js script
+
+```html
+// index.html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Webpack 101</title>
+  </head>
+
+  <body>
+    <h1>Webpack 101</h1>
+    <i class="fa fa-font-awesome fa-5x"></i>
+    <ul id="list" />
+  </body>
+</html>
+```
+
+<!-- prettier-ignore -->
+***
+
+## Html Webpack Plugin
+
+And remove the hardcoded filename
+
+```js
+// webpack.config.js
+module.exports = (env, args) => {
+  const devMode = args.mode !== 'production';
+
+  return {
+    entry: './main.js',
+    output: {
+      filename: devMode ? '[name].js' : '[name].[contenthash].js',
+      path: path.resolve(__dirname, 'dist'),
+      publicPath: '/'
+    }
+  };
+};
+```
+
+> Rerun build or build:prod and check your index.html in your dist
+
+<!-- prettier-ignore -->
+***
+
+## Extract CSS
 
 ```bash
 npm i --save-dev mini-css-extract-plugin
@@ -723,16 +815,24 @@ npm i --save-dev mini-css-extract-plugin
 ```js
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-module.exports = {
-  plugins: [
-    new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // both options are optional
-      filename: '[name].css',
-      chunkFilename: '[id].css'
-    })
-  ]
-  // ...
+module.exports = (env, args) => {
+  const devMode = args.mode !== 'production';
+
+  return {
+    entry: './main.js',
+    output: {},
+    module: {
+      rules: []
+    },
+    plugins: [
+      new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: devMode ? '[name].css' : '[name].[contenthash].css',
+        chunkFilename: devMode ? '[id].css' : '[id].[contenthash].css'
+      })
+    ]
+  };
 };
 ```
 
@@ -742,21 +842,32 @@ module.exports = {
 ## Extract CSS - Next
 
 ```js
-{
-  // ...
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: [
-          // need to add another loader
-          MiniCssExtractPlugin.loader,
-          'css-loader'
-        ]
-      }
-    ];
-  }
-}
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+module.exports = (env, args) => {
+  const devMode = args.mode !== 'production';
+
+  return {
+    // ...
+    module: {
+      rules: [
+        {
+          test: /\.(sa|sc|c)ss$/,
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                hmr: devMode
+              }
+            },
+            'css-loader',
+            'sass-loader'
+          ]
+        }
+      ]
+    }
+  };
+};
 ```
 
 <!-- prettier-ignore -->
@@ -766,7 +877,6 @@ module.exports = {
 
 - Utility
   - webpack.NoErrorsPlugin
-  - html-webpack-plugin
   - ...
 - Optimize
   - CopyWebpackPlugin
@@ -777,7 +887,7 @@ module.exports = {
 
 # Optimization
 
-> Make a bundle as small as possible
+> Make the bundles as small as possible ;)
 
 <!-- prettier-ignore -->
 ***
@@ -786,23 +896,21 @@ module.exports = {
 
 ```bash
 # build in production mode
-webpack --mode production
-Hash: 619832e9711bc171e04e
-Version: webpack 4.28.2
-Time: 1048ms
-Built at: 2019-01-02 10:11:51
-                                 Asset      Size  Chunks                    Chunk Names
-  36d50c1381fda7c71d12b6643cbe1ee0.svg  82 bytes          [emitted]
-  674f50d287a8c48dc19ba404d20fe713.eot   162 KiB          [emitted]
-  912ec66d7572ff821749319396470bde.svg   434 KiB          [emitted]
-af7ae505a9eed503f8b8e6982036873e.woff2  75.4 KiB          [emitted]
-  b06871f281fee6b241d60582ae9369b9.ttf   162 KiB          [emitted]
-                             bundle.js  7.03 KiB       0  [emitted]         main
- fee66e712a8a08eef5805a46892932ad.woff  95.7 KiB          [emitted]
-                              main.css  36.5 KiB       0  [emitted]         main
+> webpack --mode production
+
+Hash: fb0e356904a3e6815730
+Version: webpack 4.36.1
+Time: 1300ms
+Built at: 2019-07-22 1:12:36 PM
+                        Asset       Size  Chunks             Chunk Names
+                   index.html  361 bytes          [emitted]
+main.1a63d372150498d5fee3.css  991 bytes       0  [emitted]  main
+ main.d07678198354a1145eaa.js   87.8 KiB       0  [emitted]  main
+Entrypoint main = main.1a63d372150498d5fee3.css main.d07678198354a1145eaa.js
+
 ```
 
-bundle.js = 7.03KB, main.css = 36.5KB
+main.js = 87.8Kib, main.css = 991 bytes
 
 ### Webpack will automatically optimize the JS but NOT the CSS.
 
@@ -813,17 +921,25 @@ bundle.js = 7.03KB, main.css = 36.5KB
 
 ```bash
 # install plugin
-yarn add optimize-css-assets-webpack-plugin --dev
+npm i --save-dev optimize-css-assets-webpack-plugin
 ```
 
 ```js
-const TerserPlugin = require("terser-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-module.exports = {
-  optimization: {
-    minimizer: [
-       new OptimizeCSSAssetsPlugin({}),
+module.exports = (env, args) => {
+  const devMode = args.mode !== 'production';
+
+  return {
+    entry: './main.js',
+    output: {},
+    module: {},
+    plugins: [
+      // ..
+      new MiniCssExtractPlugin({}),
+      devMode ? undefined : new OptimizeCssAssetsPlugin()
     ]
+  };
 };
 ```
 
@@ -835,86 +951,24 @@ See more at [optimize-css-assets-webpack-plugin](https://github.com/NMFR/optimiz
 ## Result
 
 ```bash
-# build in production mode + CSS Optimize
-webpack --mode production
-Hash: a6fe9d86c303d1489f56
-Version: webpack 4.28.2
-Time: 2115ms
-Built at: 2019-01-02 10:18:10
-                                 Asset      Size  Chunks                    Chunk Names
-  36d50c1381fda7c71d12b6643cbe1ee0.svg  82 bytes          [emitted]
-  674f50d287a8c48dc19ba404d20fe713.eot   162 KiB          [emitted]
-  912ec66d7572ff821749319396470bde.svg   434 KiB          [emitted]
-af7ae505a9eed503f8b8e6982036873e.woff2  75.4 KiB          [emitted]
-  b06871f281fee6b241d60582ae9369b9.ttf   162 KiB          [emitted]
-                             bundle.js  20.8 KiB       0  [emitted]         main
- fee66e712a8a08eef5805a46892932ad.woff  95.7 KiB          [emitted]
-                              main.css  30.3 KiB       0  [emitted]         main
+> webpack --mode production
 
+Hash: fb0e356904a3e6815730
+Version: webpack 4.36.1
+Time: 1356ms
+Built at: 2019-07-22 1:33:59 PM
+                        Asset       Size  Chunks             Chunk Names
+                   index.html  361 bytes          [emitted]
+main.1a63d372150498d5fee3.css  796 bytes       0  [emitted]  main
+ main.d07678198354a1145eaa.js   87.8 KiB       0  [emitted]  main
+Entrypoint main = main.1a63d372150498d5fee3.css main.d07678198354a1145eaa.js
 ```
-
-bundle.js = 20.8KB, main.css = 30.3KB
-
-CSS is optimized, but JS is bigger now!!!
-We need to manually configure the JS optimize.
-
-<!-- prettier-ignore -->
-***
-
-## Optimize JS
-
-```bash
-# install plugin
-yarn add terser-webpack-plugin --dev
-```
-
-```js
-const TerserPlugin = require("terser-webpack-plugin");
-
-module.exports = {
-  optimization: {
-    minimizer: [new TerserPlugin(
-      cache: true,
-         parallel: true,
-         sourceMap: true, // set to true if you want JS source maps
-       }),
-       new OptimizeCSSAssetsPlugin({}),
-    ]
-};
-```
-
-[terser-webpack-plugin](https://github.com/webpack-contrib/terser-webpack-plugin)
-
-<!-- prettier-ignore -->
-***
-
-## Result
-
-```bash
-# build in production mode + CSS & JS Optimize
-webpack --mode production
-Hash: 619832e9711bc171e04e
-Version: webpack 4.28.2
-Time: 1499ms
-Built at: 2019-01-02 10:22:47
-                                 Asset      Size  Chunks                    Chunk Names
-  36d50c1381fda7c71d12b6643cbe1ee0.svg  82 bytes          [emitted]
-  674f50d287a8c48dc19ba404d20fe713.eot   162 KiB          [emitted]
-  912ec66d7572ff821749319396470bde.svg   434 KiB          [emitted]
-af7ae505a9eed503f8b8e6982036873e.woff2  75.4 KiB          [emitted]
-  b06871f281fee6b241d60582ae9369b9.ttf   162 KiB          [emitted]
-                             bundle.js  7.03 KiB       0  [emitted]         main
- fee66e712a8a08eef5805a46892932ad.woff  95.7 KiB          [emitted]
-                              main.css  30.3 KiB       0  [emitted]         main
-```
-
-bundle.js = 7.03KB, main.css = 30.3KB
 
 ---
 
-# More advanced setup
+# More advanced
 
-> A more production ready config
+> There is more ;)
 
 <!-- prettier-ignore -->
 ***
@@ -924,102 +978,39 @@ bundle.js = 7.03KB, main.css = 30.3KB
 Choose a developer tool to enhance debugging.
 
 ```js
-module.exports = {
-    ...
-    devtool: 'sourcemap'
-}
+module.exports = (env, args) => {
+  const devMode = args.mode !== 'production';
+
+  return {
+    entry: './main.js',
+    devtool: devMode ? 'cheap-module-source-map' : 'source-map',
+    output: {},
+    module: {}
+    //..
+  };
+};
 ```
 
-See https://webpack.github.io/docs/configuration.html#devtool
+See https://webpack.js.org/configuration/devtool
 
 <!-- prettier-ignore -->
 ***
 
 ## Build for other environments
 
-webpack.common.js
+Resolve other extension
 
 ```js
 // config/webpack.common.js
 module.exports = {
   entry: 'main.js',
   resolve: {
-    extensions: ['.ts', '.js']
-  },
-  module: {
-    // common rules
-  },
-  plugins: [
-    // common plugins
-  ]
+    extensions: ['.js', '.jsx', '.json']
+  }
 };
 ```
 
-<!-- prettier-ignore -->
-***
-
-### Build for other environments
-
-webpack.dev.js
-
-```js
-// congig/webpack.dev.js
-const merge = require('webpack-merge');
-const commonConfig = require('./webpack.common.js');
-module.exports = merge(commonConfig, {
-    devtool: 'cheap-module-eval-source-map',
-    module: {
-        rules: [
-            // dev only rules
-        ]
-    },
-    devServer: {
-        ...
-    }
-})
-```
-
-<!-- prettier-ignore -->
-***
-
-### Build for other environments
-
-webpack.prod.js
-
-```js
-// config/webpack.prod.js
-module.exports = merge(commonConfig, {
-  devtool: 'source-map',
-  module: {
-    rules: [
-      // prod only rules
-    ]
-  }
-});
-```
-
-<!-- prettier-ignore -->
-***
-
-### Build for other environments
-
-webpack.config.js
-
-```js
-// webpack.config.js
-const env = process.env.NODE_ENV || 'development';
-function config() {
-  switch (env) {
-    case 'production':
-      return 'prod';
-    case 'development':
-      return 'dev';
-    default:
-      throw new Error(`Invalid or unknow environment: ${env}`);
-  }
-}
-module.exports = require(`./config/webpack.${config()}.js`);
-```
+> See https://webpack.js.org/configuration/resolve
 
 <!-- prettier-ignore -->
 ***
@@ -1027,6 +1018,10 @@ module.exports = require(`./config/webpack.${config()}.js`);
 ## Build for other environments
 
 Use
+
+```
+npm i --save-dev cross-env
+```
 
 ```bash
 # OSX
@@ -1045,26 +1040,6 @@ cross-env NODE_ENV=production webpack
 "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
 }
-```
-
-<!-- prettier-ignore -->
-***
-
-## Multiple bundles
-
-```js
-module.exports = {
-  entry: {
-    main: './main.ts',
-    other: './other.ts'
-  },
-  output: {
-    filename: '[name].js', // bundle output filename
-    path: __dirname + '/bundle',
-    publicPath: 'bundle'
-  }
-  // other stuff
-};
 ```
 
 ---

@@ -30,7 +30,7 @@ module.exports = (env, args) => {
   const isProduction = args.mode === 'production';
 
   const config = {
-    devtool: isProduction ? 'source-map' : '#cheap-module-eval-source-map',
+    devtool: isProduction ? 'source-map' : 'cheap-module-source-map',
     entry: [polyfillsEntry, mainEntry],
     resolve: {
       extensions: ['.js', '.jsx', '.json'],

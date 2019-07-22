@@ -7,5 +7,5 @@
 - [ ] [Async Javascript](./javascript-async.md)
 - [ ] [Javascript Modern Features](./javascript-modern.md)
 - [ ] [Javascript Unit Testing](./javascript-unit-testing.md)
-- [x] [Unit Testing Kata](./javascript-kata.md)
-- [ ] [Webpack](./javascript-webpack.md)
+- [X] [Unit Testing Kata](./javascript-kata.md)
+- [X] [Webpack](./javascript-webpack.md)
