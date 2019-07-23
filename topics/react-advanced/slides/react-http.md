@@ -117,7 +117,7 @@ const api = axios.create({
 export default api;
 ```
 
-Use it
+... and use it
 
 ```js
 // api/user.js
@@ -216,8 +216,237 @@ function MyComponent() {
 export default MyComponent;
 ```
 
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
 ---
 
-### Axios Mock Adapter
+### How to test code using axios?
 
----HERE
+- A manual mock ([jest-mock-axios](https://www.npmjs.com/package/jest-mock-axios))
+- [nock](https://www.npmjs.com/package/nock)
+- [axios-mock-adapter](https://www.npmjs.com/package/axios-mock-adapter)
+
+---//
+
+#### jest-mock-axios
+
+```bash
+npm i --save-dev jest-mock-axios
+```
+
+Create the manual mock
+
+```js
+// src/__mocks__/axios.js
+import mockAxios from 'jest-mock-axios';
+
+export default mockAxios;
+```
+
+---//
+
+#### jest-mock-axios
+
+```js
+// api/users.spec.js
+import mockAxios from 'jest-mock-axios';
+import userApi from './users';
+
+describe('users api', () => {
+  afterEach(() => mockAxios.reset()); // Reset the mock
+
+  describe('getUsers', () => {
+    test('it returns the res.data', async () => {
+      const pattyBouvier = {
+        lastName: 'Bouvier',
+        firstName: 'Patty',
+        id: 6
+      };
+
+      const promise = userApi.getUsers();
+
+      mockAxios.mockResponse({
+        data: [pattyBouvier]
+      });
+
+      const result = await promise;
+
+      expect(mockAxios.get).toHaveBeenCalledWith('users');
+      expect(result).toEqual([pattyBouvier]);
+    });
+  });
+});
+```
+
+---//
+
+#### jest-mock-axios
+
+- odd api
+- seems overly complicated
+- will get complex fast with multiple api calls
+
+---//
+
+#### nock
+
+```bash
+npm i --save-dev nock
+```
+
+```js
+import nock from 'nock';
+import userApi from './users';
+
+describe('users api', () => {
+  describe('getUsers', () => {
+    test('it returns the res.data', async () => {
+      const pattyBouvier = {
+        lastName: 'Bouvier',
+        firstName: 'Patty',
+        id: 6
+      };
+
+      nock('http://localhost:3000')
+        .get('/users')
+        .reply(200, [pattyBouvier]);
+
+      const result = await userApi.getUsers();
+
+      expect(result).toEqual([pattyBouvier]);
+    });
+  });
+});
+```
+
+---//
+
+#### nock
+
+- it is library agnostic
+- you can provide expected response before invoking code
+
+---//
+
+#### axios-mock-adapter
+
+```bash
+npm i --save-dev axios-mock-adapter
+```
+
+```js
+// ./api/users.spec.js
+import MockAdapter from 'axios-mock-adapter';
+
+import api from './user-api-client';
+import userApi from './users';
+
+describe('users api', () => {
+  /** @type {MockAdapter} */
+  let mock;
+
+  beforeEach(() => {
+    mock = new MockAdapter(api);
+  });
+
+  afterEach(() => mock.reset());
+});
+```
+
+---//
+
+#### axios-mock-adapter
+
+```js
+describe('getUsers', () => {
+  test('it returns the res.data', async () => {
+    const pattyBouvier = {
+      lastName: 'Bouvier',
+      firstName: 'Patty',
+      id: 6
+    };
+
+    mock.onGet('http://localhost:3000/users').reply(200, [pattyBouvier]);
+
+    const result = await userApi.getUsers();
+
+    expect(result).toEqual([pattyBouvier]);
+  });
+});
+```
+
+---//
+
+#### axios-mock-adapter
+
+- by default all api request respond with 404
+- full axios support
+
+---
+
+### Exercises
+
+#### Rules
+
+- write the functions in a tdd fashion, so write tests first
+- use nock or axios-mock-adapter
+- make the code/tests as clean as possible
+
+---//
+
+#### 1. getById
+
+```curl
+GET http://localhost:3000/users/:id
+```
+
+Map to following shape
+
+```js
+/**
+ * @typedef {Object} StoredUser
+ * @property {number} id
+ * @property {String} firstName
+ * @property {String} lastName
+ * @property {Date} [birthDate]
+ * @property {'M'|'F'} gender
+ * @property {Boolean} isFamily
+ */
+```
+
+---//
+
+#### 2. listPaged
+
+```curl
+GET http://localhost:3000/users
+```
+
+```js
+function listPaged(page, limit = 10) {
+  return {
+    total: 0,
+    data: []
+  };
+}
+```
+
+- sort the data on lastName,firstName
+- the response header X-Total-Count contains the total of items
+- data is in the same shape as exercise 1
+
+---//
+
+#### 3. save
+
+```curl
+POST http://localhost:3000/users
+PUT http://localhost:3000/users/:id
+```
+
+```js
+function save(user) {}
+```
+
+- if the user has an id use a PUT request, otherwise use POST
+- return the stored user

@@ -1,6 +1,6 @@
 # React Advanced
 
-- [ ] [HTTP](./slides/react-http.md)
+- [X] [Http](./slides/react-http.md)
 - [ ] [React Resting Library](./slides/react-rtl.md)
 - [ ] [React Router](./slides/react-router.md)
 - [ ] [Forms](./slides/react-forms.md)
