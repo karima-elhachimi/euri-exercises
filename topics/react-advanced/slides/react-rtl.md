@@ -646,7 +646,7 @@ Create the following async component
 </button>
 ```
 
-- render loading as badge content by default
+- render ??? as badge content by default
 - reuse the button component
 - create a badge component if you want ;)
 - use the listPaged from react-http exercise as starting point to get the total amount of users
