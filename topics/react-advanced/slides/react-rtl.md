@@ -23,7 +23,7 @@ Copyright (c) 2019 Euricom nv.
 
 ### Guiding Principles
 
-1. If it relates to rendering components, it deals with DOM nodes rather than component instances, nor should it encourage dealing with component instances.
+1. If it relates to rendering components, it deals with DOM nodes rather than component instances.
 2. It should be generally useful for testing individual React components or full React applications.
 3. Utility implementations and APIs should be simple and flexible.
 
@@ -204,7 +204,7 @@ export default Alert;
 
 #### cleanup
 
-Failing to call cleanup when you've called render could result in a memory leak and tests which are not "idempotent" (which can lead to difficult to debug errors in your tests).
+Failing to call cleanup when you've called render could result in a memory leak and tests which are not "idempotent" (which can lead to difficult to debug errors).
 
 ```js
 // ./components/alert.spec.jsx
@@ -251,35 +251,33 @@ import '@testing-library/react/cleanup-after-each';
 ```js
 // ./components/alert.spec.jsx
 import React from 'react';
-import { render, within } from '@testing-library/react';
+import { render, within, fireEvent } from '@testing-library/react';
 
 import Alert from './alert';
 
-test('it renders the alert', () => {
-  const { getByRole } = render(<Alert>Message</Alert>);
+describe('Alert component', () => {
+  test('it renders the alert', () => {
+    const { getByRole } = render(
+      <Alert>
+        <div data-testid="child" />
+      </Alert>
+    );
 
-  const alert = getByRole('alert');
+    // verify rendering
+    const alert = getByRole('alert');
+    expect(alert).toHaveClass('alert', 'alert-primary');
 
-  expect(alert).toHaveClass('alert', 'alert-primary');
-});
+    // verify it renders children
+    const { getByTestId } = within(alert);
+    getByTestId('child');
+  });
 
-test('it renders the children', () => {
-  const { getByRole } = render(
-    <Alert>
-      <div data-testid="child" />
-    </Alert>
-  );
+  test('it allows to specify a variant', () => {
+    const { getByRole } = render(<Alert variant="danger">My Message</Alert>);
+    const alert = getByRole('alert');
 
-  const { getByTestId } = within(getByRole('alert'));
-
-  getByTestId('child');
-});
-
-test('it can render in a different variant', () => {
-  const { getByRole } = render(<Alert variant="danger">Boeh</Alert>);
-  const alert = getByRole('alert');
-
-  expect(alert).toHaveClass('alert', 'alert-danger');
+    expect(alert).toHaveClass('alert', 'alert-danger');
+  });
 });
 ```
 
@@ -352,12 +350,246 @@ test('it renders the alert', () => {
   expect(alert).toHaveClass('alert', 'alert-secondary');
 });
 ```
+
 ---
+
 ### Firing events
+
+```js
+import { fireEvent } from '@testing-library/react';
+```
+
+> The story continues to make our alert component dismissible
+
+---//
+
+#### Firing events
+
+```js
+// ./components/alert.spec.jsx
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react';
+
+import Alert from './alert';
+
+describe('Alert component', () => {
+  // ...
+
+  test('it renders as dismissible', () => {
+    const { getByRole, container } = render(
+      <Alert dismissible>My message</Alert>
+    );
+
+    // it adds the class
+    const alert = getByRole('alert');
+    expect(alert).toHaveClass('alert-dismissible');
+  });
+});
+```
+
+---//
+
+#### Firing events - dismissible class
+
+```js
+function Alert({ children, dismissible, variant }) {
+  return (
+    <div
+      className={classNames('alert', {
+        [`alert-${variant}`]: true,
+        'alert-dismissible': dismissible
+      })}
+      role="alert"
+    >
+      {children}
+    </div>
+  );
+}
+
+Alert.propTypes = {
+  //...
+  dismissible: bool
+};
+
+Alert.defaultProps = {
+  dismissible: undefined
+};
+```
+
+---//
+
+#### Firing events - button
+
+```js
+test('it renders as dismissible', () => {
+  const { getByRole, container } = render(
+    <Alert dismissible>My message</Alert>
+  );
+
+  // it adds the class
+  const alert = getByRole('alert');
+  expect(alert).toHaveClass('alert-dismissible');
+
+  // it adds a button
+  const button = container.querySelector('button[aria-label="Close"]');
+  expect(button).toBeInTheDocument();
+});
+```
+
+---//
+
+#### Firing events - button
+
+```js
+// ./components/alert.jsx
+{
+  dismissible && (
+    <button type="button" className="close" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  );
+}
+```
+
+---//
+
+#### Firing events -button
+
+```js
+import { render, fireEvent } from '@testing-library/react';
+
+test('it renders as dismissible', () => {
+  const { getByRole, container } = render(
+    <Alert dismissible>My message</Alert>
+  );
+
+  const alert = getByRole('alert');
+  // ...
+
+  // it adds a button
+  const button = container.querySelector('button[aria-label="Close"]');
+  expect(button).toBeInTheDocument();
+
+  fireEvent.click(button);
+
+  expect(alert).not.toBeInTheDocument();
+});
+```
+
+> Let's make it work ;)
 
 ---
 
 ### Waiting for something
+
+> see https://testing-library.com/docs/dom-testing-library/api-async
+
+---//
+
+#### Waiting for something
+
+- wait (Promise) retry the function within until it stops throwing or times out
+- waitForElement (Promise) retry the function until it returns an element or an array of elements
+
+  - findBy and findAllBy queries are async and retry
+
+- waitForDomChange (Promise) retry the function each time the DOM is changed
+- waitForElementToBeRemoved (Promise) retry the function until it no longer returns a DOM node
+
+---//
+
+#### Waiting for something
+
+What if dismissing of our alert came with a small delay?
+
+```js
+function Alert({ children, dismissible, variant }) {
+  const [dismissed, setDismissed] = useState(false);
+
+  const dismiss = () => {
+    setTimeout(() => {
+      setDismissed(true);
+    }, 50);
+  };
+
+  if (dismissed) return null;
+  // ...
+}
+```
+
+> Our test would start failing!
+
+---//
+
+#### Waiting for something - failing test
+
+```js
+import { render, fireEvent } from '@testing-library/react';
+
+test('it renders as dismissible', () => {
+  const { getByRole, container } = render(
+    <Alert dismissible>My message</Alert>
+  );
+
+  // it adds a button
+  const button = container.querySelector('button[aria-label="Close"]');
+  fireEvent.click(button);
+
+  // ==> FAILS ON THIS LINE
+  expect(alert).not.toBeInTheDocument();
+});
+```
+
+---//
+
+#### Waiting for something - make the test work
+
+```js
+test('it renders as dismissible', async () => {
+  const { getByRole, queryByRole, container } = render(
+    <Alert dismissible>My message</Alert>
+  );
+
+  // it adds the class
+  const alert = getByRole('alert');
+
+  const button = container.querySelector('button[aria-label="Close"]');
+
+  fireEvent.click(button);
+
+  await waitForElementToBeRemoved(() => queryByRole('alert'));
+});
+```
+
+> Warning: An update to Alert inside a test was not wrapped in act(...).
+
+---//
+
+#### Waiting for something - make the test work
+
+This is a known [issue](https://github.com/testing-library/react-testing-library/issues/281) that will be solved in React 16.9.0
+
+```js
+// jest.setup.js
+
+// Remove this after react 16.9.0
+// Silence a warning that we'll get until react
+// fixes this: https://github.com/facebook/react/pull/14853
+const originalError = console.error;
+
+beforeAll(() => {
+  console.error = (...args) => {
+    if (/Warning.*not wrapped in act/.test(args[0])) {
+      return;
+    }
+    originalError.call(console, ...args);
+  };
+});
+
+afterAll(() => {
+  console.error = originalError;
+});
+```
 
 ---
 
