@@ -92,6 +92,8 @@ function App() {
     </Router>
   );
 }
+
+export default App;
 ```
 
 ---//
@@ -105,3 +107,143 @@ function App() {
 ```jsx
 <Route path="/" exact component={Home} />
 ```
+
+---//
+
+#### Route - nesting
+
+```jsx
+import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+const Home = ({ ...props }) => console.log(props) || <h1>Home</h1>;
+const Product = () => <h1>List</h1>;
+const ProductDetail = ({ id }) => <h1>Detail {id}</h1>;
+
+function App() {
+  return (
+    <Router>
+      <Route path="/" exact component={Home} />
+      <Route
+        path="/product"
+        render={({ match: { url } }) => (
+          <>
+            <Route path={`${url}/`} component={Product} exact />
+            <Route
+              path={`${url}/:id([0-9]+)`}
+              render={({ match }) => <ProductDetail id={match.params.id} />}
+            />
+          </>
+        )}
+      />
+    </Router>
+  );
+}
+
+export default App;
+```
+
+---
+
+### Switch
+
+> Renders the first Route (or redirect) that matches that location
+
+👁️ **Switch** is unique in that it renders a route exclusively. In contrast, every **Route** that matches the location renders inclusively.
+
+---//
+
+#### Switch
+
+```jsx
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+const Home = ({ ...props }) => console.log(props) || <h1>Home</h1>;
+
+const Product = () => <h1>List</h1>;
+const ProductDetail = ({ id }) => <h1>Detail {id}</h1>;
+const NotFound = () => <h1>NotFound</h1>;
+
+function App() {
+  return (
+    <Router>
+      <Switch>
+        <Route path="/" component={Home} exact />
+        <Route path="/product" exact component={Product} />
+        <Route
+          path="/product/:id([0-9]+)"
+          render={({ match }) => <ProductDetail id={match.params.id} />}
+        />
+        <Route component={NotFound} />
+      </Switch>
+    </Router>
+  );
+}
+```
+
+---
+
+### withRouter
+
+---
+
+### Navigating
+
+#### Link
+
+#### Programmatically
+
+---
+
+### Prompt
+
+---
+
+### Redirect
+
+---
+
+### React Testing Library?
+
+```bash
+npm i --save-dev history
+```
+
+```jsx
+// ./src/test/react-testing-helpers
+import React from 'react';
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router-dom';
+import { render } from '@testing-library/react';
+
+export function renderWithRouter(
+  ui,
+  {
+    route = '/',
+    history = createMemoryHistory({
+      initialEntries: [route]
+    })
+  } = {}
+) {
+  return {
+    ...render(ui, {
+      wrapper: props => <Router {...props} history={history} />
+    }),
+    // adding `history` to the returned utilities to allow us
+    // to reference it in our tests (just try to avoid using
+    // this to test implementation details).
+    history
+  };
+}
+```
+
+---
+
+### Resources
+
+> See https://reacttraining.com/react-router/web/guides/quick-start
+
+---
+
+### Exercises
