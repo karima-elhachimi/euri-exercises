@@ -60,7 +60,7 @@ There are 3 ways to render something with a route:
 
 ---//
 
-#### Route - route props
+#### Route - props
 
 All 3 methods will passed the same 3 route props
 
@@ -70,4 +70,38 @@ All 3 methods will passed the same 3 route props
 
 ```js
 const Home = ({ ...props }) => console.log(props) || <h1>Home</h1>;
+```
+
+---//
+
+#### Route - path
+
+Any valid URL path or array of paths that [path-to-regexp](https://github.com/pillarjs/path-to-regexp/tree/v1.7.0) understands.
+
+```jsx
+const ProductDetail = ({ id }) => <h1>Detail {id}</h1>;
+
+function App() {
+  return (
+    <Router>
+      <Route path="/" component={Home} />
+      <Route
+        path="/product/:id([0-9]+)"
+        render={({ match }) => <ProductDetail id={match.params.id} />}
+      />
+    </Router>
+  );
+}
+```
+
+---//
+
+#### Route - exact
+
+> Oops both routes matched when navigating to /product/11 💩
+
+🛠️ Add the **exact** modifier
+
+```jsx
+<Route path="/" exact component={Home} />
 ```
