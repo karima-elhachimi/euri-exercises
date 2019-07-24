@@ -616,5 +616,37 @@ Create an supplementary AlertHeader component according to [bootstrap spec](http
 - should have role heading (implicit)
 - element type should be a h4
 - should have class alert-heading
-- use as less propType declarations as possible
+- should be able to render children
 - should be able to add classes trough className prop
+
+---//
+
+#### 2. Button
+
+Create a button component that implement [bootstrap spec](https://getbootstrap.com/docs/4.3/components/buttons/)
+
+- variants: primary(default), secondary or link
+- size: small or large, default is none
+- type: button (default <=> react), submit or reset
+- should be able to add classes trough className prop
+- use as less propType declarations as possible
+- should be able to render children
+- should be able to provide disabled
+- should be able to provide onClick
+
+---//
+
+#### 3. User Counter Badge
+
+Create the following async component
+
+```html
+<button type="button" class="btn btn-primary">
+  Users <span class="badge badge-light">4</span>
+</button>
+```
+
+- render loading as badge content by default
+- reuse the button component
+- create a badge component if you want ;)
+- use the listPaged from react-http exercise as starting point to get the total amount of users
