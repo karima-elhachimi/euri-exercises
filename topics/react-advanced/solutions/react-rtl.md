@@ -228,3 +228,174 @@ Button.defaultProps = {
 
 export default Button;
 ```
+
+---
+
+#### 3. User Counter Badge
+
+```js
+// ./components/badge.spec.jsx
+import React from 'react';
+import { render } from '@testing-library/react';
+
+import Badge from './badge';
+
+describe('Badge component', () => {
+  test('it renders as a secondary badge by default', () => {
+    const { getByTestId } = render(<Badge data-testid="badge">0</Badge>);
+
+    const badge = getByTestId('badge');
+
+    expect(badge.nodeName).toMatch(/span/i);
+    expect(badge).toHaveClass('badge', 'badge-secondary');
+  });
+
+  test('it allows other variants', () => {
+    const { getByTestId } = render(
+      <Badge variant="light" data-testid="badge">
+        0
+      </Badge>
+    );
+
+    expect(getByTestId('badge')).toHaveClass('badge', 'badge-light');
+  });
+
+  test('it allows the pill modifier', () => {
+    const { getByTestId } = render(
+      <Badge data-testid="badge" pill>
+        0
+      </Badge>
+    );
+
+    expect(getByTestId('badge')).toHaveClass('badge', 'badge-pill');
+  });
+
+  test('it renders the children', () => {
+    const { getByTestId } = render(
+      <Badge data-testid="badge" pill>
+        <div data-testid="child" />
+      </Badge>
+    );
+
+    getByTestId('child');
+  });
+});
+```
+
+```js
+// ./components/badge.jsx
+import React from 'react';
+import classNames from 'classnames';
+import { oneOf, bool } from 'prop-types';
+
+const BS_PREFIX = 'badge';
+
+function Badge({ pill, variant, ...rest }) {
+  return (
+    <span
+      className={classNames(BS_PREFIX, {
+        [`${BS_PREFIX}-${variant}`]: true,
+        [`${BS_PREFIX}-pill`]: pill
+      })}
+      {...rest}
+    />
+  );
+}
+
+Badge.propTypes = {
+  pill: bool,
+  variant: oneOf([
+    'primary',
+    'secondary',
+    'success',
+    'danger',
+    'warning',
+    'info',
+    'light',
+    'dark'
+  ])
+};
+
+Badge.defaultProps = {
+  pill: undefined,
+  variant: 'secondary'
+};
+
+export default Badge;
+```
+
+```js
+// ./components/user-counter.spec.jsx
+import React from 'react';
+import { render, within, waitForDomChange } from '@testing-library/react';
+import UserCounter from './user-counter';
+import { listPaged as listPagedMock } from '../api/users';
+
+jest.mock('../api/users');
+
+describe('User counter', () => {
+  beforeEach(() => {
+    listPagedMock.mockResolvedValue({
+      total: 10
+    });
+  });
+
+  test('it renders in its initial state', () => {
+    const { getByRole } = render(<UserCounter />);
+
+    const button = getByRole('button');
+    expect(button).toHaveClass('btn', 'btn-primary');
+    expect(button).toHaveTextContent('Users');
+
+    const { getByTestId } = within(button);
+
+    const badge = getByTestId('user-counter');
+    expect(badge.nodeName).toMatch(/span/i);
+    expect(badge).toHaveClass('badge', 'badge-light');
+    expect(badge).toHaveTextContent('???');
+  });
+
+  test('it retrieves the users and displays the total', async () => {
+    const { getByTestId } = render(<UserCounter />);
+
+    const badge = getByTestId('user-counter');
+
+    await waitForDomChange();
+
+    expect(badge).toHaveTextContent(10);
+  });
+});
+```
+
+```js
+// ./components/user-counter.jsx
+import React, { useState, useEffect } from 'react';
+import Button from './button';
+import Badge from './badge';
+
+import { listPaged } from '../api/users';
+
+function UserCounter() {
+  const [total, setTotal] = useState(undefined);
+
+  useEffect(() => {
+    async function fetchData() {
+      // You can await here
+      const { total: totalAmountOfUsers } = await listPaged(1, 0);
+      setTotal(totalAmountOfUsers);
+    }
+    fetchData();
+  }, []);
+
+  return (
+    <Button>
+      {'Users '}
+      <Badge variant="light" data-testid="user-counter">
+        {total || '???'}
+      </Badge>
+    </Button>
+  );
+}
+
+export default UserCounter;
+```
