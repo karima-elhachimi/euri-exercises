@@ -116,6 +116,8 @@ export async function getById(id) {
 }
 ```
 
+---
+
 #### 2. listPaged
 
 ./api/users.spec.js
@@ -172,6 +174,8 @@ export async function listPaged(page, limit = 10) {
   };
 }
 ```
+
+---
 
 #### 3. save
 

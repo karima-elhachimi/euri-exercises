@@ -596,3 +596,25 @@ afterAll(() => {
 ### Resources
 
 > See https://testing-library.com/docs/react-testing-library/cheatsheet
+
+---
+
+### Exercises
+
+> Knowledge is of no value unless you put it into practice.
+
+<small>
+Anton Checkov
+</small>
+
+---//
+
+#### 1. AlertHeader
+
+Create an supplementary AlertHeader component according to [bootstrap spec](https://getbootstrap.com/docs/4.3/components/alerts/#additional-content)
+
+- should have role heading (implicit)
+- element type should be a h4
+- should have class alert-heading
+- use as less propType declarations as possible
+- should be able to add classes trough className prop
