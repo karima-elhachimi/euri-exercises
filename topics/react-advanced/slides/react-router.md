@@ -96,16 +96,84 @@ function App() {
 export default App;
 ```
 
+⚠️ All params are string's!
+
 ---//
 
 #### Route - exact
 
-> Oops both routes matched when navigating to /product/11 💩
+Oops, both routes matched when navigating to /product/11 🚫
 
-🛠️ Add the **exact** modifier
+> ✅ Add the **exact** modifier
 
 ```jsx
 <Route path="/" exact component={Home} />
+```
+
+---//
+
+#### Route - Query
+
+🤔 What about query parameters?
+
+```jsx
+// Add the following component
+const Score = ({ achieved = 0, maximum = 0 }) => (
+  <h1>
+    Scored {achieved} out of {maximum}
+  </h1>
+);
+
+// Add the following route
+<Route
+  path="/score"
+  render={({ location: { search } }) => {
+    console.log(search);
+
+    return <Score />;
+  }}
+/>;
+```
+
+---//
+
+#### Route - Query
+
+We have access to the routes query string via the search property of the [location](https://reacttraining.com/react-router/web/api/location) route prop
+
+```bash
+# Output in console
+?achieved=1&maximum=5
+```
+
+❓How can we parse this query string?
+
+---//
+
+#### Route - Parsing qs
+
+- using a npm package
+  - [query-string](https://www.npmjs.com/package/query-string)
+  - [querystringify](https://www.npmjs.com/package/querystringify)
+- using the [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) interface
+
+---//
+
+#### Route - Parsing qs
+
+```jsx
+// Adapt the score route
+<Route
+  path="/score"
+  render={({ location: { search } }) => {
+    const query = new URLSearchParams(search);
+
+    const achieved = query.get('achieved');
+    const maximum = query.get('maximum');
+
+    return <Score achieved={achieved} maximum={maximum} />;
+  }}
+/>
 ```
 
 ---//
@@ -147,9 +215,9 @@ export default App;
 
 ### Switch
 
-> Renders the first Route (or redirect) that matches that location
+Renders the first &lt;Route&gt; (or &lt;Redirect&gt;) that matches that location
 
-👁️ **Switch** is unique in that it renders a route exclusively. In contrast, every **Route** that matches the location renders inclusively.
+> **Switch** is unique in that it renders a route exclusively. In contrast, every &lt;Route&gt; that matches the location renders inclusively.
 
 ---//
 
@@ -185,6 +253,104 @@ function App() {
 ---
 
 ### withRouter
+
+🤔 What if we want the same 3 route props outside of a &lt;Route&gt;, or not directly nested under one of the 3 render methods?
+
+```jsx
+const ShowLocation = ({ location = {} }) => (
+  <span>{location.pathname || 'unknown'}</span>
+);
+```
+
+---//
+
+#### withRouter ✅
+
+```jsx
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+const Home = ({ ...props }) => <h1>Home</h1>;
+
+const ShowLocation = ({ location = {} }) => (
+  <span>{location.pathname || 'unknown'}</span>
+);
+
+function App() {
+  return (
+    <Router>
+      <Switch>
+        <Route path="/" component={Home} exact />
+        <Route path="/show" component={ShowLocation} />
+      </Switch>
+    </Router>
+  );
+}
+```
+
+---//
+
+#### withRouter 🚫
+
+```jsx
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+const Home = ({ ...props }) => <h1>Home</h1>;
+
+const ShowLocation = ({ location = {} }) => (
+  <span>{location.pathname || 'unknown'}</span>
+);
+
+function App() {
+  return (
+    <Router>
+      <ShowLocation />
+      <Switch>
+        <Route path="/" component={Home} exact />
+        <Route path="/show" component={ShowLocation} />
+      </Switch>
+    </Router>
+  );
+}
+```
+
+---//
+
+#### withRouter ✅
+
+```jsx
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  withRouter
+} from 'react-router-dom';
+
+const ShowLocation = withRouter(({ location = {} }) => (
+  <span>{location.pathname || 'unknown'}</span>
+));
+
+const Home = ({ ...props }) => <h1>Home</h1>;
+
+function App() {
+  return (
+    <Router>
+      <ShowLocation />
+      <Switch>
+        <Route path="/" component={Home} exact />
+      </Switch>
+    </Router>
+  );
+}
+```
+
+---//
+
+#### withRouter
+
+💡 You can get access to the history object’s properties and the closest &lt;Route&gt;'s match via the **withRouter** higher-order component. **withRouter** will pass updated match, location, and history props to the wrapped component whenever it renders.
 
 ---
 
