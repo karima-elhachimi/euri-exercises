@@ -356,7 +356,84 @@ function App() {
 
 ### Navigating
 
-#### Link
+<img src="./images/Anton-Yelchin.jpg" width="400px"/>
+
+<small>⚰️ Anton Yelchin (19 june, 2016)</small>
+
+---//
+
+#### Navigating - anchor
+
+```jsx
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+// Module components
+const Home = () => <h1>Home</h1>;
+const Product = () => <h1>Product</h1>;
+
+// Our App
+function App() {
+  useEffect(() => {
+    console.log('mounted');
+  }, []);
+
+  return (
+    <Router>
+      <a href="/product">Product</a>
+      <Switch>
+        <Route path="/" component={Home} exact />
+        <Route path="/product" component={Product} />
+      </Switch>
+    </Router>
+  );
+}
+```
+
+---//
+
+#### Navigating - anchor
+
+Console output (with option Preserve Log checked):
+
+```bash
+mounted # <== Initial mount (useEffect triggers)
+Navigated to http://localhost:8080/product # <== We clicked the link
+mounted # <== Another mount 🚫
+```
+
+> Also we noticed the ⚡ due to full reload of the app
+
+---//
+
+#### Navigating - Link
+
+```jsx
+// Add Link
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+
+// Change the <a>
+<Link to="/product">Product</Link>;
+```
+
+Console output ✅:
+
+```bash
+mounted # <== Initial mount (useEffect triggers)
+```
+
+---//
+
+#### Navigating - Link 💡
+
+Provides declarative, accessible navigation around your application
+
+- to (string): A string representation of the location to link to
+- to (object): An object that can have any of the following properties (pathname, search, hash or state)
+- replace: When true, clicking the link will replace the current entry in the history
+- others: title, target, etc will added to underlying anchor
+
+---//
 
 #### Programmatically
 
