@@ -215,7 +215,7 @@ export default App;
 
 ### Switch
 
-Renders the first <code>&lt;Route&gt;</code> (or  <code>&lt;Redirect&gt;</code>) that matches that location
+Renders the first <code>&lt;Route&gt;</code> (or <code>&lt;Redirect&gt;</code>) that matches that location
 
 > **Switch** is unique in that it renders a route exclusively. In contrast, every <code>&lt;Route&gt;</code> that matches the location renders inclusively.
 
@@ -500,24 +500,18 @@ const ProductLinkButton = withRouter(({ history }) => {
 🤔 What if we wanted to ask the user a confirmation before a navigation action occurs?
 
 ```jsx
-import React from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Link,
-  Prompt
-} from 'react-router-dom';
+import { /**..., */ Link, Prompt } from 'react-router-dom';
 
-const Home = () => <h1>Home</h1>;
+// Our product module
 const Product = () => (
-  <>
+  <d>
     <h1>Product</h1>
     <Link to="/">Back Home</Link>
     <Prompt message="Are you sure?" />
-  </>
+  </d>
 );
 
+// Our app
 function App() {
   return (
     <Router>
@@ -532,7 +526,7 @@ function App() {
 
 ---//
 
-#### [Prompt](https://reacttraining.com/react-router/core/api/Prompt) 💡
+#### [Prompt](https://reacttraining.com/react-router/core/api/Prompt)
 
 Used to prompt the user before navigating away from a page. When your application enters a state that should prevent the user from navigating away (like a form is half-filled out), render a <code>&lt;Prompt&gt;</code>.
 
@@ -542,6 +536,24 @@ Used to prompt the user before navigating away from a page. When your applicatio
 ---
 
 ### Redirect
+
+🤔 What if we wanted to reroute the user depending on some logic?
+
+```jsx
+import { Redirect } from 'react-router';
+
+// Just render the redirect component conditionally
+<Redirect to="/dashboard" />;
+```
+
+---//
+
+#### [Redirect](https://reacttraining.com/react-router/core/api/Redirect) 💡
+
+Rendering a <code>&lt;Redirect&gt;</code> will navigate to a new location. The new location will override the current location in the history stack, like server-side redirects (HTTP 3xx) do.
+
+- to (string): The URL to redirect to.
+- push (bool): When true, redirecting will push a new entry onto the history instead of replacing the current one.
 
 ---
 
