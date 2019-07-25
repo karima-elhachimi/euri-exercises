@@ -564,7 +564,7 @@ npm i --save-dev history
 ```
 
 ```jsx
-// ./src/test/react-testing-helpers (⚠️ <=> https://testing-library.com/docs/example-react-router)
+// ./test/react-testing-helpers (⚠️ <=> https://testing-library.com/docs/example-react-router)
 import React from 'react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
@@ -600,3 +600,38 @@ export function renderWithRouter(
 ---
 
 ### Exercises
+
+<img src="./images/tdd.png" width="400px"/>
+
+---//
+
+#### Exercises - Code of Conduct
+
+- Use the force (TDD)
+- Use a module centric folder structure
+  - all main page components under modules/\${module}
+  - all components not shared between modules under modules/{module}/components
+  - all components used within components under components/{root} or modules/{module}/components/{root}
+
+---//
+
+#### Exercise 1 - Layout app
+
+- Create following module components: Home(/), Login(/login), pages/notFound.jsx.
+- The components are not tested for the time being and contain a h1 with the title
+- Verify for all the routes that your app uses the correct module component
+
+💡Hints
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+- Default export <=> named export.
+- Remember that components can be mocked too !
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+```js
+jest.mock('./path/component', () => () => <div />);
+```
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
