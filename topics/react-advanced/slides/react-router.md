@@ -410,7 +410,7 @@ mounted # <== Another mount 🚫
 
 ```jsx
 // Add Link
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import { /**..., */ Link } from 'react-router-dom';
 
 // Change the <a>
 <Link to="/product">Product</Link>;
@@ -422,20 +422,76 @@ Console output ✅:
 mounted # <== Initial mount (useEffect triggers)
 ```
 
+Html output:
+
+```html
+<a href="/product">Product</a>
+```
+
 ---//
 
-#### Navigating - Link 💡
+#### Navigating - [Link](https://reacttraining.com/react-router/web/api/Link) 💡
 
 Provides declarative, accessible navigation around your application
 
 - to (string): A string representation of the location to link to
 - to (object): An object that can have any of the following properties (pathname, search, hash or state)
-- replace: When true, clicking the link will replace the current entry in the history
+- replace (bool): When true, clicking the link will replace the current entry in the history
 - others: title, target, etc will added to underlying anchor
 
 ---//
 
-#### Programmatically
+#### Navigating - NavLink
+
+```jsx
+// Change Link to NavLink
+import { /**..., */ NavLink } from 'react-router-dom';
+
+// Change the <Link>
+<NavLink to="/product">Product</NavLink>;
+```
+
+Html output (/):
+
+```html
+<a href="/product">Product</a>
+```
+
+Html output (/product):
+
+```html
+<a href="/product" class="active">Product</a>
+```
+
+---//
+
+#### Navigating - [NavLink](https://reacttraining.com/react-router/web/api/NavLink) 💡
+
+A special version of the &lt;Link&gt; that will add styling attributes to the rendered element when it matches the current URL.
+
+- activeClassName (string): The class to give the element when it is active (active=default)
+- activeStyle (object): The styles to apply to the element when it is active.
+  ---//
+
+#### Navigating - Programmatically
+
+```jsx
+// we need withRouter again
+import { /**..., */ withRouter } from 'react-router-dom';
+
+// the component
+const ProductLinkButton = withRouter(({ history }) => {
+  const onClicked = () => {
+    history.push('/product');
+  };
+
+  return (
+    <button type="button" className="btn btn-primary" onClick={onClicked}>
+      Product
+    </button>
+  );
+});
+```
 
 ---
 
@@ -454,7 +510,7 @@ npm i --save-dev history
 ```
 
 ```jsx
-// ./src/test/react-testing-helpers
+// ./src/test/react-testing-helpers (⚠️ <=> https://testing-library.com/docs/example-react-router)
 import React from 'react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
