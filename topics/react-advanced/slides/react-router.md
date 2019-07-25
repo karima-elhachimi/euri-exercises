@@ -215,9 +215,9 @@ export default App;
 
 ### Switch
 
-Renders the first &lt;Route&gt; (or &lt;Redirect&gt;) that matches that location
+Renders the first <code>&lt;Route&gt;</code> (or  <code>&lt;Redirect&gt;</code>) that matches that location
 
-> **Switch** is unique in that it renders a route exclusively. In contrast, every &lt;Route&gt; that matches the location renders inclusively.
+> **Switch** is unique in that it renders a route exclusively. In contrast, every <code>&lt;Route&gt;</code> that matches the location renders inclusively.
 
 ---//
 
@@ -252,9 +252,9 @@ function App() {
 
 ---
 
-### withRouter
+### <code>withRouter</code>
 
-🤔 What if we want the same 3 route props outside of a &lt;Route&gt;, or not directly nested under one of the 3 render methods?
+🤔 What if we want the same 3 route props outside of a <code>&lt;Route&gt;</code>, or not directly nested under one of the 3 render methods?
 
 ```jsx
 const ShowLocation = ({ location = {} }) => (
@@ -264,7 +264,7 @@ const ShowLocation = ({ location = {} }) => (
 
 ---//
 
-#### withRouter ✅
+#### <code>withRouter</code> ✅
 
 ```jsx
 import React from 'react';
@@ -290,7 +290,7 @@ function App() {
 
 ---//
 
-#### withRouter 🚫
+#### <code>withRouter</code> 🚫
 
 ```jsx
 import React from 'react';
@@ -317,7 +317,7 @@ function App() {
 
 ---//
 
-#### withRouter ✅
+#### <code>withRouter</code> ✅
 
 ```jsx
 import React from 'react';
@@ -348,9 +348,9 @@ function App() {
 
 ---//
 
-#### withRouter
+#### <code>withRouter</code>
 
-💡 You can get access to the history object’s properties and the closest &lt;Route&gt;'s match via the **withRouter** higher-order component. **withRouter** will pass updated match, location, and history props to the wrapped component whenever it renders.
+💡 You can get access to the history object’s properties and the closest <code>&lt;Route&gt;</code>'s match via the <code>withRouter</code> higher-order component. <code>withRouter</code> will pass updated match, location, and history props to the wrapped component whenever it renders.
 
 ---
 
@@ -467,7 +467,7 @@ Html output (/product):
 
 #### Navigating - [NavLink](https://reacttraining.com/react-router/web/api/NavLink) 💡
 
-A special version of the &lt;Link&gt; that will add styling attributes to the rendered element when it matches the current URL.
+A special version of the <code>&lt;Link&gt;</code> that will add styling attributes to the rendered element when it matches the current URL.
 
 - activeClassName (string): The class to give the element when it is active (active=default)
 - activeStyle (object): The styles to apply to the element when it is active.
@@ -496,6 +496,48 @@ const ProductLinkButton = withRouter(({ history }) => {
 ---
 
 ### Prompt
+
+🤔 What if we wanted to ask the user a confirmation before a navigation action occurs?
+
+```jsx
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Link,
+  Prompt
+} from 'react-router-dom';
+
+const Home = () => <h1>Home</h1>;
+const Product = () => (
+  <>
+    <h1>Product</h1>
+    <Link to="/">Back Home</Link>
+    <Prompt message="Are you sure?" />
+  </>
+);
+
+function App() {
+  return (
+    <Router>
+      <Switch>
+        <Route path="/" component={Home} exact />
+        <Route path="/product" component={Product} />
+      </Switch>
+    </Router>
+  );
+}
+```
+
+---//
+
+#### [Prompt](https://reacttraining.com/react-router/core/api/Prompt) 💡
+
+Used to prompt the user before navigating away from a page. When your application enters a state that should prevent the user from navigating away (like a form is half-filled out), render a <code>&lt;Prompt&gt;</code>.
+
+- message (string): The message to prompt the user with when they try to navigate away.
+- when (bool): Instead of conditionally rendering a <code>&lt;Prompt&gt;</code> behind a guard, you can always render it but pass when={true} or when={false} to prevent or allow navigation accordingly.
 
 ---
 
