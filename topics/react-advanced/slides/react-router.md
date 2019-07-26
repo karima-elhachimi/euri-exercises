@@ -613,9 +613,9 @@ export function renderWithRouter(
   - all components not shared between modules under modules/{module}/components
   - all components used within components under components/{root} or modules/{module}/components/{root}
 
----//
+---
 
-#### Exercise 1 - Layout app
+### Exercise 1 - Layout app
 
 - Create following module components: Home(/), Login(/login), pages/notFound.jsx.
 - The components are not tested for the time being and contain a h1 with the title
@@ -635,3 +635,97 @@ jest.mock('./path/component', () => () => <div />);
 ```
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
+
+---
+
+### Exercise 2 - Login/Logout flow
+
+<img src="./images/yoda.jpg" width="400px"/>
+
+🤯 This is an multi step exercise and can be quite challenging, ask for help when you're stuck!
+
+---//
+
+#### Exercise 2.1 Navbar
+
+Create a [navbar](https://getbootstrap.com/docs/4.3/components/navbar/) which renders the following:
+
+<!-- prettier-ignore -->
+```html
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="/">
+    <img src="${js-logo}" width="30" height="30" class="d-inline-block align-top" alt="Bootcamp Logo"/>
+    Bootcamp
+  </a>
+</nav>
+```
+
+- verify through navigation role
+- verify brand logo image trough alt text
+- verify brand text
+
+---//
+
+#### Exercise 2.1 Navbar
+
+<small>We want to keep track of the current identity (username for the time being), so when the user has not logged in yet we want the following link:</small>
+
+```html
+<nav class="navbar navbar-light bg-light">
+  <!-- ... -->
+  <a href="/login">Log In</a>
+</nav>
+```
+
+<small>Alternatively when the user has logged on:</small>
+
+```html
+<nav class="navbar navbar-light bg-light">
+  <!-- ... -->
+  <a href="/logout">Log Out</a>
+</nav>
+```
+
+💡Do not forget the guard case, to verify the other link is not present
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+---//
+
+#### Exercise 2.2 Login Module
+
+- Adapt the login module to render a button which for now authenticates and sets the current user to admin when clicked
+- When the user is already authenticated we want to redirect to home
+
+💡Hints
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+- history.location.pathname contains current path.
+- use a context?
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+---//
+
+#### Exercise 2.3 Logout route
+
+<img src="./images/yoda-hang-in.png" width="200px"/>
+
+- Create the route '/logout'
+- it clears the current user if any
+- it redirects to home
+
+---//
+
+#### Exercise 2.4 Home greeting
+
+We want to greet the user differently depending on logged in or not
+
+```html
+<h1>Welcome, please log in</h1>
+```
+
+```html
+<h1>Hello admin</h1>
+```
