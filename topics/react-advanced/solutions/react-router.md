@@ -825,3 +825,79 @@ ProtectedRoute.defaultProps = {
 
 export default ProtectedRoute;
 ```
+
+---
+
+#### Exercise 3.3 Adapt users route
+
+```jsx
+// src/js/app.spec.jsx
+describe('/users', () => {
+  describe('when anonymous', () => {
+    test('it redirects to /login, preserving state from', () => {
+      const { history } = renderWithRouter(<App />, {
+        route: '/users'
+      });
+
+      expect(history).toHaveProperty('location.pathname', '/login');
+      expect(history).toHaveProperty('location.state.from.pathname', '/users');
+    });
+  });
+
+  describe('when authenticated', () => {
+    test('it renders the user module', () => {
+      const { getByTestId } = renderWithRouter(
+        <App initialIdentity="someone" />,
+        {
+          route: '/users'
+        }
+      );
+      getByTestId('UsersModuleMock');
+
+      expect(UsersModuleMock).toHaveBeenCalledWith({}, expect.toBeObject());
+    });
+
+    test('it renders the user module with parsed page', () => {
+      const { getByTestId } = renderWithRouter(
+        <App initialIdentity="someone" />,
+        {
+          route: '/users?page=2'
+        }
+      );
+      getByTestId('UsersModuleMock');
+
+      expect(UsersModuleMock).toHaveBeenCalledWith(
+        {
+          page: 2
+        },
+        expect.toBeObject()
+      );
+    });
+
+    test('it renders the user module with parsed limit', () => {
+      const { getByTestId } = renderWithRouter(
+        <App initialIdentity="someone" />,
+        {
+          route: '/users?limit=20'
+        }
+      );
+      getByTestId('UsersModuleMock');
+
+      expect(UsersModuleMock).toHaveBeenCalledWith(
+        {
+          limit: 20
+        },
+        expect.toBeObject()
+      );
+    });
+  });
+});
+```
+
+```jsx
+// src/js/app.jsx
+import ProtectedRoute from './components/protected-route';
+
+// Change the users route to protected
+<ProtectedRoute path="/users" />
+```
