@@ -477,15 +477,18 @@ import IdentityContext from '../../contexts/identity-context';
 import Login from './login';
 
 describe('login component', () => {
-  function render(currentIdentity = undefined, { onAuthenticated = jest.fn() } = {}) {
+  function render(
+    currentIdentity = undefined,
+    { onAuthenticated = jest.fn() } = {}
+  ) {
     return {
       ...renderWithRouter(
         <IdentityContext.Provider value={currentIdentity}>
           <Login onAuthenticated={onAuthenticated} />
         </IdentityContext.Provider>,
-        { route: '/login' },
+        { route: '/login' }
       ),
-      onAuthenticated,
+      onAuthenticated
     };
   }
 
@@ -510,5 +513,168 @@ describe('login component', () => {
     });
   });
 });
+```
 
+---
+
+### Exercise 3 Listing users
+
+#### Exercise 3.1 Users Module
+
+```jsx
+// src/js/app.spec.jsx
+import UsersModuleMock from './modules/users/users';
+
+jest.mock(
+  //
+  './modules/users/users',
+  () => jest.fn().mockReturnValue(<div data-testid="UsersModuleMock" />)
+);
+
+describe('App component', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  // ...
+
+  describe('/users', () => {
+    test('it renders the user module', () => {
+      const { getByTestId } = renderWithRouter(<App />, { route: '/users' });
+      getByTestId('UsersModuleMock');
+
+      expect(UsersModuleMock).toHaveBeenCalledWith({}, expect.toBeObject());
+    });
+
+    test('it renders the user module with parsed page', () => {
+      const { getByTestId } = renderWithRouter(<App />, {
+        route: '/users?page=2'
+      });
+      getByTestId('UsersModuleMock');
+
+      expect(UsersModuleMock).toHaveBeenCalledWith(
+        {
+          page: 2
+        },
+        expect.toBeObject()
+      );
+    });
+
+    test('it renders the user module with parsed limit', () => {
+      const { getByTestId } = renderWithRouter(<App />, {
+        route: '/users?limit=20'
+      });
+      getByTestId('UsersModuleMock');
+
+      expect(UsersModuleMock).toHaveBeenCalledWith(
+        {
+          limit: 20
+        },
+        expect.toBeObject()
+      );
+    });
+  });
+});
+```
+
+```jsx
+// src/js/app.jsx
+import Users from './modules/users/users';
+
+<Route
+  path="/users"
+  render={({ location: { search } }) => {
+    const query = new URLSearchParams(search);
+
+    const queryProps = {};
+    if (query.has('page')) queryProps.page = +query.get('page');
+    if (query.has('limit')) queryProps.limit = +query.get('limit');
+
+    return <Users {...queryProps} />;
+  }}
+/>;
+```
+
+```jsx
+// src/js/modules/users/users.spec.jsx
+import React from 'react';
+
+import { render } from '@testing-library/react';
+import Users from './users';
+
+describe('Users', () => {
+  test('it renders a heading', () => {
+    const { getByRole } = render(<Users />);
+
+    const header = getByRole('heading');
+    expect(header).toHaveTextContent(/users/i);
+  });
+
+  describe('page', () => {
+    test('it renders the badge with page 1 by default', () => {
+      const { getByTestId } = render(<Users />);
+
+      expect(getByTestId('page-badge')).toHaveTextContent(/p 1/i);
+    });
+
+    test('it renders the badge according to page', () => {
+      const { getByTestId } = render(<Users page={2} />);
+
+      expect(getByTestId('page-badge')).toHaveTextContent(/p 2/i);
+    });
+  });
+
+  describe('limit', () => {
+    test('it renders the badge with limit 10 by default', () => {
+      const { getByTestId } = render(<Users />);
+
+      expect(getByTestId('limit-badge')).toHaveTextContent(/l 10/i);
+    });
+
+    test('it renders the badge according to limit', () => {
+      const { getByTestId } = render(<Users limit={20} />);
+
+      expect(getByTestId('limit-badge')).toHaveTextContent(/l 20/i);
+    });
+  });
+});
+```
+
+```jsx
+// src/js/modules/users/users.jsx
+import React from 'react';
+import { number } from 'prop-types';
+
+import Badge from '../../components/badge';
+
+function Users({ page, limit }) {
+  return (
+    <h1>
+      {'Users '}
+      <Badge //
+        variant="success"
+        data-testid="page-badge"
+      >
+        {`P ${page}`}
+      </Badge> <Badge //
+        variant="danger"
+        data-testid="limit-badge"
+      >
+        {`L ${limit}`}
+      </Badge>
+    </h1>
+  );
+}
+
+Users.propTypes = {
+  page: number,
+  limit: number
+};
+
+Users.defaultProps = {
+  page: 1,
+  limit: 10
+};
+
+export default Users;
 ```

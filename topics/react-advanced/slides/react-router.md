@@ -742,9 +742,21 @@ We want to greet the user differently depending on logged in or not
 
 - create a new users module component
 - hook into your app under path /users
-- parse following query params and pass to component (page (only if numeric) , limit (only if numeric))
-- if one of the values is provided but does not match numeric value than redirect main /users route
-- the component itself renders 
+- parse following query params and pass to component if present: page(numeric) , limit (numeric))
+- the component itself renders a title with Users, a page (1 default) and limit (10 default) badge
+
+```jsx
+// 💡Components can be mocked and with a jest mock function
+import UsersModuleMock from './modules/users/users';
+
+jest.mock('./modules/users/users', () =>
+  jest.fn().mockReturnValue(<div data-testid="UsersModuleMock" />)
+);
+
+expect(UsersModuleMock).toHaveBeenCalledWith({}, {});
+```
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---//
 
@@ -753,9 +765,25 @@ We want to greet the user differently depending on logged in or not
 Create a <code>&lt;ProtectedRoute&gt;</code> component
 
 - Redirect to /login when not authenticated (pass from)
-- Render the component > render method and spread props over it
+- Render the component > render method and spread render props over it
 
----// 
+```jsx
+// 💡Hint
+function ProtectedRoute({ component as Component, render, ...rest }) {
+  <Route
+    {...rest}
+    render={(props)=>{
+      // if not authenticated
+      <Redirect />
+      // otherwise if component
+      component ? <Component {...props}/> : render(props)
+    }}
+}
+```
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+---//
 
 #### Exercise 3.3 - Adapt Users route
 
