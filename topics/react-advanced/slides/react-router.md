@@ -729,3 +729,42 @@ We want to greet the user differently depending on logged in or not
 ```html
 <h1>Hello admin</h1>
 ```
+
+---
+
+### Exercise 3 - Listing users
+
+<img src="./images/yoda-practice.jpg" width="400px"/>
+
+---//
+
+#### Exercise 3.1 - Users Module
+
+- create a new users module component
+- hook into your app under path /users
+- parse following query params and pass to component (page (only if numeric) , limit (only if numeric))
+- if one of the values is provided but does not match numeric value than redirect main /users route
+- the component itself renders 
+
+---//
+
+#### Exercise 3.2 - Protect it
+
+Create a <code>&lt;ProtectedRoute&gt;</code> component
+
+- Redirect to /login when not authenticated (pass from)
+- Render the component > render method and spread props over it
+
+---// 
+
+#### Exercise 3.3 - Adapt Users route
+
+- protect our user route
+- test only the bare minimum to avoid repeating tests, but you should at least test the logged out scenario once
+
+---//
+
+#### Exercise 3.4 - Adapt Login
+
+- Instead of redirect to home, it should use the state.from
+- if there is none redirect to home
