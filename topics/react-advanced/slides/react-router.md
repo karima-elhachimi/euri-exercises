@@ -769,7 +769,7 @@ Create a <code>&lt;ProtectedRoute&gt;</code> component
 
 ```jsx
 // 💡Hint
-function ProtectedRoute({ component as Component, render, ...rest }) {
+function ProtectedRoute({ component: Component, render, ...rest }) {
   <Route
     {...rest}
     render={(props)=>{

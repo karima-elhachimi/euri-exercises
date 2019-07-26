@@ -678,3 +678,150 @@ Users.defaultProps = {
 
 export default Users;
 ```
+
+---
+
+#### Exercise 3.2 Protect it
+
+```jsx
+// src/js/components/protected-route.spec.jsx
+import React from 'react';
+
+import { renderWithRouter } from '../../../test/react-testing-helpers';
+import IdentityContext from '../contexts/identity-context';
+import ProtectedRoute from './protected-route';
+
+describe('Protected route component', () => {
+  function render(
+    identity = undefined,
+    { path = '/some-route', ...rest } = {}
+  ) {
+    return renderWithRouter(
+      <IdentityContext.Provider value={identity}>
+        <ProtectedRoute path={path} {...rest} />
+      </IdentityContext.Provider>,
+      { route: '/some-route' }
+    );
+  }
+
+  describe('when authenticated', () => {
+    test('it renders the route when using component', () => {
+      const component = jest
+        .fn()
+        .mockReturnValue(<div data-testid="route-mock" />);
+
+      const { getByTestId } = render('someone', {
+        component
+      });
+
+      getByTestId('route-mock');
+
+      expect(component).toHaveBeenCalledWith(
+        expect.toContainKeys(['history', 'location', 'match']),
+        {}
+      );
+    });
+
+    test('it renders the route when using render', () => {
+      const renderProp = jest
+        .fn()
+        .mockReturnValue(<div data-testid="route-mock" />);
+
+      const { getByTestId } = render('someone', {
+        render: renderProp
+      });
+
+      getByTestId('route-mock');
+
+      expect(renderProp).toHaveBeenCalledWith(
+        expect.toContainKeys(['history', 'location', 'match'])
+      );
+    });
+
+    test('it renders the route with component when using both', () => {
+      const component = jest
+        .fn()
+        .mockReturnValue(<div data-testid="component-route-mock" />);
+      const renderProp = jest
+        .fn()
+        .mockReturnValue(<div data-testid="render-route-mock" />);
+
+      const { getByTestId } = render('someone', {
+        component,
+        render: renderProp
+      });
+
+      getByTestId('component-route-mock');
+
+      expect(component).toHaveBeenCalledWith(
+        expect.toContainKeys(['history', 'location', 'match']),
+        {}
+      );
+    });
+  });
+
+  describe('when anonymous', () => {
+    test('it redirects to /login', () => {
+      const component = jest
+        .fn()
+        .mockReturnValue(<div data-testid="route-mock" />);
+      const { history } = render(undefined, { component });
+
+      expect(history).toHaveProperty('location.pathname', '/login');
+      expect(history).toHaveProperty(
+        'location.state.from.pathname',
+        '/some-route'
+      );
+      expect(component).not.toHaveBeenCalled();
+    });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+});
+```
+
+```jsx
+// src/js/components/protected-route.jsx
+import React, { useContext } from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import { any, func } from 'prop-types';
+import IdentityContext from '../contexts/identity-context';
+
+function ProtectedRoute({ component: Component, render, ...rest }) {
+  const currentIdentity = useContext(IdentityContext);
+
+  return (
+    <Route
+      {...rest}
+      render={props => {
+        if (!currentIdentity) {
+          // eslint-disable-next-line react/prop-types
+          return (
+            <Redirect
+              to={{ pathname: '/login', state: { from: props.location } }}
+            />
+          );
+        }
+
+        if (Component) return <Component {...props} />;
+
+        return render(props);
+      }}
+    />
+  );
+}
+
+ProtectedRoute.propTypes = {
+  component: any,
+  render: func
+};
+
+ProtectedRoute.defaultProps = {
+  component: undefined,
+  render: undefined
+};
+
+export default ProtectedRoute;
+```
