@@ -787,6 +787,7 @@ function ProtectedRoute({ component: Component, render, ...rest }) {
 
 #### Exercise 3.3 - Adapt Users route
 
+- Add a link to the users route in the [navbar](https://getbootstrap.com/docs/4.3/components/navbar/)
 - protect our user route
 - test only the bare minimum to avoid repeating tests, but you should at least test the logged out scenario once
 

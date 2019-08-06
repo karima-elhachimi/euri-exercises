@@ -832,6 +832,30 @@ export default ProtectedRoute;
 
 ```jsx
 // src/js/app.spec.jsx
+describe('nav bar', () => {
+  describe('links', () => {
+    test('it renders a link to our users route', () => {
+      const { getByRole } = renderWithRouter(<App />);
+
+      const { getByText } = within(getByRole('navigation'));
+
+      expect(getByText(/users/i)).toHaveAttribute('href', '/users');
+    });
+
+    test('it marks the users link active when route is /users', () => {
+      // 🤪 We have to be authenticated otherwise our protected route will redirect to /login
+      const { getByRole, debug } = renderWithRouter(
+        <App initialIdentity="John" />,
+        { route: '/users' }
+      );
+
+      const { getByText } = within(getByRole('navigation'));
+      debug();
+      expect(getByText(/users/i)).toHaveClass('active');
+    });
+  });
+});
+
 describe('/users', () => {
   describe('when anonymous', () => {
     test('it redirects to /login, preserving state from', () => {
@@ -898,6 +922,27 @@ describe('/users', () => {
 // src/js/app.jsx
 import ProtectedRoute from './components/protected-route';
 
+// Add the nav-link
+<nav className="navbar navbar-light bg-light">
+  <Link className="navbar-brand" to="/">
+    <img
+      src={JsLogo}
+      width="30"
+      height="30"
+      className="d-inline-block align-top"
+      alt="Bootcamp Logo"
+    />
+    {' Bootcamp'}
+  </Link>
+  <ul className="navbar-nav mr-auto">
+    <li className="nav-item">
+      <NavLink className="nav-link" to="/users">
+        Users
+      </NavLink>
+    </li>
+  </ul>
+</nav>
+
 // Change the users route to protected
-<ProtectedRoute path="/users" />
+<ProtectedRoute path="/users" />;
 ```
