@@ -844,13 +844,12 @@ describe('nav bar', () => {
 
     test('it marks the users link active when route is /users', () => {
       // 🤪 We have to be authenticated otherwise our protected route will redirect to /login
-      const { getByRole, debug } = renderWithRouter(
-        <App initialIdentity="John" />,
-        { route: '/users' }
-      );
+      const { getByRole } = renderWithRouter(<App initialIdentity="John" />, {
+        route: '/users'
+      });
 
       const { getByText } = within(getByRole('navigation'));
-      debug();
+
       expect(getByText(/users/i)).toHaveClass('active');
     });
   });
