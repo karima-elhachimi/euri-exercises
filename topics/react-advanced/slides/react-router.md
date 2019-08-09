@@ -797,3 +797,18 @@ function ProtectedRoute({ component: Component, render, ...rest }) {
 
 - Instead of redirect to home, it should use the state.from
 - if there is none redirect to home
+
+💡Hints
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+- create memory history and set state using history.replace('/login', { // state }).
+- either use a route or listen for changes on the history (redirect loop)
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+---
+
+### Conclusion
+
+<img src="./images/crying-jedi.jpg" width="400px"/>

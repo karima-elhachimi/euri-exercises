@@ -945,3 +945,112 @@ import ProtectedRoute from './components/protected-route';
 // Change the users route to protected
 <ProtectedRoute path="/users" />;
 ```
+
+#### Exercise 3.4 Adapt Login
+
+```jsx
+// src/js/modules/login/login.spec.jsx
+import React from 'react';
+import { fireEvent } from '@testing-library/react';
+import { Route } from 'react-router';
+import { createMemoryHistory } from 'history';
+
+import { renderWithRouter } from '../../../../test/react-testing-helpers';
+import IdentityContext from '../../contexts/identity-context';
+import Login from './login';
+
+describe('login component', () => {
+  function render(
+    currentIdentity = undefined,
+    { onAuthenticated = jest.fn() } = {},
+    history
+  ) {
+    return {
+      ...renderWithRouter(
+        <IdentityContext.Provider value={currentIdentity}>
+          <Route
+            path="/login"
+            render={() => <Login onAuthenticated={onAuthenticated} />}
+          />
+        </IdentityContext.Provider>,
+        { route: '/login', history }
+      ),
+      onAuthenticated
+    };
+  }
+
+  describe('default', () => {
+    test('it calls the onAuthenticated prop when clicking on the login button', () => {
+      const { getByText, onAuthenticated } = render();
+
+      const loginButton = getByText(/login/i);
+
+      fireEvent.click(loginButton);
+
+      expect(onAuthenticated).toHaveBeenCalledWith('admin');
+    });
+  });
+
+  describe('already authenticated', () => {
+    test('it redirects to home if no state from', () => {
+      const { onAuthenticated, history } = render('someone');
+
+      expect(history).toHaveProperty('location.pathname', '/');
+      expect(onAuthenticated).not.toHaveBeenCalled();
+    });
+
+    test('it redirects to state from', () => {
+      const history = createMemoryHistory();
+      history.replace('/login', {
+        from: {
+          pathname: '/secured',
+          search: '',
+          hash: '',
+          key: 'KEY'
+        }
+      });
+
+      const { onAuthenticated } = render('someone', undefined, history);
+
+      expect(history).toHaveProperty('location.pathname', '/secured');
+      expect(onAuthenticated).not.toHaveBeenCalled();
+    });
+  });
+});
+```
+
+```jsx
+// src/js/modules/login/login.jsx
+import React, { useContext } from 'react';
+import { Redirect, withRouter } from 'react-router-dom';
+import { func, shape, string } from 'prop-types';
+import Button from '../../components/button';
+import IdentityContext from '../../contexts/identity-context';
+
+function Login({
+  onAuthenticated,
+  location: { state: { from } = { from: { pathname: '/' } } }
+}) {
+  const currentIdentity = useContext(IdentityContext);
+
+  if (currentIdentity) return <Redirect to={from} />;
+
+  return <Button onClick={() => onAuthenticated('admin')}>Login</Button>;
+}
+
+Login.propTypes = {
+  onAuthenticated: func.isRequired,
+  location: shape({
+    state: shape({
+      from: shape({
+        pathname: string.isRequired,
+        search: string,
+        hash: string,
+        key: string
+      })
+    })
+  }).isRequired
+};
+
+export default withRouter(Login);
+```
