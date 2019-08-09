@@ -77,8 +77,8 @@ export default Alert;
 
 #### [Queries](https://testing-library.com/docs/dom-testing-library/api-queries)
 
-- getBy\*: queries return the first matching node for a query, and throw an error if no elements match or if more than one match is found (use getAllBy instead).
-- queryBy\*: queries return the first matching node for a query, and return null if no elements match. This is useful for asserting an element that is not present. This throws if more than one match is found (use queryAllBy instead).
+- <code>getBy*</code>: queries return the first matching node for a query, and throw an error if no elements match or if more than one match is found (use <code>getAllBy*</code> instead).
+- <code>queryBy*</code>: queries return the first matching node for a query, and return null if no elements match. This is useful for asserting an element that is not present. This throws if more than one match is found (use <code>queryAllBy*</code> instead).
 
 ---//
 
@@ -226,14 +226,7 @@ test('it renders the alert', () => {
 
 #### cleanup
 
-Move it to jest.setup.js
-
-```js
-import 'jest-extended';
-
-import '@testing-library/jest-dom/extend-expect';
-import '@testing-library/react/cleanup-after-each';
-```
+🤩 Luckily since @testing-library/react > [9.0.0](https://github.com/testing-library/react-testing-library/releases), will do this for us when it detects a runner that supports <code>afterEach</code>
 
 ---//
 
@@ -490,9 +483,6 @@ test('it renders as dismissible', () => {
 
 - wait (Promise) retry the function within until it stops throwing or times out
 - waitForElement (Promise) retry the function until it returns an element or an array of elements
-
-  - findBy and findAllBy queries are async and retry
-
 - waitForDomChange (Promise) retry the function each time the DOM is changed
 - waitForElementToBeRemoved (Promise) retry the function until it no longer returns a DOM node
 
@@ -558,36 +548,6 @@ test('it renders as dismissible', async () => {
   fireEvent.click(button);
 
   await waitForElementToBeRemoved(() => queryByRole('alert'));
-});
-```
-
-> Warning: An update to Alert inside a test was not wrapped in act(...).
-
----//
-
-#### Waiting for something - make the test work
-
-This is a known [issue](https://github.com/testing-library/react-testing-library/issues/281) that will be solved in React 16.9.0
-
-```js
-// jest.setup.js
-
-// Remove this after react 16.9.0
-// Silence a warning that we'll get until react
-// fixes this: https://github.com/facebook/react/pull/14853
-const originalError = console.error;
-
-beforeAll(() => {
-  console.error = (...args) => {
-    if (/Warning.*not wrapped in act/.test(args[0])) {
-      return;
-    }
-    originalError.call(console, ...args);
-  };
-});
-
-afterAll(() => {
-  console.error = originalError;
 });
 ```
 
