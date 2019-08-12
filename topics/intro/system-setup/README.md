@@ -64,4 +64,5 @@ Install what you like and have.
 
 ## Setup Development System
 
-- see [OSX](./osx/system-setup-osx-dev.md)
+- for [OSX](./osx/system-setup-osx-dev.md)
+- for [Windows](./wim/system-setup-win-dev.md)
