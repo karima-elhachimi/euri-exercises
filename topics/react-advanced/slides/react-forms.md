@@ -115,25 +115,28 @@ function UncontrolledFormExample() {
 - set the default value by using <code>defaultChecked</code> property
 
 ```jsx
-import React, { useRef } from 'react';
+const isFriendRef = useRef();
 
-function UncontrolledFormExample() {
-  const isFriendRef = useRef();
-
-  const handleSubmit = evt => {
-    evt.preventDefault();
-    console.log({
-      friend: isFriendRef.current.checked
-    });
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="friend">Is Friend</label>
-      <input id="friend" type="checkbox" ref={isFriendRef} defaultChecked />
-
-      <button type="submit">Submit</button>
-    </form>
-  );
-}
+const handleSubmit = evt => {
+  evt.preventDefault();
+  console.log({
+    friend: isFriendRef.current.checked
+  });
+};
 ```
+
+```html
+<label htmlFor="friend">Is Friend</label>
+<input id="friend" type="checkbox" defaultChecked ref="{isFriendRef}" />
+```
+
+---//
+
+#### Exercise 1 - Create the login form
+
+- username or login input (type text)
+- password input (type password)
+- known user admin, pwd secret
+- when unknown user, reset form and display message unknown user or password
+
+🧨 TDD (RTL), <code>getByLabelText()</code> is your friend here
