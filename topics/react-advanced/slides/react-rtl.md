@@ -60,7 +60,7 @@ describe('Alert component', () => {
 
 ---//
 
-#### Make it pass
+#### Make it pass ✅
 
 ```js
 // ./components/alert.jsx
@@ -101,7 +101,7 @@ describe('Alert component', () => {
 });
 ```
 
-Don't repeat yourself ;)
+💡Don't repeat yourself
 
 ```js
 // ./jest.setup.js
@@ -111,7 +111,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 ---//
 
-#### debug
+#### <code>debug</code>
 
 ```js
 test('it renders the alert', () => {
@@ -123,7 +123,7 @@ test('it renders the alert', () => {
 });
 ```
 
-Shows the contents of your body at that exact moment
+🖨️ Outputs the DOM of your <code>body</code>
 
 ```html
 console.log node_modules/@testing-library/react/dist/index.js:93
@@ -136,7 +136,7 @@ console.log node_modules/@testing-library/react/dist/index.js:93
 
 ---//
 
-#### debug
+#### <code>debug</code>
 
 But you can also specify a baseElement
 
@@ -158,7 +158,7 @@ test('it renders the alert', () => {
 
 ---//
 
-#### unmount
+#### <code>unmount</code>
 
 ```js
 import React from 'react';
@@ -179,9 +179,9 @@ test('it renders the alert', () => {
 
 ---//
 
-#### unmount
+#### <code>unmount</code>
 
-Verify the behavior
+👍 Verify the behavior
 
 ```js
 import React, { useEffect } from 'react';
@@ -202,9 +202,9 @@ export default Alert;
 
 ---//
 
-#### cleanup
+#### <code>cleanup</code>
 
-Failing to call cleanup when you've called render could result in a memory leak and tests which are not "idempotent" (which can lead to difficult to debug errors).
+Failing to call <code>cleanup</code> when you've called render could result in a memory leak and tests which are not _idempotent_.
 
 ```js
 // ./components/alert.spec.jsx
@@ -224,13 +224,19 @@ test('it renders the alert', () => {
 
 ---//
 
-#### cleanup
+#### <code>cleanup</code>
 
 🤩 Luckily since @testing-library/react > [9.0.0](https://github.com/testing-library/react-testing-library/releases), will do this for us when it detects a runner that supports <code>afterEach</code>
 
 ---//
 
-#### Fast forward
+#### Fast-forward ⏩
+
+<img src="./images/back-to-the-future.jpg" width="400px"/>
+
+---//
+
+#### Fast-forward ⏩
 
 - our component should have a class alert and alert-primary by default
 - our component renders its children
@@ -239,7 +245,7 @@ test('it renders the alert', () => {
 
 ---//
 
-#### Fast forward
+#### Fast-forward ⏩
 
 ```js
 // ./components/alert.spec.jsx
@@ -276,7 +282,7 @@ describe('Alert component', () => {
 
 ---//
 
-#### Fast forward
+#### Fast-forward ⏩
 
 ```js
 // ./components/alert.jsx
@@ -320,7 +326,7 @@ export default Alert;
 
 ---//
 
-#### rerender
+#### <code>rerender</code>
 
 Update a components props
 
@@ -335,18 +341,16 @@ test('it renders the alert', () => {
   const { getByRole, rerender } = render(<Alert>Message</Alert>);
 
   const alert = getByRole('alert');
-
   expect(alert).toHaveClass('alert', 'alert-primary');
 
   rerender(<Alert variant="secondary">Message</Alert>);
-
   expect(alert).toHaveClass('alert', 'alert-secondary');
 });
 ```
 
 ---
 
-### Firing events
+### Firing events ⚡
 
 ```js
 import { fireEvent } from '@testing-library/react';
@@ -356,7 +360,7 @@ import { fireEvent } from '@testing-library/react';
 
 ---//
 
-#### Firing events
+#### Firing events ⚡
 
 ```js
 // ./components/alert.spec.jsx
@@ -469,17 +473,17 @@ test('it renders as dismissible', () => {
 });
 ```
 
-> Let's make it work ;)
+> Let's make it work ✅
 
 ---
 
-### Waiting for something
+### Waiting for something ⏱️
 
 > see https://testing-library.com/docs/dom-testing-library/api-async
 
 ---//
 
-#### Waiting for something
+#### Waiting for something ⏱️
 
 - wait (Promise) retry the function within until it stops throwing or times out
 - waitForElement (Promise) retry the function until it returns an element or an array of elements
@@ -488,9 +492,9 @@ test('it renders as dismissible', () => {
 
 ---//
 
-#### Waiting for something
+#### Waiting for something ⏱️
 
-What if dismissing of our alert came with a small delay?
+🤔 What if dismissing of our alert came with a small delay?
 
 ```js
 function Alert({ children, dismissible, variant }) {
@@ -507,11 +511,11 @@ function Alert({ children, dismissible, variant }) {
 }
 ```
 
-> Our test would start failing!
+> Our tests would start failing! 🚫
 
 ---//
 
-#### Waiting for something - failing test
+#### Waiting for something - failing test 🚫
 
 ```js
 import { render, fireEvent } from '@testing-library/react';
@@ -532,7 +536,7 @@ test('it renders as dismissible', () => {
 
 ---//
 
-#### Waiting for something - make the test work
+#### Waiting for something - make the test work ✅
 
 ```js
 test('it renders as dismissible', async () => {
@@ -561,17 +565,13 @@ test('it renders as dismissible', async () => {
 
 ### Exercises
 
-> Knowledge is of no value unless you put it into practice.
-
-<small>
-Anton Checkov
-</small>
+<img src="./images/practice-quote-2.jpg" width="600px"/>
 
 ---//
 
-#### 1. AlertHeader
+#### 1. <code>AlertHeader</code>
 
-Create an supplementary AlertHeader component according to [bootstrap spec](https://getbootstrap.com/docs/4.3/components/alerts/#additional-content)
+Create an supplementary [AlertHeader](https://getbootstrap.com/docs/4.3/components/alerts/#additional-content) component
 
 - should have role heading (implicit)
 - element type should be a h4
@@ -581,9 +581,9 @@ Create an supplementary AlertHeader component according to [bootstrap spec](http
 
 ---//
 
-#### 2. Button
+#### 2. <code>Button</code>
 
-Create a button component that implement [bootstrap spec](https://getbootstrap.com/docs/4.3/components/buttons/)
+Create a [button]((https://getbootstrap.com/docs/4.3/components/buttons/)) component
 
 - variants: primary(default), secondary or link
 - size: small or large, default is none
@@ -596,7 +596,7 @@ Create a button component that implement [bootstrap spec](https://getbootstrap.c
 
 ---//
 
-#### 3. User Counter Badge
+#### 3. <code>UserCounterBadge</code>
 
 Create the following async component
 
