@@ -626,7 +626,7 @@ export function renderWithRouter(
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 - Default export <=> named export.
-- Remember that components can be mocked too !
+- Components can be mocked too!
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
@@ -642,7 +642,7 @@ jest.mock('./path/component', () => () => <div />);
 
 <img src="./images/yoda.jpg" width="400px"/>
 
-🤯 This is an multi step exercise and can be quite challenging, ask for help when you're stuck!
+🤯This is an multi step exercise and can be quite challenging, ask for help when you're stuck!
 
 ---//
 
@@ -795,7 +795,7 @@ function ProtectedRoute({ component: Component, render, ...rest }) {
 
 #### Exercise 3.4 - Adapt Login
 
-- Instead of redirect to home, it should use the state.from
+- Instead of redirecting to home, it should use the state.from
 - if there is none redirect to home
 
 💡Hints
@@ -807,8 +807,10 @@ function ProtectedRoute({ component: Component, render, ...rest }) {
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
----
+---//
 
-### Conclusion
+### Exercise 3 - Conclusion
 
 <img src="./images/crying-jedi.jpg" width="400px"/>
+
+🤔How do you feel about the login module and the tests that where needed? (Possible improvements, was it the right approach, ...)
