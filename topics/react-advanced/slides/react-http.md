@@ -15,9 +15,9 @@ Copyright (c) 2018-2019 Euricom nv.
 
 ## Introduction
 
-As React does not have a build-in service/library for doing rest based http class we have to rely on 3th party libraries.
+As React does not have a build-in service/library for doing rest based http calls, we'll have to rely on 3th party libraries.
 
-- [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) (standardized, rising)
+- [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) (standardized 📈)
 - [Axios](https://github.com/axios/axios) (popular)
 - [SuperAgent](https://visionmedia.github.io/superagent/)
 
@@ -101,9 +101,9 @@ axios
 
 ---//
 
-#### Keep it dry ;)
+#### 💡Keep it dry
 
-Create a custom config
+Create an axios instance with custom config
 
 ```js
 // api/user-api-client.js
@@ -280,7 +280,7 @@ describe('users api', () => {
 
 ---//
 
-#### jest-mock-axios
+#### jest-mock-axios 🚫
 
 - odd api
 - seems overly complicated
@@ -321,7 +321,7 @@ describe('users api', () => {
 
 ---//
 
-#### nock
+#### nock ✅
 
 - it is library agnostic
 - you can provide expected response before invoking code
@@ -377,7 +377,7 @@ describe('getUsers', () => {
 
 ---//
 
-#### axios-mock-adapter
+#### axios-mock-adapter ✅
 
 - by default all api request respond with 404
 - full axios support
@@ -386,7 +386,11 @@ describe('getUsers', () => {
 
 ### Exercises
 
-#### Rules
+<img src="./images/practice-quote-1.jpg" width="300px"/>
+
+---//
+
+#### Exercises - Rules
 
 - write the functions in a tdd fashion, so write tests first
 - use nock or axios-mock-adapter
@@ -394,7 +398,7 @@ describe('getUsers', () => {
 
 ---//
 
-#### 1. getById
+#### 1. <code>getById</code>
 
 ```curl
 GET http://localhost:3000/users/:id
@@ -416,7 +420,7 @@ Map to following shape
 
 ---//
 
-#### 2. listPaged
+#### 2. <code>listPaged</code>
 
 ```curl
 GET http://localhost:3000/users
@@ -437,7 +441,7 @@ function listPaged(page, limit = 10) {
 
 ---//
 
-#### 3. save
+#### 3. <code>save</code>
 
 ```curl
 POST http://localhost:3000/users
