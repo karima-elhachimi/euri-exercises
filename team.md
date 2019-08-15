@@ -6,12 +6,21 @@ T.B.D
 
 ## Trainers
 
+### Peter Cosemans
+
+- Email: <a href="mailto:peter.cosemans@gmail.com">peter.cosemans@gmail.com</a>
+- Mobile: +32 487 93 85 31
+- Training: Intro, Http/Rest & JavaScript 
+- Independent JavaScript Expert / Coach 
+
+<img src="./team/petercosemans.jpg" width="250">
+
 ### Tom Marien
 
 - Email: <a href="mailto:tom.marien@euri.com">tom.marien@euri.com</a>
 - Email: <a href="tommarien@gmail.com">tommarien@gmail.com</a>
 - Mobile: +32 485 27 35 85
-- Training: JavaScript, unit testing and patterns and React state management
+- Training: unit testing and patterns and React state management
 - Team Lead / Coach (Full stack Javascript Projects)
 
 <img src="./team/TomMarien.jpg" width="250">

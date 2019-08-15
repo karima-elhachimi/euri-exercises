@@ -1,18 +1,18 @@
-1. Intro (Tom)
+1. Intro (Tom / Peter)
 
-    - Welcome
+    - Welcome (????)
     - System Setup 1
       MacOS
       Office
-    - Admin (Liesbeth)
+    - Admin (Liesbeth ???)
     - System Setup 2
       VSCode
       Bash Shell
       n vs nvm
-      prepare: apple ID account
+      prepare: apple ID account (windows store)
       install all tools
 
-2) Http Intro (Tom)
+2) Http Intro (Tom / Peter)
 
     - HTTP
     - WEB Services
@@ -20,7 +20,7 @@
     - Graphql
     - exercise: TODO: NEW EXERCISE !!!!
 
-3) JavaScript (Tom)
+3) JavaScript (Peter)
 		- Know you javascript (scope, closure, this, prototype, ...)
 		- modules systems (cjs, esm, ...)
 		- ES6+ (arrow, spread, rest, ...)
