@@ -182,7 +182,7 @@ The Ecma TC39 committee is responsible for evolving the ECMAScript programming l
 
 ## The TC39 Process
 
-- Stage 0: Initial input
+- Stage 0: Initial input - Strawman
 - Stage 1: Proposal (spec, polyfill, demo)
 - Stage 2: Draft (ready for testing)
 - Stage 3: Candidate (almost there, last bits)
