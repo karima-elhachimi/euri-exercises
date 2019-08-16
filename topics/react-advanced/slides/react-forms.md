@@ -134,9 +134,53 @@ const handleSubmit = evt => {
 
 #### Exercise 1 - Create the login form
 
-- username or login input (type text)
-- password input (type password)
-- known user admin, pwd secret
-- when unknown user, reset form and display message unknown user or password
+Complete the login module to generate the following html (component design is up to you):
 
-🧨 TDD (RTL), <code>getByLabelText()</code> is your friend here
+```html
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="card col-sm-6">
+      <div class="card-body">
+        <h4 class="card-title">Sign in</h4>
+        <p class="text-danger text-center" role="alert">
+          Unknown user or password
+        </p>
+        <form>
+          <div class="form-group">
+            <label for="username">Your username</label
+            ><input
+              class="form-control"
+              placeholder="username"
+              type="text"
+              id="username"
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Your password</label
+            ><input
+              class="form-control"
+              placeholder="******"
+              type="password"
+              id="password"
+            />
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">
+              Login
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+---//
+
+#### Exercise 1 - Create the login form
+
+- username is focussed by default (don't use autofocus)
+- verify that password is of type password
+- valid users: admin(🔑secret) and user(🔑pass)
+- when invalid user, reset form display alert unknown user or password and set focus back to username
