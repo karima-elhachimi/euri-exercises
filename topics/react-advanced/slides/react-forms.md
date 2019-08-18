@@ -263,8 +263,8 @@ function ControlledFormExample() {
     const { target } = evt;
     const value = target.type === 'checkbox' ? target.checked : target.value;
 
-    //⚠️ Spread existing values, 
-    // a class component's this.setState() 
+    //⚠️ Spread existing values,
+    // a class component's this.setState()
     // would have done this automatically
     setFormValues({
       ...formValues,
@@ -297,3 +297,100 @@ function ControlledFormExample() {
   );
 }
 ```
+
+---//
+
+#### Exercise 2
+
+Create a <code>&lt;UserForm /&gt;</code> control that could be used to create or edit users
+
+```html
+<form novalidate="">
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label" for="firstName">First Name</label>
+    <div class="col-sm-10">
+      <input
+        class="form-control"
+        id="firstName"
+        placeholder="Enter First Name"
+        type="text"
+        value=""
+      />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label" for="lastName">Last Name</label>
+    <div class="col-sm-10">
+      <input
+        class="form-control"
+        id="lastName"
+        placeholder="Enter Last Name"
+        type="text"
+        value=""
+      />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-check-label" for="isFamily">Family</label>
+    <div class="col-sm-10">
+      <div class="form-check">
+        <input class="form-check-input" id="isFamily" type="checkbox" />
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Save</button>
+  </div>
+</form>
+```
+
+---//
+
+#### Exercise 2.1 Getting Started
+
+Create the component (module: users-detail)
+
+- verify the firstName input
+  - use <code>getByLabelText</code> to get to the input
+  - verify value (empty)
+  - verify placeholder
+- verify the lastName input
+- verify the family checkbox
+
+---//
+
+#### Exercise 2.2 <code>onSubmit</code>
+
+Adjust the component to call a property called onSubmit with as param the formValues when the form is submitted (Save Clicked)
+
+- verify the value of <code>firstName</code>
+- verify the value of <code>lastName</code>
+- verify the value of family input as the property <code>isFamily</code> in the formValues
+
+---//
+
+#### Exercise 2.3 firstName Validation
+
+Add the required and maxlength and verify that onSubmit is not called in those cases
+
+```html
+<div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="firstName">First Name</label>
+  <div class="col-sm-10">
+    <input
+      class="form-control is-invalid"
+      id="firstName"
+      maxlength="30"
+      name="firstName"
+      placeholder="Enter First Name"
+      required=""
+      type="text"
+      value=""
+    />
+    <div class="invalid-feedback" data-testid="validation-feedback-first-name">
+      is required  <!–– has a maximum length of 30 ––>
+    </div>
+  </div>
+</div>
+```
+
