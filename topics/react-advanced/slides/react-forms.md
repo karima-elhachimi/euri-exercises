@@ -184,3 +184,116 @@ Complete the login module to generate the following html (component design is up
 - verify that password is of type password
 - valid users: admin(🔑secret) and user(🔑pass)
 - when invalid user, reset form display alert unknown user or password and set focus back to username
+
+---
+
+### Controlled
+
+- React has taken control of the input
+- The input value is stored in local state
+- Data (state) and UI (inputs) are always in sync
+
+> React state becomes the “single source of truth”.
+
+---//
+
+#### 🤔 How?
+
+```jsx
+import React, { useState } from 'react';
+
+function ControlledFormExample() {
+  //⚠️ The initialState has to be different
+  // from null or undefined otherwise react would throw
+  // a warning of uncontrolled ==> controlled
+  const [firstName, setFirstName] = useState('');
+
+  const handleSubmit = evt => {
+    console.log({ firstName });
+    evt.preventDefault();
+  };
+
+  const handleChange = evt => {
+    console.log('change', { value: evt.target.value });
+    setFirstName(evt.target.value);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="firstName">First Name</label>
+      <input
+        id="firstName"
+        type="text"
+        value={firstName}
+        onChange={handleChange}
+      />
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+export default ControlledFormExample;
+```
+
+---//
+
+#### Element summary overview
+
+- <code>&lt;input type="text" /&gt; </code>, <code>&lt;select /&gt;</code> and <code>&lt;textarea /&gt;</code> use <code>value</code> property and <code>evt.target.value</code> in callback
+- <code>&lt;input type="checkbox" /&gt; </code> and <code>&lt;input type="radio" /&gt; </code> use <code>checked</code> property and <code>evt.target.checked</code> in callback
+
+---//
+
+#### Handling multiple inputs
+
+```jsx
+function ControlledFormExample() {
+  const [formValues, setFormValues] = useState({
+    firstName: '',
+    friend: false
+  });
+
+  const handleSubmit = evt => {
+    console.log(formValues);
+    evt.preventDefault();
+  };
+
+  const handleInputChange = evt => {
+    const { target } = evt;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+
+    //⚠️ Spread existing values, 
+    // a class component's this.setState() 
+    // would have done this automatically
+    setFormValues({
+      ...formValues,
+      [target.name]: value
+    });
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="firstName">First Name</label>
+      <input
+        id="firstName"
+        name="firstName"
+        onChange={handleInputChange}
+        type="text"
+        value={formValues.firstName}
+      />
+
+      <label htmlFor="friend">Is Friend</label>
+      <input
+        checked={formValues.friend}
+        id="friend"
+        name="friend"
+        onChange={handleInputChange}
+        type="checkbox"
+      />
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
