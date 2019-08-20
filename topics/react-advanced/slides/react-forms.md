@@ -24,7 +24,7 @@ Copyright (c) 2018-2019 Euricom nv.
 ### Uncontrolled
 
 - Uncontrolled inputs are like traditional HTML form inputs
-- You can then get their value using a [<code>Ref</code>](https://reactjs.org/docs/refs-and-the-dom.html)
+- You can then get their value using a [`Ref`](https://reactjs.org/docs/refs-and-the-dom.html)
 - You have to ‘pull’ the value from the field when you need it
 
 ---//
@@ -49,7 +49,7 @@ function UncontrolledFormExample() {
 
 ---//
 
-#### Form - <code>onSubmit</code>
+#### Form - `onSubmit`
 
 ```jsx
 import React from 'react';
@@ -68,7 +68,7 @@ function UncontrolledFormExample() {
 
 ---//
 
-#### Input - <code>useRef</code>
+#### Input - `useRef`
 
 ```jsx
 import React, { useRef } from 'react';
@@ -91,7 +91,7 @@ function UncontrolledFormExample() {
 
 ---//
 
-#### Input - <code>defaultValue</code>
+#### Input - `defaultValue`
 
 🤔What if you wanted to provide an initial value for the input?
 
@@ -105,14 +105,14 @@ function UncontrolledFormExample() {
 />
 ```
 
-💡<code>&lt;textarea /&gt;</code> and <code>&lt;select /&gt;</code> works accordingly.
+💡`<textarea />` and `<select />` works accordingly.
 
 ---//
 
-#### Input - <code>radio</code> & <code>checkbox</code>
+#### Input - `radio` & `checkbox`
 
-- get the value by using the <code>checked</code> property of the ref
-- set the default value by using <code>defaultChecked</code> property
+- get the value by using the `checked` property of the ref
+- set the default value by using `defaultChecked` property
 
 ```jsx
 const isFriendRef = useRef();
@@ -125,16 +125,19 @@ const handleSubmit = evt => {
 };
 ```
 
+<!-- prettier-ignore -->
 ```html
 <label htmlFor="friend">Is Friend</label>
-<input id="friend" type="checkbox" defaultChecked ref="{isFriendRef}" />
+<input 
+  id="friend"
+  type="checkbox" defaultChecked ref="{isFriendRef}" />
 ```
 
 ---//
 
 #### Exercise 1 - Create the login form
 
-Complete the login module to generate the following html (component design is up to you):
+Complete the login module to match:
 
 ```html
 <div class="container">
@@ -240,8 +243,8 @@ export default ControlledFormExample;
 
 #### Element summary overview
 
-- <code>&lt;input type="text" /&gt; </code>, <code>&lt;select /&gt;</code> and <code>&lt;textarea /&gt;</code> use <code>value</code> property and <code>evt.target.value</code> in callback
-- <code>&lt;input type="checkbox" /&gt; </code> and <code>&lt;input type="radio" /&gt; </code> use <code>checked</code> property and <code>evt.target.checked</code> in callback
+- `<input type="text" />`, `<select />` and `<textarea />` use `value` property and `evt.target.value` in callback
+- `<input type="checkbox" />` and `<input type="radio" />` use `checked` and `evt.target.checked` in callback
 
 ---//
 
@@ -302,10 +305,10 @@ function ControlledFormExample() {
 
 #### Exercise 2
 
-Create a <code>&lt;UserForm /&gt;</code> control that could be used to create or edit users
+Create a `<UserForm />` control that could be used to create or edit users
 
 ```html
-<form novalidate="">
+<form novalidate>
   <div class="form-group row">
     <label class="col-sm-2 col-form-label" for="firstName">First Name</label>
     <div class="col-sm-10">
@@ -351,7 +354,7 @@ Create a <code>&lt;UserForm /&gt;</code> control that could be used to create or
 Create the component (module: users-detail)
 
 - verify the firstName input
-  - use <code>getByLabelText</code> to get to the input
+  - use `getByLabelText` to get to the input
   - verify value (empty)
   - verify placeholder
 - verify the lastName input
@@ -359,21 +362,21 @@ Create the component (module: users-detail)
 
 ---//
 
-#### Exercise 2.2 <code>onSubmit</code>
+#### Exercise 2.2 `onSubmit`
 
-Adjust the component to call the property <code>onSubmit</code> with formValues when the form is submitted (Save Clicked)
+Adjust the component to call the property `onSubmit` with formValues when the form is submitted (Save Clicked)
 
-- verify the value of <code>firstName</code>
-- verify the value of <code>lastName</code>
-- verify the value of family input as the property <code>isFamily</code> in the formValues
+- verify the value of `firstName`
+- verify the value of `lastName`
+- verify the value of family input as the property `isFamily` in the formValues
 
 ---//
 
 #### Exercise 2.3 firstName Validation
 
 - Add required and maxlength=30 attributes
-- <code>onSubmit</code> should not be called when firstName is invalid
-- Verify the validation feedback and is-invalid class
+- `onSubmit` should not be called when firstName is invalid
+- Verify the validation feedback and 'is-invalid' class
 
 ```html
 <div class="form-group row">
@@ -404,7 +407,7 @@ Adjust the component to call the property <code>onSubmit</code> with formValues 
 - We only want to see the validation message after the user has submitted the form
 - Or when the user has touched the input
 
-💡Hint: use the [<code>onBlur</code>](https://reactjs.org/docs/events.html#focus-events) event to mark the field as touched
+💡Hint: use the [`onBlur`](https://reactjs.org/docs/events.html#focus-events) event to mark the field as touched
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
@@ -418,7 +421,7 @@ Adjust the component to call the property <code>onSubmit</code> with formValues 
 
 ---//
 
-#### Exercise 2.6 <code>initialValues</code>
+#### Exercise 2.6 `initialValues`
 
 ```jsx
 <UserForm
@@ -434,7 +437,7 @@ Adjust the component to call the property <code>onSubmit</code> with formValues 
 - verify inputs values to match initialValues
 - updating initialValues resets the form, so all validation and touches are cleared
 
-💡Hint: use <code>rerender</code> to update the component
+💡Hint: use `rerender` to update the component
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
@@ -443,5 +446,279 @@ Adjust the component to call the property <code>onSubmit</code> with formValues 
 #### Exercise 3 UserDetail route/module (optional)
 
 - create a protected route to our module /users/new
-- when our <code>&lt;UserForm /&gt;</code> submits we store the new user using our users api
-- after saving we redirect to /users
+- when our `<UserForm />` submits we store the new user using our users api
+- after saving we redirect to '/users'
+
+---
+
+### Formik
+
+<img src="./images/formik.png" width="400px" style="border: 0px;background:#191919"/><br>
+
+Build forms in React, without the tears 😭.
+
+---//
+
+#### Getting Started
+
+We could extract our controlled form behavior into a `useForm` [custom hook](https://reactjs.org/docs/hooks-custom.html). But let's look at [Formik](https://github.com/jaredpalmer/formik)
+
+- `formik`: Easy form library
+- `yup`: Yup is a JavaScript object schema validator
+
+```
+npm i --save formik yup
+```
+
+---//
+
+#### Formik - As hoc
+
+A Higher-order Component (HoC) that accepts a configuration object
+
+```jsx
+const MyForm = ({ values, errors, handleSubmit}) => (
+  <form onSubmit={handleSubmit}>
+    ...
+  </form>
+);
+
+withFormik({
+  mapPropsToValues: {
+      // ...
+  },
+  validate: {
+      // ...
+  }
+  handleSubmit: {
+      /// ...
+  }
+}(MyForm)
+```
+
+---//
+
+#### Formik - As component
+
+A React component with a render prop
+
+```jsx
+<Formik
+    initialValues={{
+      //...
+    }}
+    validate={values => {
+      //...
+    }}
+    onSubmit={(
+      //...
+    )}
+    render={({ values, errors, handleSubmit }) => (
+        <form onSubmit={handleSubmit}>
+        </form>
+    )}
+/>
+```
+
+---//
+
+#### Building a form
+
+Start with a `<Formik />` component
+
+```jsx
+import React from 'react';
+import { Formik } from 'formik';
+
+function SimpleFormikForm() {
+  return (
+    <Formik
+      initialValues={{
+        name: ''
+      }}
+      onSubmit={values => {
+        console.log('submit', values);
+      }}
+      render={() => <form />}
+    />
+  );
+}
+
+export default SimpleFormikForm;
+```
+
+---//
+
+#### Building a form
+
+Add your input elements
+
+```jsx
+import React from 'react';
+import { Formik } from 'formik';
+
+function SimpleFormikForm() {
+  return (
+    <Formik
+      initialValues={{
+        name: ''
+      }}
+      onSubmit={values => {
+        console.log('submit', values);
+      }}
+      render={({ handleSubmit, handleChange, values }) => (
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            id="name"
+            onChange={handleChange}
+            value={values.name}
+          />
+          <button type="submit">Submit</button>
+        </form>
+      )}
+    />
+  );
+}
+
+export default SimpleFormikForm;
+```
+
+---//
+
+#### Building a form
+
+Simplify with [`Form`](https://jaredpalmer.com/formik/docs/api/form) and [`Field`](https://jaredpalmer.com/formik/docs/api/field) components
+
+```jsx
+import React from 'react';
+import { Formik, Form, Field } from 'formik';
+
+function SimpleFormikForm() {
+  return (
+    <Formik
+      initialValues={{
+        name: ''
+      }}
+      onSubmit={values => {
+        console.log('submit', values);
+      }}
+      render={() => (
+        <Form>
+          <Field name="name" type="test" />
+          <button type="submit">Submit</button>
+        </Form>
+      )}
+    />
+  );
+}
+
+export default SimpleFormikForm;
+```
+
+---//
+
+#### Building a form
+
+Add validation
+
+```js
+import React from 'react';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(4)
+    .required()
+});
+
+function SimpleFormikForm() {
+  return (
+    <Formik
+      initialValues={{
+        name: ''
+      }}
+      validationSchema={validationSchema}
+      onSubmit={values => {
+        console.log('submit', values);
+      }}
+      render={({ errors, touched }) => (
+        <Form>
+          <Field name="name" type="test" />
+          {errors.name && touched.name && <div>{errors.name}</div>}
+          <button type="submit">Submit</button>
+        </Form>
+      )}
+    />
+  );
+}
+
+export default SimpleFormikForm;
+```
+
+---//
+
+#### Building a form
+
+Simplify even further with [`ErrorMessage`](https://jaredpalmer.com/formik/docs/api/errormessage) component
+
+```jsx
+import React from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(4)
+    .required()
+});
+
+function SimpleFormikForm() {
+  return (
+    <Formik
+      initialValues={{
+        name: ''
+      }}
+      validationSchema={validationSchema}
+      onSubmit={values => {
+        console.log('submit', values);
+      }}
+      render={() => (
+        <Form>
+          <Field name="name" type="test" />
+          <ErrorMessage name="name" />
+          <button type="submit">Submit</button>
+        </Form>
+      )}
+    />
+  );
+}
+
+export default SimpleFormikForm;
+```
+
+---//
+
+#### Exercise 4 - Convert `UserForm` to `Formik`
+
+- create a copy of the spec and rename to -formik.spec.jsx
+- create a copy of the component and rename to -formik.jsx
+- change to a `formik` form
+- try to make as less changes as possible to the spec
+
+💡Hint: if you use `yup` the validation changes from `sync` to `async`!
+
+---
+
+### Resources
+
+- [Building forms using React](https://www.codementor.io/blizzerand/building-forms-using-react-everything-you-need-to-know-iz3eyoq4y)
+
+- [Should you store your form state in Redux?](https://goshakkk.name/should-i-put-form-state-into-redux/)
+
+- Formik
+  - [Better React Forms with Formik](https://mead.io/formik/)
+  - [The Joy of Forms with React and Formik](https://keyholesoftware.com/2017/10/23/the-joy-of-forms-with-react-and-formik/)
+  - [formik vs informed vs react form vs react forms](http://www.npmtrends.com/formik-vs-informed-vs-react-form-vs-react-forms)
+  - [ReactNYC - Formik](https://www.youtube.com/watch?v=-tDy7ds0dag)
