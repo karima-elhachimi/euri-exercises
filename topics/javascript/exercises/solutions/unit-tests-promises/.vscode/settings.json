@@ -1,10 +1,20 @@
-// Place your settings in this file to overwrite default and user settings.
 {
-  "editor.formatOnSave": true,
-  "prettier.useTabs": false,
-  "prettier.printWidth": 80,
-  "prettier.tabWidth": 2,
+  // Make sure you don't forget to save when changing focus
+  "files.autoSave": "onFocusChange",
+
+  // Prettier setup (in case you install it)
+  "editor.formatOnPaste": false,
+  "editor.formatOnType": false,
+  "prettier.printWidth": 120,
   "prettier.singleQuote": true,
   "prettier.trailingComma": "all",
-  "prettier.semi": true
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

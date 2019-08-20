@@ -14,8 +14,8 @@ describe('getHomePlanetByIdCallback', () => {
       try {
         expect(planetName).toEqual('Tatooine');
         done();
-      } catch (err) {
-        done.fail(err);
+      } catch (error) {
+        done.fail(error);
       }
     });
   });
@@ -26,7 +26,7 @@ describe('getHomePlanetByIdCallback', () => {
     });
   });
 
-  test.only('getNameByIdWithTimeout', async () => {
+  test('getNameByIdWithTimeout', async () => {
     expect.assertions(1);
     // return (
     //   getNameByIdWithTimeout(1, 500)
@@ -45,7 +45,7 @@ describe('getHomePlanetByIdCallback', () => {
     }
   });
 
-  test.only('getPersonAndHomeWorldById', async () => {
+  test('getPersonAndHomeWorldById', async () => {
     const person = await getPersonAndHomeWorldById(1);
     expect(person.name).toEqual('Luke Skywalker');
     expect(person.homeworld.name).toEqual('Tatooine');

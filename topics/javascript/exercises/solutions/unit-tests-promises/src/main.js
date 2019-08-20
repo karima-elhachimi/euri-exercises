@@ -20,10 +20,7 @@ export function httpGet(url) {
 }
 
 export function getNameByIdWithTimeout(peopleId, timeout) {
-  return Promise.race([
-    setTimeoutP(timeout),
-    httpGet('https://swapi.co/api/people/1'),
-  ]).then(data => {
+  return Promise.race([setTimeoutP(timeout), httpGet('https://swapi.co/api/people/1')]).then(data => {
     if (!data) {
       throw new Error('timeout');
     }
