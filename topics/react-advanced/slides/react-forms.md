@@ -371,10 +371,9 @@ Adjust the component to call the property <code>onSubmit</code> with formValues 
 
 #### Exercise 2.3 firstName Validation
 
-- Add required and maxlength=30 attributes to firstName form-group
-- <code>onSubmit</code> should not be called when firstName is empty or longer than 30 chars
-- Verify the validation feedback in both cases
-- Verify the class on the input (is-invalid) in both case
+- Add required and maxlength=30 attributes
+- <code>onSubmit</code> should not be called when firstName is invalid
+- Verify the validation feedback and is-invalid class
 
 ```html
 <div class="form-group row">
@@ -405,11 +404,7 @@ Adjust the component to call the property <code>onSubmit</code> with formValues 
 - We only want to see the validation message after the user has submitted the form
 - Or when the user has touched the input
 
-💡Hints
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-- use the <code>onBlur</code> event to mark the field as touched
+💡Hint: use the [<code>onBlur</code>](https://reactjs.org/docs/events.html#focus-events) event to mark the field as touched
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
@@ -439,14 +434,14 @@ Adjust the component to call the property <code>onSubmit</code> with formValues 
 - verify inputs values to match initialValues
 - updating initialValues resets the form, so all validation and touches are cleared
 
-💡Hints
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-- use <code>rerender</code> to update the component
+💡Hint: use <code>rerender</code> to update the component
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---//
 
-##### Exercise 3 UserDetail route/module (optional)
+#### Exercise 3 UserDetail route/module (optional)
+
+- create a protected route to our module /users/new
+- when our <code>&lt;UserForm /&gt;</code> submits we store the new user using our users api
+- after saving we redirect to /users

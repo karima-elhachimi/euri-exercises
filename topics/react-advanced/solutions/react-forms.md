@@ -337,6 +337,8 @@ Login.propTypes = {
 export default withRouter(Login);
 ```
 
+---
+
 ### Exercise 2 - User Detail Form
 
 ```jsx
@@ -837,4 +839,155 @@ UserForm.defaultProps = {
 };
 
 export default UserForm;
+```
+
+---
+
+### Exercise 3 - UserDetail route/module (optional)
+
+```jsx
+// src/js/app.spec.jsx
+
+// Mock the new module
+jest.mock(
+  //
+  './modules/users-detail/user-detail.jsx',
+  () => jest.fn().mockReturnValue(<div data-testid="UserDetailModuleMock" />)
+);
+
+// Add the following tests
+describe('/users/new', () => {
+  test('it renders the user detail module when authenticated', () => {
+    const { getByTestId, queryByTestId } = renderWithRouter(
+      <App initialIdentity="someone" />,
+      {
+        route: '/users/new'
+      }
+    );
+
+    getByTestId('UserDetailModuleMock');
+
+    expect(queryByTestId('UsersModuleMock')).toBeNull();
+  });
+
+  test('ensure it redirects to login when anonymous', () => {
+    const { history } = renderWithRouter(<App />, {
+      route: '/users/new'
+    });
+
+    expect(history).toHaveProperty('location.pathname', '/login');
+    expect(history).toHaveProperty(
+      'location.state.from.pathname',
+      '/users/new'
+    );
+  });
+});
+```
+
+```jsx
+// src/js/app.jsx
+import UserDetail from './modules/users-detail/user-detail';
+
+<ProtectedRoute path="/users/new" component={UserDetail} />;
+```
+
+```jsx
+// src/js/modules/users-detail/user-detail.spec.jsx
+
+/* eslint-disable react/prop-types */
+
+import React from 'react';
+import { fireEvent, waitForDomChange } from '@testing-library/react';
+import UserDetail from './user-detail';
+
+import { save as saveMock } from '../../api/users';
+import { renderWithRouter } from '../../../../test/react-testing-helpers';
+
+jest.mock('./components/user-form.jsx', () => ({ onSubmit }) => {
+  const handleClick = () => {
+    onSubmit({ firstName: 'John', lastName: 'Doe', isFamily: true });
+  };
+
+  return (
+    <div data-testid="UserFormMock">
+      <button type="button" onClick={handleClick}>
+        FakeSubmit
+      </button>
+    </div>
+  );
+});
+
+jest.mock('../../api/users.js');
+
+describe('User Detail', () => {
+  beforeEach(() => {
+    saveMock.mockResolvedValue({ id: 10 });
+  });
+
+  describe('when creating a new user', () => {
+    function render() {
+      return renderWithRouter(<UserDetail />);
+    }
+
+    it('it renders a header', () => {
+      const { getByRole } = render();
+
+      expect(getByRole('heading')).toHaveTextContent(/user detail/i);
+    });
+
+    it('it renders the user form', () => {
+      const { getByTestId } = render();
+
+      getByTestId('UserFormMock');
+    });
+
+    test('it stores the new user and redirects to /users', async () => {
+      const { getByText, history } = render();
+
+      fireEvent.click(getByText('FakeSubmit'));
+
+      expect(saveMock).toHaveBeenCalledWith({
+        firstName: 'John',
+        lastName: 'Doe',
+        isFamily: true
+      });
+
+      await waitForDomChange();
+
+      expect(history).toHaveProperty('location.pathname', '/users');
+    });
+  });
+});
+```
+
+```jsx
+// src/js/modules/users-detail/user-detail.jsx
+import React, { useCallback, useState } from 'react';
+import { Redirect } from 'react-router';
+
+import UserForm from './components/user-form';
+import * as UserApi from '../../api/users';
+
+function UserDetail() {
+  const [redirect, setRedirect] = useState(false);
+
+  const handleSubmit = useCallback(async values => {
+    await UserApi.save(values);
+    setRedirect(true);
+  }, []);
+
+  if (redirect) {
+    return <Redirect to="/users" />;
+  }
+
+  return (
+    <div className="container-fluid">
+      <h1>User Detail</h1>
+      <br />
+      <UserForm onSubmit={handleSubmit} />
+    </div>
+  );
+}
+
+export default UserDetail;
 ```
