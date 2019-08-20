@@ -18,22 +18,129 @@ See [https://chocolatey.org/packages?q=repository](https://chocolatey.org/packag
 > must select a different location other than the default install
 > location. See [https://chocolatey.org/install#non-administrative-install](https://chocolatey.org/install#non-administrative-install) for details.
 
-#### Better console window
+#### NodeJS
 
-The PowerShell in Windows 10 got a bunch of upgrades, but it's even better if used with [CMDer](https://github.com/bliker/cmder/), a powerful Console Emulator. Install with:
+A bunch of tools are powered by Node and installed via npm. This applies to you even if you don't care about Node development. If you want to install tools for React, Azure, TypeScript, or Cordova, you'll need this.
 
-- [Download Full](https://github.com/cmderdev/cmder/releases/download/v1.3.2/cmder.zip)
-- Extract (this takes some time) and copy to c:\cmder\
-- Create shortcut to desktop or taskbar
-- Set bash shell as 'Default task for new console'
+Although you could install NodeJS directly following the steps outlined on the [NodeJS](https://nodejs.org/en/) site, we suggest you to use a version manager for Node.
 
-Even if you don't want to use CMDer, you should enable your PowerShell to execute scripts. You're a developer - the terminal is your friend.
+Use installer: [nvm-windows](https://github.com/coreybutler/nvm-windows/releases)
+
+```bash
+# install latest version of NodeJS
+nvm install latest
+
+# nvm install lts/dubnium
+nvm install lts/dubnium
+
+# list installed versions
+nvm list
+
+# switch verions
+nvm use 12.8.0
+```
+
+Install usefull nodejs development tools
+
+```bash
+# fast remove tool
+npm install rimraf -g
+
+# http server(s)
+npm install serve -g
+npm install live-server -g
+
+# cross platform ENV vars
+npm install cross-env -g
+```
+
+#### Git (Version Control)
+
+Obviously. 
+
+```bash
+# install git 
+cinst git.install
+```
+
+Or use the installer: https://git-scm.com/download/win
+
+If you want Git to be able to save credentials (so you don't have to enter SSH keys / passwords every single time you do anything), also install the Git Credential Manager for Windows.
+
+```bash
+# password manager for git
+cinst Git-Credential-Manager-for-Windows
+```
+
+If the git command line gets to complicated you can use the following tools
+
+```bash
+# install gitkraken (commercial)
+cinst gitkraken 
+
+# or install sourcetree (needs atlassian account)
+cinst sourcetree
+```
+
+#### Windows Terminal
+
+If you're a front-end developer - the terminal is your friend. So lets make the best of it.
+
+- Install Windows 10 versie 18362.0 of hoger as a prerequisites
+
+- Install Windows terminal (preview): https://www.microsoft.com/nl-be/p/windows-terminal-preview/9n0dx20hk701
+
+Enable git bash into the Windows terminal (https://stackoverflow.com/questions/56839307/adding-git-bash-to-the-new-windows-terminal)
+
+- Make sure your git command can be run successfully in CMD
+- Update the config file profile.json
+
+```json
+{ 
+    "tabTitle": "Git Bash",
+    "acrylicOpacity" : 0.75, 
+    "closeOnExit" : true, 
+    "colorScheme" : "Campbell", 
+    "commandline" : "C:/Program Files/Git/bin/bash.exe --login", 
+    "cursorColor" : "#FFFFFF", 
+    "cursorShape" : "bar", 
+    "fontFace" : "Consolas", 
+    "fontSize" : 12, 
+    "guid" : "{14ad203f-52cc-4110-90d6-d96e0f41b64d}", 
+    "historySize" : 9001, 
+    "icon": "ms-appdata:///roaming/git-bash_32px.ico",
+    "name" : "Git Bash", 
+    "padding" : "0, 0, 0, 0", 
+    "snapOnInput" : true, 
+    "useAcrylic" : true 
+}
+```
+
+- The icon can be obtained here: [git-bash_32px.ico](https://raw.githubusercontent.com/yanglr/WindowsDevTools/master/awosomeTerminal/icons/git-bash_32px.ico)
+You can add icons for Tab to this location: `%LOCALAPPDATA%\packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\RoamingState`. Put 32x32 PNG/icons in this folder, and then in profile.json you can reference the image resource with the path starting with `ms-appdata:// .` Test git bash works well in Windows Terminal
+
+
+If you want to use Powershell, you should enable your PowerShell to execute scripts. 
 
 ```
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser
 ```
 
-#### Bash Tools (wget, curl, etc): Gow
+#### Code Editor: VS Code
+
+The best editor for (Javascript) development: [Visual Studio Code](https://code.visualstudio.com/)
+
+Although there is a csinst for visual studio code, i recommend against it. As all autoupdating apps should never be installed using brew, as they would be outdated. So use the installer: https://code.visualstudio.com/
+
+To make it even better install the following extenstions
+
+- EditorConfig for VS Code
+- ESLint
+- Path Intellisense
+- Spelling and Grammer Checker
+- REST Client
+
+#### (Optional) Bash Tools (wget, curl, etc): Gow
 
 If you're coming from a Unix machine, you might miss commands like curl, diff, grep and many other. Gow is your friend - it's a collection of a 100+ famous Unix tools recompiled for Windows.
 
@@ -43,65 +150,25 @@ cinst Gow
 
 More info: [https://github.com/bmatzelle/gow/wiki](https://github.com/bmatzelle/gow/wiki)
 
-#### Node
+## Postman
 
-A bunch of tools are powered by Node and installed via npm. This applies to you even if you don't care about Node development. If you want to install tools for React, Azure, TypeScript, or Cordova, you'll need this.
+[https://www.getpostman.com/downloads/](https://www.getpostman.com/downloads/)
 
-```
-cinst nodejs.install
-node --version
-npm --version
-```
+## Beyond Compare
 
-Useful node utils
+[http://www.scootersoftware.com/download.php](http://www.scootersoftware.com/download.php)
 
-```
-npm install rimraf -g
-npm install -g serve -g
-npm install -g live-server -g
-```
+Command Line Tools
 
-### Version Control: Git
+    Menu - Install Command Line Tools
 
-Obviously. If you want Git to be able to save credentials (so you don't have to enter SSH keys / passwords every single time you do anything), also install the Git Credential Manager for Windows.
+Setup SourceTree for Beyond Compare:
 
-```
-cinst git.install
-cinst poshgit
-# Restart PowerShell / CMDer before moving on - or run
-$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+    Visual Diff Tool: Other
+    Diff Command:/usr/local/bin/bcomp
+    Parameters:$LOCAL $REMOTE
+    Merge Tool: Other
+    Merge Command:/usr/local/bin/bcomp
+    Paramters:$LOCAL $REMOTE $BASE $MERGED
 
-cinst Git-Credential-Manager-for-Windows
-```
-
-If the git command line gets to complicated you can use the following tools
-
-```
-cinst gitkraken
-cinst sourcetree
-```
-
-#### Code Editor: VS Code
-
-The best editor for (Javascript) development: [Visual Studio Code](https://code.visualstudio.com/)
-
-```
-csinst visualstudiocode
-```
-
-To make it even better install the following extensions
-
-- EditorConfig for VS Code
-- ESLint
-- Spelling and Grammer Checker
-
-Alternative you can install Sublime or Atom.
-
-```
-cinst SublimeText3
-cinst sublimetext3-contextmenu
-cinst SublimeText3.PackageControl
-cinst SublimeText3.PowershellAlias
-
-cinst Atom
-```
+> License: see license file

@@ -2,12 +2,10 @@
 
 ## Overview
 
-- [ ] Welcome
+- [X] Welcome
 - [x] [System Setup](./system-setup/README.md)
-- [ ] The state of Javascript
-- [ ] HTTP
-- [ ] WebServices
-- [ ] REST
+- [x] [Git introduction](./slides/git.md)
+- [x] [HTTP & Rest](./slides/http.md)
 
 ### Slides
 

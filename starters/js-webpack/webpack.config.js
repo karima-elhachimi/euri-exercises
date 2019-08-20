@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -30,7 +30,7 @@ module.exports = (env, args) => {
   const isProduction = args.mode === 'production';
 
   const config = {
-    devtool: isProduction ? 'source-map' : '#cheap-module-eval-source-map',
+    devtool: isProduction ? 'source-map' : 'cheap-module-source-map',
     entry: [polyfillsEntry, mainEntry],
     resolve: {
       extensions: ['.js', '.jsx', '.json'],

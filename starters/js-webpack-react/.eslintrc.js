@@ -1,6 +1,7 @@
 module.exports = {
   extends: ['airbnb', 'plugin:jest/recommended'],
   plugins: ['import', 'react-hooks'],
+  parser: 'babel-eslint',
   parserOptions: {
     sourceType: 'module',
     ecmaFeatures: {
@@ -12,7 +13,7 @@ module.exports = {
   env: {
     es6: true,
     browser: true,
-    jest: true,
+    jest: true
   },
   rules: {
     'linebreak-style': 'off', // Don't play nicely with Windows.
@@ -22,6 +23,16 @@ module.exports = {
     'react/forbid-prop-types': 'off',
     'jest/no-focused-tests': 'error',
     'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn'
-  },
+    'react-hooks/exhaustive-deps': 'warn',
+    'jsx-a11y/label-has-associated-control': [ // airbnb require both nesting and htmlFor
+      'error',
+      {
+        labelComponents: [],
+        labelAttributes: [],
+        controlComponents: [],
+        assert: 'either',
+        depth: 25
+      }
+    ]
+  }
 };

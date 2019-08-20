@@ -1,4 +1,4 @@
-## Setup OSX for Modern/Hipster Development
+## Setup OSX for Development
 
 A fresh OSX isn't entirely ready for modern development, but all the tools you need are available. A good terminal, popular bash tools, Git, a decent package manager - when properly setup, modern development on OSX can be a lot of fun. In particular, this document outlines how to configure your OSX in such a way that it can easily handle most development tasks.
 
@@ -106,6 +106,13 @@ brew cask install qlmarkdown
 
 # A Quick Look plugin for json files
 brew cask install quicklook-json
+
+# A window manager
+brew cask install spectacle
+
+# A clipboard manager tool (so you can stop saying damnit when you pressed the keys for copy instead of paste)
+brew cask install flycut
+
 ```
 
 ### Brew Cask update
@@ -149,15 +156,7 @@ After the installation completes verify your ~/.bash_profile
 ```bash
 vi ~/.bash_profile
 
-## content
-# Add tab completion for many Bash commands
-if which brew &> /dev/null && [ -f "$(brew --prefix)/share/bash-completion/bash_completion" ]; then
-	source "$(brew --prefix)/share/bash-completion/bash_completion";
-elif [ -f /etc/bash_completion ]; then
-	source /etc/bash_completion;
-fi;
-
-# Necessary for nvm
+# Add following, necessary for nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -276,8 +275,11 @@ To make it even better install the following extenstions
 - ESLint
 - Path Intellisense
 - Spelling and Grammer Checker
+- REST Client
 
----
+## Postman
+
+[https://www.getpostman.com/downloads/](https://www.getpostman.com/downloads/)
 
 ## Marked2 (Markdown Viewer)
 
@@ -304,17 +306,7 @@ Setup SourceTree for Beyond Compare:
 
 > License: see license file
 
-## Other usefull utilities
-    brew cask install spectacle
-
-    ## Always good to perform cleanup at the end
-    brew cleanup
-
 ## Some short-cuts & tips
-
-For dummies:
-
-![OSX Keys](http://faculty.cs.gwu.edu/~timwood/wiki/lib/exe/fetch.php/learn:key-symbols.gif)
 
 Short-cuts
 

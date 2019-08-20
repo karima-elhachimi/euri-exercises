@@ -844,7 +844,66 @@ To enable decorators you must add a babel plugin
     )
 ```
 
+https://github.com/tc39/proposal-trailing-function-commas
+
 <small>ES8<br>Babel plugins:[syntax-trailing-function-commas], TS 2.0 </small>
+
+<!-- prettier-ignore -->
+***
+
+### Private fields #
+
+T.B.D
+https://dev.to/gafi/7-new-exciting-javascript-features-you-need-to-know-1fkh
+https://github.com/tc39/proposal-class-fields
+
+<!-- prettier-ignore -->
+***
+
+### Optional Chaining ?.
+
+T.B.D
+https://dev.to/gafi/7-new-exciting-javascript-features-you-need-to-know-1fkh
+https://github.com/tc39/proposal-optional-chaining
+
+<!-- prettier-ignore -->
+***
+
+### Nullish Coalescing ??
+
+T.B.D
+https://dev.to/gafi/7-new-exciting-javascript-features-you-need-to-know-1fkh
+https://github.com/tc39/proposal-nullish-coalescing
+
+<!-- prettier-ignore -->
+***
+
+### BigInt
+
+T.B.D
+https://dev.to/gafi/7-new-exciting-javascript-features-you-need-to-know-1fkh
+https://github.com/tc39/proposal-bigint
+
+<!-- prettier-ignore -->
+***
+
+### Top Level await
+
+T.B.D
+https://dev.to/gafi/7-new-exciting-javascript-features-you-need-to-know-1fkh
+https://github.com/tc39/proposal-top-level-await
+
+```js
+// db.mjs
+export const connection = await createConnection();
+```
+
+```js
+// server.mjs
+import { connection } from './db.mjs';
+
+server.start();
+```
 
 ---
 
