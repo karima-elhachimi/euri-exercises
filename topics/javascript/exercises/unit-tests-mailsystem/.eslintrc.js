@@ -15,9 +15,10 @@ module.exports = {
   rules: {
     // Not our taste
     'no-console': 'off',
+    'arrow-parens': 'off',
     'consistent-return': 'off',
     'no-plusplus': 'off',
-    // Don't play nicely with Windows
+    // Don't play nicely with Windows.
     'linebreak-style': 'off',
   },
 };
