@@ -1,68 +1,232 @@
 ---
-title: HTTP & Rest
+title: HTTP / REST
+transition: "fade"
 verticalSeparator: ---//
+---
+
+# HTTP/REST
+
+## The Core of our API
+
+<img src="./images/http-rest.jpeg" width="400px" /><br>
+<small>
+Copyright (c) 2017-2019 Euricom nv.
+</small>
+
+<!-- markdownlint-disable -->
+<br>
+<style type="text/css">
+.reveal h1 {
+    font-size: 3.0em;
+}
+.reveal h2 {
+    font-size: 2.00em;
+}
+.reveal h3 {
+    font-size: 1.00em;
+}
+.reveal p {
+    font-size: 70%;
+}
+.reveal li {
+    font-size: 150%;
+}
+.reveal blockquote {
+    font-size: 120%;
+}
+.reveal pre code {
+    display: block;
+    padding: 5px;
+    overflow: auto;
+    max-height: 800px;
+    word-wrap: normal;
+    font-size: 170%;
+    line-height: 170%;
+}
+</style>
+
 ---
 
 # HTTP
 
-- HTTP stands for Hypertext Transfer Protocol
+- Hypertext Transfer Protocol
 
   <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- It's a stateless, application-layer protocol for communicating between distributed systems, and is the foundation of the modern web
+- HTTP provides a set of rules and standards that govern how information is transmitted on the World Wide Web.
 
   <!-- .element: class="fragment" data-fragment-index="2"-->
 
-- Current version of the protocol is HTTP 1.1, although 2.0 is underway
+- The HTTP protocol is fundamental for WWW
+
   <!-- .element: class="fragment" data-fragment-index="3"-->
 
----
+---//
 
-## Message
+## HTTP
 
-Communication between a host an a client occurs, via a request/response pair and are composed of textual information encoded in ASCII
-
-<img src="./images/HTTPMsgStructure2.png" style="background-color:#f0efe7"/>
-  <!-- .element: class="fragment" data-fragment-index="1" -->
+<img src="./images/http.png" width="1000px" />
 
 ---//
 
-### Composition
+## HTTP
 
-1. A start-line describing the requests to be implemented, or its status
-   <!-- .element: class="fragment" data-fragment-index="1" -->
-2. An optional set of HTTP headers specifying the request, or describing the body included in the message.
-   <!-- .element: class="fragment" data-fragment-index="2" -->
-3. A blank line indicating all meta-information for the request have been sent.
-   <!-- .element: class="fragment" data-fragment-index="3" -->
-4. An optional body containing data associated with the request, or the document associated with a response
-   <!-- .element: class="fragment" data-fragment-index="4" -->
+<img src="./images/HTTP_Steps.png" width="1000px" />
 
 ---
 
-## Request
+# URL
 
-A request is made via a Uniform Resource Locator (URL)
+A URL (Uniform Resource Locator) is used to uniquely identify a resource over the web.
 
-<img src="./images/http1-url-structure.png" />
-
----//
-
-### Url Parts
-
-- **Protocol** http, https, ftp, ...
-- **Port** The default port is 80 for http
-- **Resource Path** The local path to the resource on the server
-- **Query** Url-encoded values
+URL has the following syntax:
 
 ```
-# querystring
-?param1=value1&param2=value2
+protocol://hostname:port/path
+```
+
+HTTP URL
+
+```
+http://mydomain/users
 ```
 
 ---//
 
-### Verbs
+# URL-anatomy
+
+<img src="./images/url-anatomy.png" width="1000px"/>
+
+---//
+
+## Url Parts
+
+- **Protocol:** http, https, ftp, ...
+- **Port:** Port number (80 = http)
+- **Resource Path:** The local path to the resource on the server
+- **Query:** Url-encoded values
+
+---//
+
+## URL samples
+
+```
+http://mydomain/users
+https://mydomain/users?sort=name
+http://localhost:8080/products
+```
+
+other
+
+```
+ftp://www.ftp.org/docs/test.txt
+mailto:user@test101.com
+news:soc.culture.Singapore
+telnet://www.nowhere123.com/
+mongodb://mongodb0.example.com:27017/admin
+```
+
+---
+
+# HTTP protocol
+
+Browser translate URL
+
+```
+http://www.nowhere123.com/doc/index.html
+```
+
+to request
+
+```
+GET /docs/index.html HTTP/1.1
+Host: www.nowhere123.com
+Accept: image/gif, image/jpeg, */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)
+(blank line)
+```
+
+---//
+
+## HTTP protocol
+
+Server response with
+
+```
+HTTP/1.1 200 OK
+Date: Sun, 18 Oct 2009 08:56:53 GMT
+Server: Apache/2.2.14 (Win32)
+Last-Modified: Sat, 20 Nov 2004 07:16:26 GMT
+ETag: "10000000565a5-2c-3e94b66c2e680"
+Content-Length: 44
+Connection: close
+Content-Type: text/html
+X-Pad: avoid browser bug
+
+<html>
+  <body>
+    <h1>My Home Page</h1>
+  </body>
+</html>
+```
+
+---
+
+# HTTP Request
+
+Request message sent by a client consists of
+
+- **Request line** – request method (GET, POST, HEAD, ...), resource URI, and protocol version
+- **Request headers** – additional parameters
+- **Body** – optional data
+
+```
+<method> <resource> HTTP/<version>
+<headers>
+<empty line>
+<body>
+```
+
+---//
+
+# HTTP GET REQUEST
+
+```
+GET /academy/winter-2009-2010 HTTP/1.1
+Host: mydomain.com
+Accept: */*
+Accept-Language: nl
+Accept-Encoding: gzip, deflate
+User-Agent: Mozilla/4.0(compatible;...)
+Connection: Keep-Alive
+Cache-Control: no-cache
+<CRLF>
+```
+
+---//
+
+# HTTP POST REQUEST
+
+```
+POST /webmail/login.php HTTP/1.1
+Host: mydomain.com
+Accept: */*
+User-Agent: Mozilla/4.0(compatible;...)
+Connection: Keep-Alive
+Cache-Control: no-cache
+Content-Length: 59
+<CRLF>
+LOGIN_USER=mente
+DOMAIN_NAME=abv.bg
+LOGIN_PASS=top*secret!
+<CRLF>
+```
+
+---//
+
+### HTTP Methods
 
 - **GET:** The GET method requests a representation of the specified resource. Requests using GET should only retrieve data.
 
@@ -82,99 +246,66 @@ A request is made via a Uniform Resource Locator (URL)
 
   <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- **HEAD:** The HEAD method asks for a response identical to that of a GET request, but without the response body.
+- **OTHERS:** HEAD, OPTIONS, TRACE, CONNECT
 
   <!-- .element: class="fragment" data-fragment-index="2" -->
 
-- **OTHERS:** OPTIONS, TRACE, CONNECT
-
-  <!-- .element: class="fragment" data-fragment-index="3" -->
-
----
-
-### Request Headers
-
-#### Accept
-
-The Accept request HTTP header advertises which content types, expressed as MIME types, the client is able to understand.
-
-```http
-Accept: <MIME_type>/<MIME_subtype>
-Accept: <MIME_type>/*
-Accept: */*
-
-# Multiple types, weighted with the quality value syntax:
-Accept: text/html, application/xml;q=0.9, */*;q=0.8
-```
-
 ---//
 
-#### User-Agent
-
-The User-Agent request header contains a characteristic string that allows the network protocol peers to identify the application type, operating system, software vendor or software version of the requesting software user agent.
-
-```http
-User-Agent: <product>/<product-version> <comment>
-
-# Example
-User-Agent: PostmanRuntime/7.15.0
-```
-
----//
-
-#### Host
-
-The Host request header specifies the domain name of the server (for virtual hosting), and (optionally) the TCP port number on which the server is listening.
-
-```http
-Host: <host>:<port>
-
-# Example
-Host: localhost:3000
-```
-
----//
-
-#### More ...
+## More ...
 
 Please see [MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers)
 
 ---
 
-## Response
+# HTTP Response
 
-### Status Codes
+Response message sent by the server
 
-- **1XX** Informational responses
+- **Status line** – protocol version, status code, status phrase
+- **Response headers** – provide meta data
+- **Body** – the contents of the response (the requested resource)
 
-  <!-- .element: class="fragment" data-fragment-index="1" -->
-
-- **2XX** Successful responses
-
-  <!-- .element: class="fragment" data-fragment-index="2" -->
-
-- **3XX** Redirection messages
-
-  <!-- .element: class="fragment" data-fragment-index="3" -->
-
-- **4XX** Client error responses
-
-  <!-- .element: class="fragment" data-fragment-index="4" -->
-
-- **5XX** Server error responses
-  <!-- .element: class="fragment" data-fragment-index="5" -->
+```
+HTTP/<version> <code> <text>
+<headers>
+<CRLF>
+<body – the requested resource>
+```
 
 ---//
 
-#### **1XX:** Informational responses
+## HTTP Response
 
-- **100 Continue** This interim response indicates that everything so far is OK and that the client should continue with the request or ignore it if it is already finished.
-
-- **101 Switching Protocol** This code is sent in response to an Upgrade request header by the client, and indicates the protocol the server is switching to.
+```
+HTTP/1.1 404 Not Found
+Date: Fri, 17 Jul 2010 16:09:18 GMT+2
+Server: Apache/2.2.14 (Linux)
+Connection: close
+Content-Type: text/html
+<CRLF>
+<HTML><HEAD>
+<TITLE>404 Not Found</TITLE>
+</HEAD><BODY>
+<H1>Not Found</H1>
+The requested URL /img/logo.gif was not found on this server.<P>
+<HR>
+</BODY></HTML>
+```
 
 ---//
 
-#### **2XX** Successful responses
+## Status Codes
+
+- **1XX** Informational (e.g., “100 Continue”)
+- **2XX** Successful (e.g., “200 OK”)
+- **3XX** Redirection (e.g., “301 Moved Permanent)
+- **4XX** Client error (e.g., “404 Not Found”)
+- **5XX** Server error (e.g., “500 Internal Server Error”)
+
+---//
+
+#### **2XX** Successful
 
 - **200 OK** The request has succeeded
 - **201 Created** The request has succeeded and a new resources has been created as a result of it
@@ -182,87 +313,48 @@ Please see [MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers)
 
 ---//
 
-#### **3XX** Redirection messages
-
-- **301 Moved Permanently** The resource is now located at a new URL.
-- **303 See Other** The resource is temporarily located at a new URL. The Location response header contains the temporary URL.
-- **304 Not Modified** This is used for caching purposes. It tells the client that the response has not been modified, so the client can continue to use the same cached version of the response.
-
----//
-
-#### **4XX** Client error responses
+#### **4XX** Client error
 
 - **400 Bad Request** The request was malformed
 - **401 Unauthorized** The request requires authentication
-- **403 Forbidden** The client does not have access rights to the content, unlike 401 the clients identity is known to the server
+- **403 Forbidden** The client does not have access rights to the content
 - **404 Not Found** The resource is not found
-- **405 Method Not Allowed** The request method is known by the server but cannot be used
+- **405 Method Not Allowed** The request method is cannot be used
 - **409 Conflict** The request conflicts with the current state of the server
 
 ---//
 
 #### **5XX** Server error responses
 
-- **500 Internal Server Error** The server has encountered a situation that it does not know how to handle
+- **500 Internal Server Error** Server crash
 - **501 Not Implemented** The server does not yet support the requested functionality.
-- **503 Service Unavailable** The server is not ready to handle the request. Common causes are a server that is down for maintenance or that is overloaded.
+- **503 Service Unavailable** The server is not ready to handle the request.
+
+---
+
+# Cookies
+
+- Cookies are small pieces of data stored by the client on behalf of the server
+- Included in all future HTTP requests
+- Cookies are passed by headers
+
+<img src="./images/cookie.png" width="800px">
 
 ---//
 
-### Response headers
+## Cookie Content
 
-#### Content-Type
+A web browser is expected to be able to store at least 300 cookies of 4 kb each, and at least 20 cookies per server or domain.
 
-The Content-Type entity header is used to indicate the media type of the resource.
-
-```http
-Content-Type: text/html; charset=utf-8
-```
+<img src="./images/cookie-content.png" width="800px">
 
 ---//
 
-#### Server
+## Use of Cookies
 
-The Server header contains information about the software used by the origin server to handle the request.
-
-```http
-Server: <product>
-
-# Example
-Server: Apache/2.4.1 (Unix)
-```
-
----//
-
-#### Content-Length
-
-The Content-Length entity header indicates the size of the entity-body, in bytes, sent to the recipient.
-
-```http
-Content-Length: <length>
-```
-
----//
-
-#### Set-Cookie
-
-The Set-Cookie HTTP response header is used to send cookies from the server to the user agent.
-
-```http
-Set-Cookie: <cookie-name>=<cookie-value>
-Set-Cookie: <cookie-name>=<cookie-value>; Expires=<date>
-Set-Cookie: <cookie-name>=<cookie-value>; Max-Age=<non-zero-digit>
-Set-Cookie: <cookie-name>=<cookie-value>; Domain=<domain-value>
-Set-Cookie: <cookie-name>=<cookie-value>; Path=<path-value>
-Set-Cookie: <cookie-name>=<cookie-value>; Secure
-Set-Cookie: <cookie-name>=<cookie-value>; HttpOnly
-
-Set-Cookie: <cookie-name>=<cookie-value>; SameSite=Strict
-Set-Cookie: <cookie-name>=<cookie-value>; SameSite=Lax
-
-# Multiple directives are also possible, for example:
-Set-Cookie: <cookie-name>=<cookie-value>; Domain=<domain-value>; Secure; HttpOnly
-```
+- **Session Management** - Shopping Cart, Authentication
+- **Personalization** - Language, Remember me, Preferences
+- **Tracking & Analytics** - Ads, Browsing History, Analytics, Tracking
 
 ---
 
@@ -270,37 +362,161 @@ Set-Cookie: <cookie-name>=<cookie-value>; Domain=<domain-value>; Secure; HttpOnl
 
 REST stands for REpresentational State Transfer, and it is an architectural style, or design pattern for API's.
 
-> REST was defined by Roy Fielding, a computer scientist. He presented the REST principles in his PhD dissertation in 2000.
-
-The representation of the state can be in a JSON format (mostly), XML or HTML format.
-
----//
-
-What the server does when you, the client, call one of its APIs depends on 2 things that you need to provide to the server:
-
-1. An identifier for the resource you are interested in. This is the URL for the resource, also known as the endpoint. In fact, URL stands for Uniform Resource Locator.
-2. The operation you want the server to perform on that resource, in the form of an HTTP method, or verb. The common HTTP methods are GET, POST, PUT, and DELETE
+- Based on the HTTP protocol
+- State is typically presented with JSON
+- In REST everything is a resource
+- Resources are defined by URI
+- Full stateless
 
 ---//
 
-## Basic principles
+## Rest Protocol
 
-- **Client-Server Communication** distinct separation of concerns
-- **Stateless** each client request to the server requires that its state be fully represented.
-- **Cacheable** cache constraints may be used, thus enabling response data to to be marked as cacheable or not-cacheable.
-
----//
-
-## Resource Identifier
-
-Each resource is identified by its resource identifier. For example:
+Request
 
 ```
-Car: http://www.automart.com/cars/12345
+GET /products HTTP/1.1
+Host: acme.com
+Accept: application/json
+```
 
-Part: http://www.automart.com/part/12345
+Response
 
-Engine: http://www.automart.com/engine/12345
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {  id: 123, name: "Stapler", price: 4.12 }
+]
+```
+
+---//
+
+# REST Operations
+
+```
+http://www.acme.com/products
+```
+
+- `GET` to retrieve a list of products
+- `POST` to create a new product
+
+```
+http://www.acme.com/products/1234
+```
+
+- `GET` to retrieve
+- `PUT/PATCH` to update a product
+- `DELETE` to, you guessed it, delete
+
+---//
+
+## Use RESTfull URL’s
+
+```bash
+# Retrieve a list of tickets
+GET /tickets
+# Retrieves a ticket
+GET /tickets/12
+
+# Creates a new ticket
+POST /tickets
+# Update ticket #12
+PUT /tickets/12
+# Partially updates ticket #12
+PATCH /tickets/12
+
+# Deletes ticket #12
+DELETE /tickets/12
+```
+
+---//
+
+## Filtering, sorting & searching
+
+```bash
+# Filtering
+GET /tickets?state=open
+
+# Sorting
+GET /tickets?sort=-priority
+
+# Searching
+GET /tickets?q=return&state=open
+
+# Aliases
+GET /tickets/recently_closed
+```
+
+---//
+
+## Deal with relations
+
+```bash
+# Retrieves list of messages for ticket #12
+GET /tickets/12/messages
+
+# Retrieves message #5 for ticket #12
+GET /tickets/12/messages/5
+
+# Creates a new message in ticket #12
+POST /tickets/12/messages
+```
+
+---//
+
+## Authentication
+
+- Don’t use cookies or sessions
+- Always use HTTPS
+- Authorization header
+
+```bash
+# basic
+Authorization: Basic cGV0ZXI6MTIz
+
+# token based
+Authorization : Bearer cn389ncoiwuencr...
+```
+
+---//
+
+## Status Codes - Success
+
+| Code | Text      | Desc                                                                                    |
+| ---- | --------- | --------------------------------------------------------------------------------------- |
+| 200  | OK        | Response to a successful GET, PUT, PATCH or DELETE                                      |
+| 201  | Created   | Response to a POST that results in a creation                                           |
+| 204  | NoContent | Response to a successful request that won't be returning a body (like a DELETE request) |
+
+---//
+
+## Status Codes - Errors
+
+| Code | Text               | Desc                                                                                     |
+| ---- | ------------------ | ---------------------------------------------------------------------------------------- |
+| 400  | BadRequest         | The request is malformed, such as if the body does not parse or input validation         |
+| 401  | Unauthorized       | When no or invalid authentication details are provided                                   |
+| 403  | Forbidden          | When authentication succeeded but authenticated user doesn't have access to the resource |
+| 404  | Not found          | When a non-existent resource is requested                                                |
+| 405  | Method Not Allowed | When an HTTP method is being requested that isn't allowed                                |
+| 409  | Conflict           | Used for business validation error                                                       |
+
+---//
+
+## Error details
+
+body contains the error details
+
+```json
+{
+    "code": 400,
+    "message": "One or more validation failed",
+    "errors: [
+        { "field": "firstName", "message": "is required" }
+    ]
+}
 ```
 
 ---
@@ -312,40 +528,26 @@ Engine: http://www.automart.com/engine/12345
 git clone git@github.com:Euricom/training-bootcamp-frontend-2019Q3.git
 
 # Navigate to the api folder and install deps
-npm i
+npm install
 
 # Run our fake api server
 npm run serve:user-api
 ```
 
-Open the [API](http://localhost:3000/) and use postman to complete the following exercises
+> Use [PostMan](https://www.getpostman.com/downloads/) & open the [API](http://localhost:3000/) to complete the following exercises.
 
 ---//
 
-### Exercise 1
+## Exercices
 
-> Get a list of all users ordered by lastName asc and firstName asc
-
----//
-
-### Exercise 2
-
-> Get a paginated list of users where the pageSize is 5 and get the second page. As a bonus find out how the api communicates the total amount of users
-
----//
-
-### Exercise 3
-
-> Get the user with the id 2
-
----//
-
-### Exercise 4
-
-> Create a new user with the data of yourself
-
----//
-
-### Exercise 5
-
-> Remove yourself again
+```js
+- Get a list of all users ordered by
+  lastName asc and firstName asc
+- Get a paginated list of users where the
+  pageSize is 5 and get the second page. As a
+  bonus find out how the api communicates the
+  total amount of users
+- Get the user with the id 2
+- Create a new user with the data of yourself
+- Remove yourself again
+```
