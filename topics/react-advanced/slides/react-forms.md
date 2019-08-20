@@ -361,7 +361,7 @@ Create the component (module: users-detail)
 
 #### Exercise 2.2 <code>onSubmit</code>
 
-Adjust the component to call a property called onSubmit with as param the formValues when the form is submitted (Save Clicked)
+Adjust the component to call the property <code>onSubmit</code> with formValues when the form is submitted (Save Clicked)
 
 - verify the value of <code>firstName</code>
 - verify the value of <code>lastName</code>
@@ -371,7 +371,10 @@ Adjust the component to call a property called onSubmit with as param the formVa
 
 #### Exercise 2.3 firstName Validation
 
-Add the required and maxlength and verify that onSubmit is not called in those cases
+- Add required and maxlength=30 attributes to firstName form-group
+- <code>onSubmit</code> should not be called when firstName is empty or longer than 30 chars
+- Verify the validation feedback in both cases
+- Verify the class on the input (is-invalid) in both case
 
 ```html
 <div class="form-group row">
@@ -388,9 +391,50 @@ Add the required and maxlength and verify that onSubmit is not called in those c
       value=""
     />
     <div class="invalid-feedback" data-testid="validation-feedback-first-name">
-      is required  <!–– has a maximum length of 30 ––>
+      is required
+      <!–– has a maximum length of 30 ––>
     </div>
   </div>
 </div>
 ```
 
+---//
+
+#### Exercise 2.4 Improve validation
+
+- We only want to see the validation message after the user has submitted the form
+- Or when the user has touched the input
+
+💡Hints
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+- use the <code>onBlur</code> event to mark the field as touched
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+---//
+
+#### Exercise 2.5 LastName validation
+
+- The input is required
+- The length of the input is limited to 80 chars
+- It should behave as the firstName validation
+
+---//
+
+#### Exercise 2.6 <code>initialValues</code>
+
+```jsx
+<UserForm
+  initialValues={{
+    firstName: string,
+    lastName: string,
+    isFamily: boolean
+  }}
+/>
+```
+
+- initialValues is an optional prop
+- verify inputs values to match initialValues
+- updating initialValues resets the form, so all validation and touches are cleared
