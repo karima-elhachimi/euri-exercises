@@ -1,6 +1,6 @@
 # Euricom Licenses
 
-## Beyond Compare (OSX)
+## Beyond Compare (MacOS)
 
 --- BEGIN LICENSE KEY ---
 dcfAzPZNY3tu+3UqvBAPqT-k+3OjmWN4oCJMJ1Wg4qNqh019d0BJqsu6O
@@ -11,6 +11,6 @@ WDr7-S7GQ8N0cRsbPBs1CQA3tUVtNxcdB5vgVErtFKVnq7qYLhPQYcIZI
 qeD7fesmVNRF+7oyP-C4CsAhz4-P7bKS8ZFSZoi96T9nsNH0NEVDsdyH+
 --- END LICENSE KEY -----
 
-## Marked 2 (OSX)
+## Marked 2 (MacOS)
 
 D2F93BD1-81CBDB3B-16FF83C8-EF9E8DEE-EB79143E

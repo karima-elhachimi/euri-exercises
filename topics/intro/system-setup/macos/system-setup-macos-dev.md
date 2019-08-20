@@ -1,4 +1,4 @@
-## Setup OSX for Development
+# Setup OSX for Development
 
 A fresh OSX isn't entirely ready for modern development, but all the tools you need are available. A good terminal, popular bash tools, Git, a decent package manager - when properly setup, modern development on OSX can be a lot of fun. In particular, this document outlines how to configure your OSX in such a way that it can easily handle most development tasks.
 
@@ -33,58 +33,17 @@ The missing package manager for macOS (or Linux)
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-### Install bash completion
-
-```bash
-brew install bash-completion
-```
-
-After the installation completes verify your ~/.bashrc and ~/.bash_profile
-
-### ~./bashrc
-
-```bash
-vi ~/.bashrc
-
-## content
-[ -n "$PS1" ] && source ~/.bash_profile;
-
-## i = insert, esc :wq to save
-```
-
-### ~./bash_profile
-
-```bash
-vi ~/.bash_profile
-
-## content
-# Add tab completion for many Bash commands
-if which brew &> /dev/null && [ -f "$(brew --prefix)/share/bash-completion/bash_completion" ]; then
-	source "$(brew --prefix)/share/bash-completion/bash_completion";
-elif [ -f /etc/bash_completion ]; then
-	source /etc/bash_completion;
-fi;
-```
-
 ### Sample commands
 
-    brew cleanup       -- uninstall unused and old versions of packages
-    brew commands      -- show a list of commands
-    brew config        -- show homebrew and system configuration
-    brew doctor        -- audits your installation for common issues
-    brew info          -- information about a formula
-    brew install       -- install a formula
     brew list          -- list files in a formula or not-installed formulae
-    brew outdated      -- list formulae for which a newer version is available
-    brew pin           -- pin specified formulae
-    brew reinstall     -- install a formula anew; re-using its current options
-    brew search        -- search for a formula or cask (/regex/ or string)
-    brew tap           -- tap a new formula repository from GitHub, or list existing taps
+    brew cleanup       -- uninstall unused and old versions of packages
+    brew install       -- install a formula (app)
     brew uninstall     -- uninstall a formula
-    brew unpin         -- unpin specified formulae
-    brew untap         -- remove a tapped repository
     brew update        -- fetch latest version of Homebrew and all formulae
     brew upgrade       -- upgrade outdated formulae
+    brew doctor        -- audits your installation for common issues
+    brew tap           -- tap a new formula repository from GitHub
+    brew untap         -- remove a tapped repository
 
 ### Cask
 
@@ -143,58 +102,17 @@ For MacOs the following version managers exist:
 - [nvm](https://github.com/creationix/nvm)
 - [n](https://github.com/tj/n)
 
-I prefer nvm instead of n because of the global package isolation, but some people tend to disagree ;), so from here on we will follow this path
+To install nvm
 
 ```bash
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
 ```
 
-After the installation completes verify your ~/.bash_profile
-
-### ~./bash_profile
+Install latest LTS
 
 ```bash
-vi ~/.bash_profile
-
-# Add following, necessary for nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+nvm install lts/*
 ```
-
-### Verify installation
-
-```bash
-command -v nvm
-# this should print nvm
-```
-
-### Install latest lts
-
-```bash
-nvm install lts/dubnium
-```
-
-### Sample commands
-
-    --version           -- print out the latest released version of nvm
-    alias               -- show or set aliases
-    current             -- list installed versions
-    deactivate          -- undo effects of `nvm` on current shell
-    exec                -- run <command> on <version>. Uses .nvmrc if available
-    help                -- show help
-    install             -- download and install a version in <node|iojs|node version number>
-    ls                  -- list installed versions or versions matching a given description
-    ls-remote           -- list remote versions available for install
-    reinstall-packages  -- reinstall global `npm` packages contained in <version> to current version
-    run                 -- run `node` on <version> with <args> as arguments. Uses .nvmrc if available
-    unalias             -- deletes an alias
-    uninstall           -- uninstall a version
-    unload              -- unload `nvm` from shell
-    use                 -- modify PATH to use <version>. Uses .nvmrc if available
-    version             -- resolve the given description to a single local version
-    version-remote      -- resolve the given description to a single remote version
-    which               -- display path to installed node version. Uses .nvmrc if available
 
 ## Terminal
 
@@ -210,6 +128,9 @@ Obviously. If you want Git to be able to save credentials (so you don't have to 
 # install
 brew install git
 
+# check installation
+git --version
+
 # configure credential manager
 git config --global credential.helper cache
 
@@ -220,31 +141,13 @@ git config --global user.name "Mona Lisa"
 git config --global user.email "email@example.com"
 ```
 
-### Sample commands
+## Diff/Merge tool
 
-    add             -- add file contents to the index
-    branch          -- list, create, or delete branches
-    checkout        -- checkout a branch or paths to the working tree
-    clone           -- clone a repository into a new directory
-    commit          -- record changes to the repository
-    diff            -- show changes between commits, commit and working tree, etc
-    fetch           -- download objects and refs from another repository
-    init            -- create an empty Git repository or reinitialize an existing one
-    log             -- show commit logs
-    merge           -- join two or more development histories together
-    mv              -- move or rename a file, a directory, or a symlink
-    pull            -- fetch from and merge with another repository or a local branch
-    push            -- update remote refs along with associated objects
-    rebase          -- forward-port local commits to the updated upstream head
-    reset           -- reset current HEAD to the specified state
-    rm              -- remove files from the working tree and from the index
-    show            -- show various types of objects
-    status          -- show the working tree status
-    tag             -- create, list, delete or verify a tag object signed with GPG
+You can install p4merge or BeyondCompare
 
-### Diff/Merge tool
+### P4merge
 
-I personally recommend [p4merge](https://www.perforce.com/downloads/visual-merge-tool) as merge tool, but you could also use BeyondCompare see below for more info
+Download [p4merge](https://www.perforce.com/downloads/visual-merge-tool)
 
 ```bash
 # ~/.gitconfig
@@ -256,12 +159,37 @@ I personally recommend [p4merge](https://www.perforce.com/downloads/visual-merge
 	trustExitCode = false
 ```
 
-### GUI
+### BeyondCompare
 
-If the git command line gets too complicated you can install the following tools
+Download [http://www.scootersoftware.com/download.php](http://www.scootersoftware.com/download.php)
 
-- [Gitkraken](https://www.gitkraken.com/)
-- [SourceTree](https://www.sourcetreeapp.com/)
+Add Command Line Tools: Menu - Install Command Line Tools
+
+Config GIT
+
+```bash
+# ~/.gitconfig
+[diff]
+    tool = bcomp
+[difftool]
+    prompt = false
+[difftool "bcomp"]
+    trustExitCode = true
+    cmd = "/usr/local/bin/bcomp" \"$LOCAL\" \"$REMOTE\"
+[merge]
+	tool = bcomp
+[mergetool]
+    prompt = false
+[mergetool "p4merge"]
+  	trustExitCode = true
+    cmd = "/usr/local/bin/bcomp" \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+```
+
+Verify installation
+
+```
+git difftool ./README.md
+```
 
 ## Code Editor: VS Code
 
@@ -280,31 +208,6 @@ To make it even better install the following extenstions
 ## Postman
 
 [https://www.getpostman.com/downloads/](https://www.getpostman.com/downloads/)
-
-## Marked2 (Markdown Viewer)
-
-[http://marked2app.com/](http://marked2app.com/)
-
-> License: see license file
-
-## Beyond Compare
-
-[http://www.scootersoftware.com/download.php](http://www.scootersoftware.com/download.php)
-
-Command Line Tools
-
-    Menu - Install Command Line Tools
-
-Setup SourceTree for Beyond Compare:
-
-    Visual Diff Tool: Other
-    Diff Command:/usr/local/bin/bcomp
-    Parameters:$LOCAL $REMOTE
-    Merge Tool: Other
-    Merge Command:/usr/local/bin/bcomp
-    Paramters:$LOCAL $REMOTE $BASE $MERGED
-
-> License: see license file
 
 ## Some short-cuts & tips
 
@@ -333,7 +236,21 @@ Tips
 
 More: http://www.danrodney.com/mac/index.html
 
-## MacOS Tweaks
+### (optional) GIT GUI
+
+If the git command line gets too complicated you can install the following tools
+
+- [Gitkraken](https://www.gitkraken.com/)
+- [SourceTree](https://www.sourcetreeapp.com/)
+
+## (Optional) Marked2 (Markdown Viewer)
+
+[http://marked2app.com/](http://marked2app.com/)
+
+> License: see license file
+
+
+## (Optional) MacOS Tweaks
 
 #### Finder
 

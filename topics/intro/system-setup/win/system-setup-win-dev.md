@@ -1,8 +1,8 @@
-## Setup Windows 10 for Modern/Hipster Development
+# Setup Windows 10 for Modern/Hipster Development
 
 A fresh Windows isn't entirely ready for modern development, but all the tools you need are available. A good terminal, popular bash tools, Git, a decent package manager - when properly setup, modern development on Windows can be a lot of fun. In particular, this document outlines how to configure your Windows in such a way that it can easily handle most development tasks usually run on a Mac OS X or a Linux distro.
 
-#### Package Management: Chocolatey
+## Package Management: Chocolatey
 
 Chocolatey is a powerful package manager for Windows, working sort of like apt-get or homebrew. Let's get that first. Fire up CMD.exe as Administrator and run:
 
@@ -18,7 +18,7 @@ See [https://chocolatey.org/packages?q=repository](https://chocolatey.org/packag
 > must select a different location other than the default install
 > location. See [https://chocolatey.org/install#non-administrative-install](https://chocolatey.org/install#non-administrative-install) for details.
 
-#### NodeJS
+## NodeJS
 
 A bunch of tools are powered by Node and installed via npm. This applies to you even if you don't care about Node development. If you want to install tools for React, Azure, TypeScript, or Cordova, you'll need this.
 
@@ -28,9 +28,9 @@ Use installer: [nvm-windows](https://github.com/coreybutler/nvm-windows/releases
 
 ```bash
 # install latest version of NodeJS
-nvm install latest
+nvm install stable
 
-# nvm install lts/dubnium
+# nvm install lts/dubnium (latest LTS)
 nvm install lts/dubnium
 
 # list installed versions
@@ -54,7 +54,7 @@ npm install live-server -g
 npm install cross-env -g
 ```
 
-#### Git (Version Control)
+## Git (Version Control)
 
 Obviously. 
 
@@ -72,17 +72,41 @@ If you want Git to be able to save credentials (so you don't have to enter SSH k
 cinst Git-Credential-Manager-for-Windows
 ```
 
-If the git command line gets to complicated you can use the following tools
+Install & config diff/merge tool 
 
-```bash
-# install gitkraken (commercial)
-cinst gitkraken 
-
-# or install sourcetree (needs atlassian account)
-cinst sourcetree
+```
+cinst p4merge
 ```
 
-#### Windows Terminal
+Configure p4merge
+
+```bash
+# c:\users\[yourusername]\.gitconfig
+[merge]
+    tool = p4merge
+[mergetool "p4merge"]
+    cmd = p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+    trustExitCode = false
+[diff]
+    external = p4mergeDiff.bat
+[push]
+    default = simple
+```
+
+Create a p4mergeDiff bat file to handle diff
+
+```bash
+# C:\Program Files\Perforce\p4mergeDiff.bat
+p4merge "%2" "%5"
+```
+
+Verify p4merge installation
+
+```
+git difftool ./README.md
+```
+
+## Windows Terminal
 
 If you're a front-end developer - the terminal is your friend. So lets make the best of it.
 
@@ -126,7 +150,7 @@ If you want to use Powershell, you should enable your PowerShell to execute scri
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser
 ```
 
-#### Code Editor: VS Code
+## Code Editor: VS Code
 
 The best editor for (Javascript) development: [Visual Studio Code](https://code.visualstudio.com/)
 
@@ -138,9 +162,12 @@ To make it even better install the following extenstions
 - ESLint
 - Path Intellisense
 - Spelling and Grammer Checker
-- REST Client
 
-#### (Optional) Bash Tools (wget, curl, etc): Gow
+## Postman
+
+[https://www.getpostman.com/downloads/](https://www.getpostman.com/downloads/)
+
+## (Optional) Bash Tools (wget, curl, etc): Gow
 
 If you're coming from a Unix machine, you might miss commands like curl, diff, grep and many other. Gow is your friend - it's a collection of a 100+ famous Unix tools recompiled for Windows.
 
@@ -150,25 +177,16 @@ cinst Gow
 
 More info: [https://github.com/bmatzelle/gow/wiki](https://github.com/bmatzelle/gow/wiki)
 
-## Postman
+## (Optional) GIT UI
 
-[https://www.getpostman.com/downloads/](https://www.getpostman.com/downloads/)
+If the git command line gets to complicated you can use the following tools
 
-## Beyond Compare
+```bash
+# install gitkraken (commercial for private repo)
+cinst gitkraken 
 
-[http://www.scootersoftware.com/download.php](http://www.scootersoftware.com/download.php)
+# or install sourcetree (needs atlassian account)
+cinst sourcetree
+```
 
-Command Line Tools
 
-    Menu - Install Command Line Tools
-
-Setup SourceTree for Beyond Compare:
-
-    Visual Diff Tool: Other
-    Diff Command:/usr/local/bin/bcomp
-    Parameters:$LOCAL $REMOTE
-    Merge Tool: Other
-    Merge Command:/usr/local/bin/bcomp
-    Paramters:$LOCAL $REMOTE $BASE $MERGED
-
-> License: see license file
