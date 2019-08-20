@@ -55,7 +55,7 @@ describe('mainSystem', () => {
       mailSystem.sendWelcomeMail(to, subject, model);
 
       // assert
-      expect(smtpTransport.send).toBeCalled();
+      expect(smtpTransport.send).toHaveBeenCalled();
       const mail = smtpTransport.send.mock.calls[0][0];
 
       // expect(mail).toMatchSnapshot();
@@ -97,8 +97,8 @@ describe('mainSystem', () => {
       // assert
       const filteredMails = backend.transfer.mock.calls[0][0];
 
-      expect(repository.getMails).toBeCalled();
-      expect(backend.transfer).toBeCalled();
+      expect(repository.getMails).toHaveBeenCalled();
+      expect(backend.transfer).toHaveBeenCalled();
       expect(filteredMails).toBeArrayOfSize(1);
       expect(filteredMails[0].id).toEqual(456);
     });
