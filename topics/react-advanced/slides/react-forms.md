@@ -438,3 +438,15 @@ Adjust the component to call the property <code>onSubmit</code> with formValues 
 - initialValues is an optional prop
 - verify inputs values to match initialValues
 - updating initialValues resets the form, so all validation and touches are cleared
+
+💡Hints
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+- use <code>rerender</code> to update the component
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+---//
+
+##### Exercise 3 UserDetail route/module (optional)

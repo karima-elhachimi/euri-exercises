@@ -336,3 +336,505 @@ Login.propTypes = {
 
 export default withRouter(Login);
 ```
+
+### Exercise 2 - User Detail Form
+
+```jsx
+// src/js/modules/users-detail/components/user-form.spec.jsx
+import React from 'react';
+import { render as renderRtl, fireEvent } from '@testing-library/react';
+import UserForm from './user-form';
+
+describe('User Form', () => {
+  function render(props = { initialValues: undefined, onSubmit: () => {} }) {
+    return renderRtl(
+      <UserForm initialValues={props.initialValues} onSubmit={props.onSubmit} />
+    );
+  }
+
+  test('it renders the form as expected', () => {
+    const { getByLabelText } = render();
+
+    const firstNameInput = getByLabelText(/first name/i);
+    expect(firstNameInput).toHaveProperty('placeholder', 'Enter First Name');
+    expect(firstNameInput).toHaveAttribute('required');
+    expect(firstNameInput).toHaveAttribute('maxlength', '30');
+    expect(firstNameInput).toHaveValue('');
+
+    const lastNameInput = getByLabelText(/last name/i);
+    expect(lastNameInput).toHaveProperty('placeholder', 'Enter Last Name');
+    expect(lastNameInput).toHaveAttribute('required');
+    expect(lastNameInput).toHaveAttribute('maxlength', '80');
+    expect(lastNameInput).toHaveValue('');
+
+    const isFamilyInput = getByLabelText(/family/i);
+    expect(isFamilyInput).toHaveProperty('checked', false);
+  });
+
+  test('it adheres to initialValues passed', () => {
+    const initialValues = {
+      firstName: 'Jane',
+      lastName: 'Doe',
+      isFamily: true
+    };
+    const { getByLabelText } = render({ initialValues });
+
+    const firstNameInput = getByLabelText(/first name/i);
+    const lastNameInput = getByLabelText(/last name/i);
+    const familyInput = getByLabelText(/family/i);
+
+    expect(firstNameInput).toHaveValue(initialValues.firstName);
+    expect(lastNameInput).toHaveValue(initialValues.lastName);
+    expect(familyInput).toHaveProperty('checked', true);
+  });
+
+  test('ensure it resets the form when initialValues changes after submit', () => {
+    const { getByText, getByLabelText, rerender } = render({
+      initialValues: { isFamily: true }
+    });
+
+    const firstNameInput = getByLabelText(/first name/i);
+    const lastNameInput = getByLabelText(/last name/i);
+    const familyInput = getByLabelText(/family/i);
+
+    // Triggers validation
+    fireEvent.click(getByText(/save/i));
+
+    expect(firstNameInput).toHaveClass('is-invalid');
+    expect(lastNameInput).toHaveClass('is-invalid');
+    expect(familyInput).toHaveProperty('checked', true);
+
+    rerender(
+      <UserForm initialValues={{ isFamily: false }} onSubmit={() => {}} />
+    );
+
+    expect(firstNameInput).not.toHaveClass('is-invalid');
+    expect(lastNameInput).not.toHaveClass('is-invalid');
+    expect(familyInput).toHaveProperty('checked', false);
+  });
+
+  test('ensure it resets the form when initialValues changes after blur', () => {
+    const { getByLabelText, rerender } = render({
+      initialValues: { isFamily: true }
+    });
+
+    const firstNameInput = getByLabelText(/first name/i);
+    const lastNameInput = getByLabelText(/last name/i);
+    const familyInput = getByLabelText(/family/i);
+
+    // Triggers validation
+    fireEvent.blur(firstNameInput);
+    fireEvent.blur(lastNameInput);
+
+    expect(firstNameInput).toHaveClass('is-invalid');
+    expect(lastNameInput).toHaveClass('is-invalid');
+    expect(familyInput).toHaveProperty('checked', true);
+
+    rerender(
+      <UserForm initialValues={{ isFamily: false }} onSubmit={() => {}} />
+    );
+
+    expect(firstNameInput).not.toHaveClass('is-invalid');
+    expect(lastNameInput).not.toHaveClass('is-invalid');
+    expect(familyInput).toHaveProperty('checked', false);
+  });
+
+  describe('submitting', () => {
+    describe('and form is valid', () => {
+      test('it calls on submit with formValues', () => {
+        const formValues = {
+          firstName: 'Jane',
+          lastName: 'Doe',
+          isFamily: true
+        };
+        const onSubmit = jest.fn();
+
+        const { getByLabelText, getByText } = render({ onSubmit });
+
+        const firstNameInput = getByLabelText(/first name/i);
+        const lastNameInput = getByLabelText(/last name/i);
+        const familyInput = getByLabelText(/family/i);
+        const saveButton = getByText(/save/i);
+
+        fireEvent.change(firstNameInput, {
+          target: { value: formValues.firstName }
+        });
+        fireEvent.change(lastNameInput, {
+          target: { value: formValues.lastName }
+        });
+        fireEvent.click(familyInput);
+
+        fireEvent.click(saveButton);
+
+        expect(onSubmit).toHaveBeenCalledWith(formValues);
+      });
+    });
+
+    describe('and form is invalid', () => {
+      describe('firstName', () => {
+        describe('required', () => {
+          test('it shows a validation message when empty after blur', async () => {
+            const { getByLabelText, queryByTestId, getByTestId } = render();
+
+            const firstNameInput = getByLabelText(/first name/i);
+
+            expect(firstNameInput).not.toHaveClass('is-invalid');
+            expect(queryByTestId('validation-feedback-first-name')).toBeNull();
+
+            fireEvent.change(firstNameInput, { target: { value: '' } });
+            fireEvent.blur(firstNameInput);
+
+            const firstNameError = getByTestId(
+              'validation-feedback-first-name'
+            );
+            expect(firstNameError).toHaveTextContent(/is required/i);
+            expect(firstNameInput).toHaveClass('is-invalid');
+          });
+
+          test('it shows a validation message when empty after submit', async () => {
+            const {
+              getByLabelText,
+              queryByTestId,
+              getByText,
+              getByTestId
+            } = render();
+
+            const firstNameInput = getByLabelText(/first name/i);
+            const saveButton = getByText(/save/i);
+
+            expect(firstNameInput).not.toHaveClass('is-invalid');
+            expect(queryByTestId('validation-feedback-first-name')).toBeNull();
+
+            fireEvent.change(firstNameInput, { target: { value: '' } });
+            fireEvent.click(saveButton);
+
+            const firstNameError = getByTestId(
+              'validation-feedback-first-name'
+            );
+            expect(firstNameError).toHaveTextContent(/is required/i);
+            expect(firstNameInput).toHaveClass('is-invalid');
+          });
+        });
+
+        describe('maxlength = 30', () => {
+          test('it shows a validation message when too long after blur', async () => {
+            const { getByLabelText, queryByTestId, getByTestId } = render();
+
+            const firstNameInput = getByLabelText(/first name/i);
+
+            expect(firstNameInput).not.toHaveClass('is-invalid');
+            expect(queryByTestId('validation-feedback-first-name')).toBeNull();
+
+            fireEvent.change(firstNameInput, {
+              target: { value: 'a'.repeat(31) }
+            });
+            fireEvent.blur(firstNameInput);
+
+            const firstNameError = getByTestId(
+              'validation-feedback-first-name'
+            );
+            expect(firstNameError).toHaveTextContent(
+              /has a maximum length of 30/i
+            );
+            expect(firstNameInput).toHaveClass('is-invalid');
+          });
+
+          test('it shows a validation message when too long after submit', async () => {
+            const {
+              getByLabelText,
+              queryByTestId,
+              getByText,
+              getByTestId
+            } = render();
+
+            const firstNameInput = getByLabelText(/first name/i);
+            const saveButton = getByText(/save/i);
+
+            expect(firstNameInput).not.toHaveClass('is-invalid');
+            expect(queryByTestId('validation-feedback-first-name')).toBeNull();
+
+            fireEvent.change(firstNameInput, {
+              target: { value: 'a'.repeat(31) }
+            });
+            fireEvent.click(saveButton);
+
+            const firstNameError = getByTestId(
+              'validation-feedback-first-name'
+            );
+            expect(firstNameError).toHaveTextContent(
+              /has a maximum length of 30/i
+            );
+            expect(firstNameInput).toHaveClass('is-invalid');
+          });
+        });
+      });
+
+      describe('lastName', () => {
+        describe('required', () => {
+          test('it shows a validation message when empty after blur', async () => {
+            const { getByLabelText, queryByTestId, getByTestId } = render();
+
+            const lastNameInput = getByLabelText(/last name/i);
+
+            expect(lastNameInput).not.toHaveClass('is-invalid');
+            expect(queryByTestId('validation-feedback-last-name')).toBeNull();
+
+            fireEvent.change(lastNameInput, { target: { value: '' } });
+            fireEvent.blur(lastNameInput);
+
+            const lastNameError = getByTestId('validation-feedback-last-name');
+            expect(lastNameError).toHaveTextContent(/is required/i);
+            expect(lastNameInput).toHaveClass('is-invalid');
+          });
+
+          test('it shows a validation message when empty after submit', async () => {
+            const {
+              getByLabelText,
+              queryByTestId,
+              getByText,
+              getByTestId
+            } = render();
+
+            const lastNameInput = getByLabelText(/last name/i);
+            const saveButton = getByText(/save/i);
+
+            expect(lastNameInput).not.toHaveClass('is-invalid');
+            expect(queryByTestId('validation-feedback-last-name')).toBeNull();
+
+            fireEvent.change(lastNameInput, { target: { value: '' } });
+            fireEvent.click(saveButton);
+
+            const lastNameError = getByTestId('validation-feedback-last-name');
+            expect(lastNameError).toHaveTextContent(/is required/i);
+            expect(lastNameInput).toHaveClass('is-invalid');
+          });
+        });
+
+        describe('maxlength = 80', () => {
+          test('it shows a validation message when too long after blur', async () => {
+            const { getByLabelText, queryByTestId, getByTestId } = render();
+
+            const lastNameInput = getByLabelText(/last name/i);
+
+            expect(lastNameInput).not.toHaveClass('is-invalid');
+            expect(queryByTestId('validation-feedback-last-name')).toBeNull();
+
+            fireEvent.change(lastNameInput, {
+              target: { value: 'a'.repeat(81) }
+            });
+            fireEvent.blur(lastNameInput);
+
+            const lastNameError = getByTestId('validation-feedback-last-name');
+            expect(lastNameError).toHaveTextContent(
+              /has a maximum length of 80/i
+            );
+            expect(lastNameInput).toHaveClass('is-invalid');
+          });
+
+          test('it shows a validation message when too long after submit', async () => {
+            const {
+              getByLabelText,
+              queryByTestId,
+              getByText,
+              getByTestId
+            } = render();
+
+            const lastNameInput = getByLabelText(/last name/i);
+            const saveButton = getByText(/save/i);
+
+            expect(lastNameInput).not.toHaveClass('is-invalid');
+            expect(queryByTestId('validation-feedback-last-name')).toBeNull();
+
+            fireEvent.change(lastNameInput, {
+              target: { value: 'a'.repeat(81) }
+            });
+            fireEvent.click(saveButton);
+
+            const lastNameError = getByTestId('validation-feedback-last-name');
+            expect(lastNameError).toHaveTextContent(
+              /has a maximum length of 80/i
+            );
+            expect(lastNameInput).toHaveClass('is-invalid');
+          });
+        });
+      });
+
+      test('guard it does not call onSubmit with values', () => {
+        const onSubmit = jest.fn();
+
+        const { getByText } = render({ onSubmit });
+
+        fireEvent.click(getByText(/save/i));
+
+        expect(onSubmit).not.toHaveBeenCalled();
+      });
+    });
+  });
+});
+```
+
+```jsx
+import React, { useState, useEffect, useMemo } from 'react';
+import { shape, string, func, bool } from 'prop-types';
+import classNames from 'classnames';
+import Button from '../../../components/button';
+
+function UserForm({ initialValues, onSubmit }) {
+  const [formValues, setFormValues] = useState({});
+  const [touched, setTouched] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+
+  // (Re)initialize form
+  useEffect(() => {
+    const newValues = {
+      ...initialValues
+    };
+
+    setFormValues(newValues);
+    setTouched({});
+    setSubmitted(false);
+  }, [initialValues]);
+
+  // Validation
+  const errors = useMemo(() => {
+    const result = {};
+
+    if (!formValues.firstName) result.firstName = 'is required';
+    else if (formValues.firstName.length > 30)
+      result.firstName = 'has a maximum length of 30';
+
+    if (!formValues.lastName) result.lastName = 'is required';
+    else if (formValues.lastName.length > 80)
+      result.lastName = 'has a maximum length of 80';
+
+    return result;
+  }, [formValues]);
+
+  const handleInputChange = evt => {
+    const { target } = evt;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+
+    setFormValues({
+      ...formValues,
+      [target.name]: value
+    });
+  };
+
+  const handleInputBlur = evt => {
+    const {
+      target: { name }
+    } = evt;
+    if (!touched[name]) {
+      setTouched({
+        ...touched,
+        [name]: true
+      });
+    }
+  };
+
+  const handleSubmit = evt => {
+    setSubmitted(true);
+    if (Object.keys(errors).length === 0) onSubmit(formValues);
+    evt.preventDefault();
+  };
+
+  return (
+    <form noValidate onSubmit={handleSubmit}>
+      <div className="form-group row">
+        <label className="col-sm-2 col-form-label" htmlFor="firstName">
+          First Name
+        </label>
+        <div className="col-sm-10">
+          <input
+            className={classNames('form-control', {
+              'is-invalid': errors.firstName && (submitted || touched.firstName)
+            })}
+            id="firstName"
+            maxLength={30}
+            name="firstName"
+            onBlur={handleInputBlur}
+            onChange={handleInputChange}
+            placeholder="Enter First Name"
+            required
+            type="text"
+            value={formValues.firstName || ''}
+          />
+          {errors.firstName && (submitted || touched.firstName) && (
+            <div
+              className="invalid-feedback"
+              data-testid="validation-feedback-first-name"
+            >
+              {errors.firstName}
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="form-group row">
+        <label className="col-sm-2 col-form-label" htmlFor="lastName">
+          Last Name
+        </label>
+        <div className="col-sm-10">
+          <input
+            className={classNames('form-control', {
+              'is-invalid': errors.lastName && (submitted || touched.lastName)
+            })}
+            id="lastName"
+            name="lastName"
+            onBlur={handleInputBlur}
+            onChange={handleInputChange}
+            placeholder="Enter Last Name"
+            required
+            maxLength={80}
+            type="text"
+            value={formValues.lastName || ''}
+          />
+          {errors.lastName && (submitted || touched.lastName) && (
+            <div
+              className="invalid-feedback"
+              data-testid="validation-feedback-last-name"
+            >
+              {errors.lastName}
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="form-group row">
+        <label className="col-sm-2 form-check-label" htmlFor="isFamily">
+          Family
+        </label>
+        <div className="col-sm-10">
+          <div className="form-check">
+            <input
+              checked={Boolean(formValues.isFamily)}
+              className="form-check-input"
+              id="isFamily"
+              name="isFamily"
+              onChange={handleInputChange}
+              type="checkbox"
+            />
+          </div>
+        </div>
+      </div>
+      <div className="form-group">
+        <Button type="submit">Save</Button>
+      </div>
+    </form>
+  );
+}
+
+UserForm.propTypes = {
+  initialValues: shape({
+    firstName: string,
+    lastName: string,
+    isFamily: bool
+  }),
+  onSubmit: func
+};
+
+UserForm.defaultProps = {
+  initialValues: {},
+  onSubmit: () => {}
+};
+
+export default UserForm;
+```
