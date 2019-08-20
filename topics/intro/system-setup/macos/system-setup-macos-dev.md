@@ -154,9 +154,15 @@ Download [p4merge](https://www.perforce.com/downloads/visual-merge-tool)
 [merge]
 	tool = p4merge
 [mergetool "p4merge"]
-  	keepTemporaries = false
-	prompt = false
+    cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge "\"$PWD/$BASE\"" "\"$PWD/$REMOTE\"" "\"$PWD/$LOCAL\"" "\"$PWD/$MERGED\""
+	keepTemporaries = false
 	trustExitCode = false
+	keepBackup = false
+[diff]
+    tool = p4merge
+[difftool "p4merge"]
+    cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge "\"$REMOTE\"" "\"$LOCAL\""
+	prompt = false
 ```
 
 ### BeyondCompare
@@ -180,12 +186,12 @@ Config GIT
 	tool = bcomp
 [mergetool]
     prompt = false
-[mergetool "p4merge"]
+[mergetool "bcomp"]
   	trustExitCode = true
     cmd = "/usr/local/bin/bcomp" \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
 ```
 
-Verify installation
+Verify installation: change a git tracked file and
 
 ```
 git difftool ./README.md
