@@ -163,6 +163,16 @@ To make it even better install the following extenstions
 - Git Graph
 - Git Blame
 
+Must know shortcuts
+
+- Ctrl + F : Find in current File
+- Ctrl + B : Quickly show and hide the sidebar
+- Ctrl + J : Quick show and hide the bottom panel
+- Ctrl + P : Open single file
+- Alt + Up / Alt + Down : Easily move the line that the cursor is currently at up or down.
+- Ctrl + / : Will comment/uncomment code (works in js, html, css, ...)
+- Ctrl + K + Ctrl + S: Open shortcut help
+
 ## Postman
 
 [https://www.getpostman.com/downloads/](https://www.getpostman.com/downloads/)
