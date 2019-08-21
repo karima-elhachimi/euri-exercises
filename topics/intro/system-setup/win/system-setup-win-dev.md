@@ -36,11 +36,11 @@ nvm install lts/dubnium
 # list installed versions
 nvm list
 
-# switch verions
+# switch version
 nvm use 12.8.0
 ```
 
-Install usefull nodejs development tools
+Install useful nodejs development tools
 
 ```bash
 # fast remove tool
@@ -104,7 +104,7 @@ p4merge "%2" "%5"
 
 If you're a front-end developer - the terminal is your friend. So lets make the best of it.
 
-- Install Windows 10 versie 18362.0 or hoger 
+- Install Windows 10 version 18362.0 or higher 
 
 - Install Windows terminal (preview): https://www.microsoft.com/nl-be/p/windows-terminal-preview/9n0dx20hk701
 
@@ -148,9 +148,9 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser
 
 The best editor for (Javascript) development: [Visual Studio Code](https://code.visualstudio.com/)
 
-Although there is a csinst for visual studio code, i recommend against it. As all autoupdating apps should never be installed using brew, as they would be outdated. So use the installer: https://code.visualstudio.com/
+Although there is a csinst for visual studio code, i recommend against it. As all auto updating apps should never be installed using brew, as they would be outdated. So use the installer: https://code.visualstudio.com/
 
-To make it even better install the following extenstions
+To make it even better install the following extensions
 
 - EditorConfig for VS Code
 - ESLint
@@ -195,7 +195,7 @@ If the git command line gets to complicated you can use the following tools
 # install gitkraken (commercial for private repo)
 cinst gitkraken 
 
-# or install sourcetree (needs atlassian account)
+# or install sourcetree (needs an Atlassian account)
 cinst sourcetree
 ```
 

@@ -7,6 +7,15 @@ A fresh OSX isn't entirely ready for modern development, but all the tools you n
 System Preferences - Language & Region - Preferred language
 Set to English (if not already)
 
+## Terminal
+
+MacOs already has a pretty decent terminal built-in but if you want to use an alternative try ITerm2
+
+    brew cask install iterm2
+
+[Optional] If you want a nice shell with colors and git integration, install zsh
+Follow instruction from https://sourabhbajaj.com/mac-setup/iTerm/zsh.html
+
 ## XCode
 
 A must have for any Mac development, even for just the command line tools
@@ -45,29 +54,47 @@ The missing package manager for macOS (or Linux)
     brew tap           -- tap a new formula repository from GitHub
     brew untap         -- remove a tapped repository
 
+Some use full brew packages
+
+```bash
+brew install tree
+brew install git
+brew install git-flow
+brew install htop               # CPU usage, available memory
+brew install speedtest-cli      # internet speed test
+brew install wifi-password      # displays your wifi password
+brew install archey             # basic system info
+```
+
 ### Cask
 
 Cask is a Homebrew plugin that allow to install OSX applications distributed as binaries. Usually you get a dmg file and then drag-n-drop into /Applications - with Cask this process can be automated using the command line.
 
 ```bash
+# install cask
 brew tap caskroom/cask
 ```
+
+Some use full cask packages
 
 ```bash
 # Just hold the ⌘-Key a bit longer to get a list of all active short cuts of the current application.
 brew cask install cheatsheet
 
-# A Quick Look plugin for source code with syntax highlighting
+# Additional Quick Look plugins
 brew cask install qlcolorcode
-
-# A Quick Look plugin for Markdown files
 brew cask install qlmarkdown
-
-# A Quick Look plugin for json files
 brew cask install quicklook-json
+brew cask install suspicious-package
 
-# A window manager
+# The missing window manager
 brew cask install spectacle
+
+# VLC media player
+brew cask install vlc
+
+# App remover
+brew cask install appcleaner
 
 # A clipboard manager tool (so you can stop saying damnit when you pressed the keys for copy instead of paste)
 brew cask install flycut
@@ -112,12 +139,6 @@ Install latest LTS
 ```bash
 nvm install lts/*
 ```
-
-## Terminal
-
-MacOs already has a pretty decent terminal built-in but if you want to use an alternative try ITerm2
-
-    brew cask install iterm2
 
 ## Version Control: Git
 
@@ -200,14 +221,16 @@ git difftool ./README.md
 
 The best editor for (Javascript) development: [Visual Studio Code](https://code.visualstudio.com/)
 
-Although there is a cask for visual studio code, i recommend against it. As all autoupdating apps should never be installed using brew, as they would be outdated.
+Although there is a cask for visual studio code, i recommend against it. As all auto updating apps should never be installed using brew, as they would be outdated.
 
-To make it even better install the following extenstions
+To make it even better install the following extensions
 
 - EditorConfig for VS Code
 - ESLint
+- Auto Rename Tag
 - Path Intellisense
 - Spelling and Grammer Checker
+- Code Spell Checker
 - Color Highlight
 - Markdown All in One
 - Prettier - Code formatter
@@ -255,6 +278,11 @@ Tips
 - The spotlight search has a calculator build in.
 
 More: http://www.danrodney.com/mac/index.html
+
+## (optional) The Z shell 
+
+If you want a nice shell with colors and git integration, install zsh
+Follow instruction from https://sourabhbajaj.com/mac-setup/iTerm/zsh.html
 
 ### (optional) GIT GUI
 

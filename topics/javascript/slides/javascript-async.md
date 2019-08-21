@@ -164,7 +164,7 @@ Making async methods calls via promise
 ```js
 myAsyncAction(arg)
   .then(result => {
-    // successfull result
+    // successful result
   })
   .catch(err => {
     // error

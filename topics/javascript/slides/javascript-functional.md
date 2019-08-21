@@ -1,10 +1,10 @@
 ---
-title: Funtional Javascript
+title: Functional Javascript
 transition: "fade"
 verticalSeparator: "^\\*\\*\\*"
 ---
 
-## Funtional Javascript
+## Functional Javascript
 
 <img src="./images/functional.png" width="400px" /><br>
 <small>
@@ -235,7 +235,7 @@ const companies = [
 ];
 ```
 
-Usefull Array functions
+Useful Array functions
 
 `forEach`, `map`, `reduce`, `filter`, `sort`, `find`
 
@@ -252,7 +252,7 @@ for (let i = 0; i < companies.length; i++) {
 }
 ```
 
-Prefere
+Prefer
 
 ```js
 // forEach (loop over all items)
@@ -284,7 +284,7 @@ for (let i = 0; i < companies.length; i++) {
 }
 ```
 
-Prefered
+Preferred
 
 ```js
 const companyNames = companies.map(item => {
@@ -325,7 +325,7 @@ for (let i = 0; i < companies.length; i++) {
 }
 ```
 
-Prefere
+Prefer
 
 ```js
 // reduce
