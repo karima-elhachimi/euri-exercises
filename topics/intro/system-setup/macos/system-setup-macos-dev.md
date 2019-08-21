@@ -71,7 +71,6 @@ brew cask install spectacle
 
 # A clipboard manager tool (so you can stop saying damnit when you pressed the keys for copy instead of paste)
 brew cask install flycut
-
 ```
 
 ### Brew Cask update
@@ -143,7 +142,7 @@ git config --global user.email "email@example.com"
 
 ## Diff/Merge tool
 
-You can install p4merge or BeyondCompare
+You can install p4merge or BeyondCompare (preferable)
 
 ### P4merge
 
@@ -209,7 +208,12 @@ To make it even better install the following extenstions
 - ESLint
 - Path Intellisense
 - Spelling and Grammer Checker
-- REST Client
+- Color Highlight
+- Markdown All in One
+- Prettier - Code formatter
+- TODO Highlight
+- Git Graph
+- Git Blame
 
 ## Postman
 
@@ -255,37 +259,140 @@ If the git command line gets too complicated you can install the following tools
 
 > License: see license file
 
-
 ## (Optional) MacOS Tweaks
 
 #### Finder
 
-    # Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons
-    defaults write com.apple.finder QuitMenuItem -bool true
+```bash
 
-    # Finder: show hidden files by default
-    #defaults write com.apple.finder AppleShowAllFiles -bool true
+# Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons
+defaults write com.apple.finder QuitMenuItem -bool true
 
-    # Finder: show all filename extensions
-    defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+# Finder: show hidden files by default
+#defaults write com.apple.finder AppleShowAllFiles -bool true
 
-    # Finder: show status bar
-    defaults write com.apple.finder ShowStatusBar -bool true
+# Finder: show all filename extensions
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
-    # Finder: show path bar
-    defaults write com.apple.finder ShowPathbar -bool true
+# Finder: show status bar
+defaults write com.apple.finder ShowStatusBar -bool true
 
-    # Finder: allow text selection in Quick Look
-    defaults write com.apple.finder QLEnableTextSelection -bool true
+# Finder: show path bar
+defaults write com.apple.finder ShowPathbar -bool true
 
-    # Display full POSIX path as Finder window title
-    defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+# Finder: allow text selection in Quick Look
+defaults write com.apple.finder QLEnableTextSelection -bool true
 
-    # When performing a search, search the current folder by default
-    defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+# Display full POSIX path as Finder window title
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
-    # Avoid creating .DS_Store files on network volumes
-    defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+# When performing a search, search the current folder by default
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
-    # Show the ~/Library folder
-    chflags nohidden ~/Library
+# Avoid creating .DS_Store files on network volumes
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+
+# Show the ~/Library folder
+chflags nohidden ~/Library
+```
+
+## Verify Correct Installation
+
+Open an terminal window through "iTerm" app
+
+**Homebrew & Cask**
+
+```bash
+# get homebrew versions
+$ brew --version
+Homebrew/homebrew-core (git revision ea340; last commit 2019-08-20)
+Homebrew/homebrew-cask (git revision 8877; last commit 2019-08-20)
+
+# list tools installed with brew
+$ brew list
+git			readline		yarn
+git-flow	openssl			awscli
+
+# list tools installed with cask
+$ brew cask list
+cheatsheet      qlcolorcode     qlmarkdown
+quicklook-json  spectacle       iTerm2
+
+# verify brew
+$ brew doctor
+Your system is ready to brew.
+```
+
+**NodeJS, npm and nvm**
+
+```bash
+# install latest nodejs version
+$ nvm install stable
+v12.9.0 is already installed.
+Now using node v12.9.0 (npm v6.10.2)
+
+# get node version
+$ node --version
+v12.9.0
+
+# get npm version
+$ npm --version
+6.10.2
+
+# list global installed modules
+$ npm list --global --depth=0
+/Users/[yourusername]/.nvm/versions/node/v12.9.0/lib
+├── cross-env@5.2.0
+├── npm@6.10.2
+├── rimraf@3.0.0
+└── serve@11.1.0
+```
+
+**Git**
+
+```bash
+# get git version
+$ git --version
+git version 2.19.1
+
+# clone bootcamp repo
+$ cd ~
+$ mkdir git   # proposed default git folder: ~/git
+$ cd git
+$ git clone https://github.com/Euricom/training-bootcamp-frontend-2019Q3.git
+Cloning into 'training-bootcamp-frontend-2019Q3'...
+remote: Enumerating objects: 3291, done.
+remote: Total 3291 (delta 0), reused 0 (delta 0), pack-reused 3291
+Receiving objects: 100% (3291/3291), 33.91 MiB | 16.59 MiB/s, done.
+Resolving deltas: 100% (1684/1684), done.
+```
+
+**Visual Studio Code**
+
+```bash
+# goto bootcamp repo
+$ cd ~/git/training-bootcamp-frontend-2019Q3
+
+# open bootcamp repo with vscode
+$ code . 
+
+# click on 'Git Graph' in the status bar (if you installed the Git Graph extension)
+# you should see the commit graph
+```
+
+**BeyondCompare**
+
+```bash
+# get configured git merge tool
+$ git config --get merge.tool
+bcomp 
+
+# get configured git merge tool
+$ git config --get diff.tool
+bcomp 
+
+# verify correct config
+# modify the ./README.md in the bootcamp repo
+$ git difftool ./README.md # BeyondCompare should open with the README diffs
+# you can also verify the diffs in VSCode
+```

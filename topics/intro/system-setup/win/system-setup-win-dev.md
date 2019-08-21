@@ -100,17 +100,11 @@ Create a p4mergeDiff bat file to handle diff
 p4merge "%2" "%5"
 ```
 
-Verify p4merge installation
-
-```
-git difftool ./README.md
-```
-
 ## Windows Terminal
 
 If you're a front-end developer - the terminal is your friend. So lets make the best of it.
 
-- Install Windows 10 versie 18362.0 of hoger as a prerequisites
+- Install Windows 10 versie 18362.0 or hoger 
 
 - Install Windows terminal (preview): https://www.microsoft.com/nl-be/p/windows-terminal-preview/9n0dx20hk701
 
@@ -162,6 +156,12 @@ To make it even better install the following extenstions
 - ESLint
 - Path Intellisense
 - Spelling and Grammer Checker
+- Color Highlight
+- Markdown All in One
+- Prettier - Code formatter
+- TODO Highlight
+- Git Graph
+- Git Blame
 
 ## Postman
 
@@ -188,5 +188,106 @@ cinst gitkraken
 # or install sourcetree (needs atlassian account)
 cinst sourcetree
 ```
+
+## Verify Correct Installation
+
+Open a bash shell through "Windows Terminal" 
+
+**bash shell**
+
+```bash
+# goto user home folder
+$ cd ~
+~
+
+# show full path
+$ pwd
+/mnt/c/Users/[yourusername]
+```
+
+**cinst**
+
+```bash
+# show choco help
+$ choco
+
+# list installed packages
+$ choco list
+```
+
+**NodeJS, npm and nvm**
+
+```bash
+# install latest nodejs version
+$ nvm install stable
+v12.9.0 is already installed.
+Now using node v12.9.0 (npm v6.10.2)
+
+# get node version
+$ node --version
+v12.9.0
+
+# get npm version
+$ npm --version
+6.10.2
+
+# list global installed modules
+$ npm list --global --depth=0
+/mnt/c/Users/[yourusername]/.nvm/versions/node/v12.9.0/lib
+├── cross-env@5.2.0
+├── npm@6.10.2
+├── rimraf@3.0.0
+└── serve@11.1.0
+```
+
+**Git**
+
+```bash
+# get git version
+$ git --version
+git version 2.19.1
+
+# clone bootcamp repo
+$ cd ~
+$ mkdir git   # proposed default git folder: ~/git
+$ cd git
+$ git clone https://github.com/Euricom/training-bootcamp-frontend-2019Q3.git
+Cloning into 'training-bootcamp-frontend-2019Q3'...
+remote: Enumerating objects: 3291, done.
+remote: Total 3291 (delta 0), reused 0 (delta 0), pack-reused 3291
+Receiving objects: 100% (3291/3291), 33.91 MiB | 16.59 MiB/s, done.
+Resolving deltas: 100% (1684/1684), done.
+```
+
+**Visual Studio Code**
+
+```bash
+# goto bootcamp repo
+$ cd ~/git/training-bootcamp-frontend-2019Q3
+
+# open bootcamp repo with vscode
+$ code . 
+
+# click on 'Git Graph' in the status bar (if you installed the Git Graph extension)
+# you should see the commit graph
+```
+
+**p4merge**
+
+```bash
+# get configured git merge tool
+$ git config --get merge.tool
+p4merge 
+
+# get configured git merge tool
+$ git config --get diff.tool
+p4merge 
+
+# verify correct config
+# modify the ./README.md in the bootcamp repo
+$ git difftool ./README.md # p4merge should open with the README diffs
+# you can also verify the diffs in VSCode
+```
+
 
 
