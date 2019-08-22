@@ -1,36 +1,43 @@
 # HTTP/REST solutions
 
 ```bash
-# Get a list of all users ordered by lastName asc and firstName asc
-GET http://localhost:3000/users?_sort=lastName,firstName HTTP/1.1
+# Get a list of all users ordered by lastName desc 
+GET https://euri-test-api-phflgvcuay.now.sh/api/users/1003?sort=lastName-
 ```
 
 ```bash
 # Get a paginated list of users where the pageSize is 5 and get the 
 # second page. As a bonus find out how the api communicates the
 # total amount of users 
-GET http://localhost:3000/users?_limit=5&_page=2 HTTP/1.1
+GET https://euri-test-api-phflgvcuay.now.sh/api/users?page=1&pageSize=3
 ```
 
 ```bash
-# Get the user with the id 2
-GET http://localhost:3000/users/2 HTTP/1.1
+# Get the user with the id 1003
+GET https://euri-test-api-phflgvcuay.now.sh/api/users/1003
 ```
 
 ```bash
 # Create a new user with the data of yourself
-POST http://localhost:3000/users HTTP/1.1
+POST https://euri-test-api-phflgvcuay.now.sh/api/users 
 Content-Type: application/json
 
 {
     "firstName": "Peter",
     "lastName": "Cosemans",
-    "gender": "M",
-    "birthDate": "1964-10-06T19:00:00.000Z"
+    "age": 55,
+    "email": "peter.cosemans@gmail.com"
 }
 ```
 
 ```bash
 # Remove yourself again
-DELETE http://localhost:3000/users/9 HTTP/1.1
+DELETE https://euri-test-api-phflgvcuay.now.sh/api/users/[yourId] 
+```
+
+```bash
+#  Get the basket with items & product description
+GET https://euri-test-api-phflgvcuay.now.sh/api/basket/xyz
+GET https://euri-test-api-phflgvcuay.now.sh/api/products/1
+GET https://euri-test-api-phflgvcuay.now.sh/api/products/2
 ```

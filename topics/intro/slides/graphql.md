@@ -289,9 +289,29 @@ query {
 
 ---
 
+### Query Fragments
+
+```json
+    query {
+        lee: user(id: "1") {
+            ...UserFragment
+        }
+        sam: user(id: "2") {
+            ...UserFragment
+        }
+    }
+
+    fragment UserFragment on User {
+        name
+        email
+    }
+```
+
+---
+
 # GraphQL mutation
 
-> Mutation is like an action in Redux
+> Query to get info, Mutation to modify it
 
 ---
 
@@ -402,18 +422,20 @@ query {
     }
 }
 ```
+
 ---
 
 # Exercise
 
-Open https://euri-test-api-ohrakgrzhg.now.sh
+Open https://euri-test-api-phflgvcuay.now.sh/graphql
 
-1. Query all the tasks
-2. Query a single task and use a variable
-3. Add a new task (use mutation)
-4. Complete a task
-5. Query all products (all fields) & basket with product title in one query
-6. Add an other product to the basket
+1. Query all users ordered by firstName (retrieve all fields)
+2. Query a single user and use a variable
+3. Add and complete a task
+4. Query all products (all fields) & basket with products (all fields) in one query. 
+5. Add an other product to the basket
+
+When using the basket use a random checkoutID (eg: "123" or "peterBasket") to get your own basket.
 
 ---
 

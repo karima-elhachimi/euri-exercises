@@ -534,7 +534,7 @@ npm install
 npm run serve:user-api
 ```
 
-> Use [PostMan](https://www.getpostman.com/downloads/) & open the [API](http://localhost:3000/) to complete the following exercises.
+> Use [PostMan](https://www.getpostman.com/downloads/) & open the [API](https://euri-test-api-phflgvcuay.now.sh) to complete the following exercises.
 
 ---//
 
@@ -542,7 +542,7 @@ npm run serve:user-api
 
 ```js
 - Get a list of all users ordered by
-  lastName asc and firstName asc
+  lastName desc 
 - Get a paginated list of users where the
   pageSize is 5 and get the second page. As a
   bonus find out how the api communicates the
@@ -550,4 +550,5 @@ npm run serve:user-api
 - Get the user with the id 2
 - Create a new user with the data of yourself
 - Remove yourself again
+- Get the basket with items description
 ```
