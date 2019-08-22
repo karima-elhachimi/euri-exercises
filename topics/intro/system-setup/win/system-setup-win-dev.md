@@ -28,10 +28,10 @@ Use installer: [nvm-windows](https://github.com/coreybutler/nvm-windows/releases
 
 ```bash
 # install latest version of NodeJS
-nvm install stable
+nvm install 10.16.3
 
 # nvm install lts/dubnium (latest LTS)
-nvm install lts/dubnium
+nvm install 12.8.0
 
 # list installed versions
 nvm list
@@ -137,6 +137,8 @@ Enable git bash into the Windows terminal (https://stackoverflow.com/questions/5
 - The icon can be obtained here: [git-bash_32px.ico](https://raw.githubusercontent.com/yanglr/WindowsDevTools/master/awosomeTerminal/icons/git-bash_32px.ico)
 You can add icons for Tab to this location: `%LOCALAPPDATA%\packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\RoamingState`. Put 32x32 PNG/icons in this folder, and then in profile.json you can reference the image resource with the path starting with `ms-appdata:// .` Test git bash works well in Windows Terminal
 
+- After saving of the settings, restart the Windows Terminal (Preview)
+
 
 If you want to use Powershell, you should enable your PowerShell to execute scripts. 
 
@@ -219,7 +221,7 @@ $ pwd
 
 ```bash
 # show choco help
-$ choco
+$ choco -?
 
 # list installed packages
 $ choco list
