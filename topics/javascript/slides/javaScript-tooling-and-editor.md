@@ -1,6 +1,6 @@
 ---
 title: JavaScript, Tooling and Editor
-transition: "fade"
+transition: 'fade'
 verticalSeparator: "^\\*\\*\\*"
 ---
 
@@ -35,7 +35,7 @@ Copyright (c) 2017-2019 Euricom nv.
     overflow: auto;
     max-height: 800px;
     word-wrap: normal;
-    font-size: 90%;
+    font-size: 120%;
 }
 </style>
 
@@ -136,16 +136,23 @@ Check you node version
 v8.12.0
 ```
 
+```bash
+# verify your npm version
+> npm --version
+v8.12.0
+```
+
 <!-- prettier-ignore -->
 ***
 
 ## Switch node version
 
-Using 'n'
+### Using 'n'
 
 ```bash
 # install
 npm install n -g
+brew install n    # alternative
 
 # use
 n 6.9.4
@@ -159,23 +166,33 @@ n
 n ls
 ```
 
+All versions share a common global
+
 <!-- prettier-ignore -->
 ***
 
 ## Switch node version
 
-Using 'nvm'
+### Using 'nvm'
 
 ```bash
-# install
-brew install nvm
+# list local available version (and aliases)
+nvm list  # or nvm ls
 
-# use
-nvm list available
-nvm install 6.9.4
-nvm use 6.9.4
-nvm ls
+# list remote version
+nvm ls-remote --lts
+nvm ls-remote
+
+# install specific version
+nvm install lts/dubnium
+nvm install stable  #latest version
+nvm install v11.10.0
+
+# use specific version
+nvm use v12.9.0
 ```
+
+Versions are fully separated
 
 ---
 
@@ -216,13 +233,30 @@ $ npm uninstall jquery --save
 Other usefull commands
 
 ```bash
+# create a package.json
 npm init
-npm install eslint --save-dev   # install as desdependency
-npm list --depth=0              # list local install packages
-npm list --depth=0 -g           # list global install packages
-npm cache clean                 # clear cache
-npm config list                 # show configs
-npm install -g npm@latest       # upgrade npm to latest version
+npm init --force
+
+# install as dev dependency
+npm install eslint --save-dev
+
+# list local/global install packages
+npm list --depth=0
+npm list --depth=0 --global
+
+# show package info
+npm info jquery
+npm info jquery --json  # all details
+npm info jquery versions --json # versions
+
+# clear cache
+npm cache clean
+
+# show configs
+npm config list
+
+# upgrade npm to latest version
+npm install -g npm@latest
 ```
 
 <!-- prettier-ignore -->
@@ -262,7 +296,8 @@ $ npm config set registry <registry url>
 Specify a different source
 
 ```bash
-npm install (with no args, in package dir)
+npm install # install all dependencies in package.json
+
 npm install [<@scope>/]<pkg>
 npm install [<@scope>/]<pkg>@<tag>
 npm install [<@scope>/]<pkg>@<version>
@@ -286,8 +321,12 @@ You can run small CLI script via npm/yarn
     "name": "temp",
     "version": "1.0.0",
     "scripts": {
-        "start": "node main.js"
+      "create": "mkdir -p dist/js",
+      "cleanup": "rimraf dist"
     },
+    "devDependencies": {
+      "rimraf": "^3.0.0"
+    }
     ...
 }
 ```
@@ -295,9 +334,9 @@ You can run small CLI script via npm/yarn
 To run
 
 ```bash
-$ npm run start
-my-project@1.0.0 start /Users/my-user/git/my-project
-> node main.js
+$ npm run init
+> tools@1.0.0 init /Users/peter/git/temp/tools
+> mkdir -p dist/js
 ```
 
 <!-- prettier-ignore -->
@@ -309,7 +348,7 @@ Executor for local and ad-hoc npm binaries
 
 ```bash
 # add a local package
-yarn add cowsay
+npm install cowsay
 
 # run local package
 npx cowsay May the force be with you
@@ -327,25 +366,16 @@ npx https://gist.github.com/zkat/4bc19503fe9e9309e2bfaa2c58074d32
 
 Yarn (fast, reliable and secure) alternative to npm
 
-```bash
-# install (npm install jquery)
-$ yarn add jquery
-
-# install all modules from package.json (npm install)
-$ yarn
-
-# uninstall jquery (npm uninstall)
-$ yarn remove jquery
-
-# run a script
-$ yarn start
-
-# others
-$ yarn info jquery              # show information about package
-$ yarn add jquery@2.2.4         # install jquery v2.2.4
-$ yarn outdated                 # show which packages are outdated
-$ yarn upgrade-interactive      # interactive upgrade all modules
-```
+| npm                           | yarn                     |
+| ----------------------------- | ------------------------ |
+| npm install                   | yarn                     |
+| npm install jquery            | yarn add jquery          |
+| npm install eslint --save-dev | yarn add jquery --dev    |
+| npm run create                | yarn create              |
+| npm audit                     | yarn audit               |
+|                               | yarn outdated            |
+|                               | yarn why                 |
+| use npm-check                 | yarn upgrade-interactive |
 
 ---
 
@@ -366,24 +396,26 @@ src/calc.js
 module.exports = {
   add(x, y) {
     return x + y;
-  }
+  },
 };
 ```
 
 src/index.js
 
 ```js
-const calc = require("./calc");
+const calc = require('./calc');
 console.log(calc.add(1, 2));
 ```
 
 index.html
 
 ```html
-<body>
-  <div id="root"></div>
-  <script src="bundle.js"></script>
-</body>
+<html>
+  <body>
+    <div id="root"></div>
+    <script src="bundle.js"></script>
+  </body>
+</html>
 ```
 
 <!-- prettier-ignore -->
@@ -394,17 +426,17 @@ index.html
 Install
 
 ```bash
-yarn add webpack webpack-cli --dev
+npm install webpack webpack-cli --save-dev
 ```
 
 webpack.config.js
 
 ```js
 module.exports = {
-  entry: "./src/index.js",
-  mode: "development",
-  devtool: "source-maps",
-  output: { path: __dirname, filename: "bundle.js" }
+  entry: './src/index.js',
+  mode: 'development',
+  devtool: 'source-maps',
+  output: { path: __dirname, filename: 'bundle.js' },
 };
 ```
 
@@ -435,7 +467,7 @@ Install
 
 ```bash
 # install as npm module
-yarn @babel/core @babel/preset-env --dev
+npm install @babel/cli @babel/core @babel/preset-env --save-dev
 ```
 
 Configure: .babelrc<br>
@@ -458,8 +490,8 @@ src/index.js
 
 ```js
 const person = {
-  name: "jan",
-  age: 12
+  name: 'jan',
+  age: 12,
 };
 
 // object spread not supported by node 6
@@ -471,9 +503,9 @@ console.log(otherPerson);
 lets switch to an older version
 
 ```bash
-n 6.10
-
-# or use nvm
+$ nvm install lts/Boron
+...
+Now using node v6.17.1 (npm v3.10.10)
 ```
 
 build the javascript
@@ -515,7 +547,7 @@ When you are running node 11, its building to node 6
 
 ```bash
 # install dependencies
-yarn @babel/cli @babel/node --dev
+npm install nodemon @babel/node --dev
 ```
 
 add startup script in package.json
@@ -531,7 +563,7 @@ and run it
 
 ```bash
 # start the application, watch and rerun
-yarn start
+npm run start
 ```
 
 <!-- prettier-ignore -->
@@ -603,11 +635,12 @@ package.json
   },
   "dependencies": {},
   "devDependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/cli": "^7.2.0",
-    "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.2.0",
-    "@babel/plugin-proposal-numeric-separator": "^7.2.0"
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/plugin-proposal-numeric-separator": "^7.2.0",
+    "@babel/preset-env": "^7.5.5",
+    "nodemon": "^1.19.1"
   }
 }
 ```
@@ -619,7 +652,7 @@ package.json
 
 ```bash
 # install as npm module
-yarn add babel-loader --dev
+npm install babel-loader --save-dev
 ```
 
 ```js
@@ -630,11 +663,11 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        loader: "babel-loader",
-        exclude: /node_modules/
-      }
-    ]
-  }
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+      },
+    ],
+  },
 };
 ```
 
@@ -656,7 +689,7 @@ specify which browser to support (package.json)
 
 See more: https://babeljs.io/docs/en/babel-preset-env
 
-Enjoy the latest ES7+ features :)
+Enjoy the latest ESNext features :)
 
 ---
 
@@ -706,11 +739,39 @@ Config file: `.prettierrc`
 }
 ```
 
+Install dependency
+
+```
+npm install prettier -D
+```
+
 script (package.json)
 
 ```
 scripts: {
     "format": "prettier --write 'src/**/*.js'"
+}
+```
+
+<!-- prettier-ignore -->
+***
+
+## Config
+
+Exclude files
+
+```bash
+# .prettierignore
+package.json
+package-lock.json
+bundle.js
+```
+
+Run prettier on all files
+
+```
+scripts: {
+    "format": "prettier --write ''**/*.{js,json,html}''"
 }
 ```
 
@@ -754,7 +815,7 @@ Any good JS editor support's linting: Visual Studio Code, WebStorm, Atom, ...
 
 ```bash
 # install eslint
-yarn add eslint --dev
+npm install eslint --save-dev
 ```
 
 .eslintrc
@@ -804,7 +865,7 @@ console.log("${greeting} world!")
 Run eslint
 
 ```js
-yarn lint
+npm run lint
 ```
 
 <small>This setup follow the airbnb styleguide: https://github.com/zalmoxisus/javascript</small>
@@ -812,23 +873,12 @@ yarn lint
 <!-- prettier-ignore -->
 ***
 
-### Add some rules
-
-.eslintrc
-
-```json
-{
-  "extends": ["eslint:recommended"]
-  ...
-}
-```
-
-run it
+### ESLint - Run
 
 ```
-yarn lint
+npm run lint
 
-/Users/peter/git/temp/t1/src/index.js
+/Users/.../src/index.js
    2:17  error  Invalid typeof comparison value                             valid-typeof
    4:5   error  Unexpected negating the left operand of 'in' operator       no-unsafe-negation
    4:25  error  'navigator' is not defined                                  no-undef
@@ -855,15 +905,6 @@ Add the eslint environment (.eslintrc)
   },
 ```
 
-The environement
-
-Final run
-
-```
-eslint "./src/**/*.js"
-✨  Done in 0.56s.
-```
-
 <!-- prettier-ignore -->
 ***
 
@@ -876,13 +917,34 @@ eslint "./src/**/*.js"
 <!-- prettier-ignore -->
 ***
 
+### ESLint - Airbnb config
+
+Install dependencies
+
+```bash
+npm install eslint-config-airbnb-base -D
+npm install eslint-plugin-import -D
+```
+
+config
+
+```json
+{
+  "extends": ["airbnb-base"],
+  ...
+}
+```
+
+<!-- prettier-ignore -->
+***
+
 ### ESLint - Disable styling rules
 
 When using Prettier you can disable all formatting rules
 
 ```bash
 # install additional eslint config
-$ yarn add eslint-config-prettier --dev
+$ npm install eslint-config-prettier --save-dev
 ```
 
 .eslintrc
@@ -890,7 +952,7 @@ $ yarn add eslint-config-prettier --dev
 ```json
 {
   "extends": [
-      "eslint:recommended",
+      "airbnb-base",
       "prettier"
   ],
   ...
@@ -912,7 +974,7 @@ console.log(number);
 
 ```bash
 # install babel parser for eslint
-yarn add babel-eslint --dev
+npm install babel-eslint --save-dev
 ```
 
 configure it (.eslintrc)
@@ -924,25 +986,22 @@ configure it (.eslintrc)
 }
 ```
 
-Supporting all of babel
+Supporting all of nice babel stuff
 
 <!-- prettier-ignore -->
 ***
 
 ## Other...
 
-### ESLint configurations
-
-- eslint-config-airbnb
-- eslint-config-standard
-- eslint-config-google
-- ...
-
-### Linters
-
-- JSLint & JSHint (Outdated, don't use)
-- TSLint (Typescript)
-- StyleLint (CSS, Sass, Less)
+- ESLint configurations
+  - eslint-config-airbnb
+  - eslint-config-standard
+  - eslint-config-google
+  - ...
+- Linters
+  - JSLint & JSHint (Outdated, don't use)
+  - TSLint (Typescript)
+  - StyleLint (CSS, Sass, Less)
 
 ---
 
@@ -959,7 +1018,6 @@ Pre-defined projects for easy startup. Where to find?
 Ready to:
 
 - Run any React/ES6+ in browser
-- Prettier setup
 - Linting with AirBnb config
 - Editorconfig for consistent tabs/spacing
 - Usefull VSCode setup
