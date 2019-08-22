@@ -125,7 +125,7 @@ Although you could install NodeJS directly following the steps outlined on the [
 
 For MacOs the following version managers exist:
 
-- [nvm](https://github.com/creationix/nvm)
+- [nvm](https://github.com/creationix/nvm) (preferred)
 - [n](https://github.com/tj/n)
 
 To install nvm
@@ -134,7 +134,7 @@ To install nvm
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
 ```
 
-Install latest LTS
+Install latest LTS with nvm
 
 ```bash
 nvm install lts/*
