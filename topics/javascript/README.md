@@ -16,7 +16,7 @@ Fundamentals
 ES6 and beyond
 
 - [x] [Modern](./slides/javascript-modern.md)
-- [ ] [Async](./slides/javascript-async.md)
+- [x] [Async](./slides/javascript-async.md)
 
 Unit tests
 
