@@ -9,13 +9,13 @@ Tooling and IDE
 
 Fundamentals
 
-- [ ] [Fundamentals](./slides/javascript-fundamentals.md)
+- [x] [Fundamentals](./slides/javascript-fundamentals.md)
 - [ ] [Functional Javascript](./slides/javascript-functional.md)
 - [ ] [Module Systems](./slides/javascript-modules.md)
 
 ES6 and beyond
 
-- [ ] [Modern](./slides/javascript-modern.md)
+- [x] [Modern](./slides/javascript-modern.md)
 - [ ] [Async](./slides/javascript-async.md)
 
 Unit tests

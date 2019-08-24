@@ -1,6 +1,6 @@
 ---
 title: Functional Javascript
-transition: "fade"
+transition: 'fade'
 verticalSeparator: "^\\*\\*\\*"
 ---
 
@@ -152,7 +152,7 @@ obj = {
 A pure function with immutable change
 
 ```js
-const obj = { name: "john" };
+const obj = { name: 'john' };
 
 // BAD
 function updatedName(obj, newName) {
@@ -166,11 +166,11 @@ function updatedName(obj, name) {
   // the input arguments
   return {
     ...obj, // spread operator is your friend
-    name
+    name,
   };
 }
 
-const updatedObj = updatedName(obj, "peter");
+const updatedObj = updatedName(obj, 'peter');
 ```
 
 <!-- prettier-ignore -->
@@ -180,15 +180,15 @@ const updatedObj = updatedName(obj, "peter");
 
 ```js
 // object
-const obj = { name: "bob" };
-const newObj = { ...obj, name: "peter" };
+const obj = { name: 'bob' };
+const newObj = { ...obj, name: 'peter' };
 
 // array push
 const array = [1, 2, 3];
 const newArray = [...array, 12]; // [1, 2, 3, 4]
 
 // array remove by id
-const array = [{ id: 1, name: "bob" }, { id: 2, name: "peter" }];
+const array = [{ id: 1, name: 'bob' }, { id: 2, name: 'peter' }];
 const newArray = array.filter(item => item.id != 1);
 ```
 
@@ -229,15 +229,15 @@ Our array
 
 ```js
 const companies = [
-  { id: 1, name: "Acme", category: "finance", employees: 5 },
-  { id: 4, name: "Globe", category: "tech", employees: 1010 },
-  { id: 2, name: "Soylent", category: "food", employees: 120 }
+  { id: 1, name: 'Acme', category: 'finance', employees: 5 },
+  { id: 4, name: 'Globe', category: 'tech', employees: 1010 },
+  { id: 2, name: 'Soylent', category: 'food', employees: 120 },
 ];
 ```
 
 Useful Array functions
 
-`forEach`, `map`, `reduce`, `filter`, `sort`, `find`
+`forEach`, `map`, `reduce`, `filter`, `sort`, `find`, `some`, `any`
 
 <!-- prettier-ignore -->
 ***
@@ -349,7 +349,7 @@ const bigCompanies = companies.filter(item => {
 const bigCompanies = companies.filter(item => item.employees > 1000);
 
 // find
-const acme = companies.find(item => item.name === "Acme");
+const acme = companies.find(item => item.name === 'Acme');
 
 // sort
 const sortedCompanies = companies.sort((a, b) => a.name > b.name);
@@ -371,11 +371,11 @@ const sortedNames = companies.map(item => item.name).sort((a, b) => a > b);
 Add item to array
 
 ```js
-const name = "Wolfoods";
+const name = 'Wolfoods';
 const newId = companies.reduce((acc, item) => Math.max(acc, item.id), 0) + 1;
 companies.push({
   id: newId,
-  name
+  name,
 });
 ```
 
@@ -395,5 +395,5 @@ Find and update an item
 
 ```js
 const company = companies.find(item => item.id === 1);
-company.name = "Other name";
+company.name = 'Other name';
 ```

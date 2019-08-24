@@ -27,7 +27,7 @@ Copyright (c) 2017-2019 Euricom nv.
     font-size: 70%;
 }
 .reveal blockquote {
-    font-size: 80%;
+    font-size: 120%;
 }
 .reveal pre code {
     display: block;
@@ -35,7 +35,7 @@ Copyright (c) 2017-2019 Euricom nv.
     overflow: auto;
     max-height: 800px;
     word-wrap: normal;
-    font-size: 90%;
+    font-size: 120%;
 }
 </style>
 
@@ -75,14 +75,14 @@ Copyright (c) 2017-2019 Euricom nv.
 - 1995 (dec): LiveScript was later renamed to JavaScript
 - 1996: People start using Javascript
 - 1996: Microsoft is coming with IE. Netscape in problem.
-- 1997: Netscape reaches out to Ecma. JS was standardized: Ecmascript
+- 1997: Netscape reaches out to Ecma. JS was standardized: ECMAScript
 
 <!-- prettier-ignore -->
 ***
 
 ## Life is Good
 
-- 1999: Ecmascript 3
+- 1999: ECMAScript 3
   - More people implementing ES spec
   - More people/companies get involved (Apple, Yahoo, Adobe, ...)
 
@@ -116,17 +116,25 @@ Copyright (c) 2017-2019 Euricom nv.
   - TC39 agree to postpone ES4 and to implement ES3.1 (and rename to ES5)
   - Committee is working together now. New features set: Harmony
 - 2009: ES5 is official
-- 2015: TC39 has finalized ES6
-  - Renamed ES6 to ES2015
-  - Browser starting the implementation of ES2015
 
 <!-- prettier-ignore -->
 ***
 
+## The future
+
+- 2009: TC39 Starting on next version
+- 2015: TC39 has finalized ES6
+  - Renamed ES6 to ES2015
+  - Browser starting the implementation of ES2015
+- 2017: Most browsers implementing > 95% of ES2015
+  <!-- prettier-ignore -->
+
+---
+
 ## Today
 
-- TC39 works on features for ES2019
-- Browsers are inplementing ES2019 and beyond
+- TC39 works on features for ES2020
+- Browsers are implementing ES2019 and beyond
 
 ---
 
@@ -158,7 +166,7 @@ Copyright (c) 2017-2019 Euricom nv.
 - ECMAScript 5 (ES5) - 2009
 - ECMAScript 6 (ES6/ES2015) - 2015
 - ECMAScript 2016 (ES7)
-- ECMAScript 2017
+- ECMAScript 2017 ... ES2020
 - ES.Next
 - TC39
 
@@ -612,27 +620,7 @@ const arrowGreeting = (message, name) => {
 const arrowGreeting = (message, name) => message + name;
 ```
 
-<!-- prettier-ignore -->
-***
-
-## Arrow Functions
-
-Simpler syntax
-
-```js
-const createGreeting = function(message, name) {
-  return {
-    message,
-    name
-  };
-};
-
-// multi line return
-const createGreeting = (message, name) => ({
-  message,
-  name
-});
-```
+There is more about arrow functions (see later)
 
 <!-- prettier-ignore -->
 ***
@@ -782,7 +770,7 @@ var myRevealingModule = (function() {
 
   return {
     setName: publicSetName,
-    getName: publicGetName
+    getName: publicGetName,
   };
 })();
 
@@ -878,7 +866,9 @@ doThis();
 <!-- prettier-ignore -->
 ***
 
-## This - Default and implicit binding
+## This
+
+### Default and implicit binding
 
 ```javascript
 function foo() {
@@ -897,7 +887,11 @@ o3.foo(); // ???
 <!-- prettier-ignore -->
 ***
 
-The 'this' points to the object where it is called from (its context), if there is no object fallback to the global (window in browser).
+## This
+
+### Default and implicit binding
+
+> The 'this' points to the object where it is called from (its context), if >?> there is no object fallback to the global (window in browser).
 
 ```javascript
 foo(); // 'bar1' default binding (none strict)
@@ -905,10 +899,10 @@ o2.foo(); // 'bar2' explicit binding
 o3.foo(); // 'bar3' explicit binding
 ```
 
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
 <!-- prettier-ignore -->
 ***
+
+## This
 
 ### Default and implicit binding
 
@@ -917,7 +911,7 @@ const o1 = {
   bar: 'bar1',
   foo: function() {
     console.log(this.bar);
-  }
+  },
 };
 
 const o2 = { bar: 'bar2', foo: o1.foo };
@@ -944,7 +938,9 @@ foo(); // 'bar3'
 <!-- prettier-ignore -->
 ***
 
-## This - Explicit binding
+## This
+
+### Explicit binding (call & apply)
 
 ```javascript
 function foo(arg1, arg2) {
@@ -965,7 +961,9 @@ foo.apply(obj, a); // 'bar2', 5, 6
 <!-- prettier-ignore -->
 ***
 
-## This - Hard binding
+## This
+
+### Hard binding (bind)
 
 ```javascript
 function foo(ba, lam) {
@@ -981,7 +979,9 @@ foo2('lam'); // 'bam ba lam'
 <!-- prettier-ignore -->
 ***
 
-### This - Hard binding
+## This
+
+### Hard binding (bind)
 
 Typically used in this context
 
@@ -993,9 +993,9 @@ const car = {
       function() {
         console.log(this.name + ' started');
       }.bind(this),
-      1000
+      1000,
     );
-  }
+  },
 };
 
 car.start(); // output: Bmw started
@@ -1004,7 +1004,9 @@ car.start(); // output: Bmw started
 <!-- prettier-ignore -->
 ***
 
-### This - `new` keyword
+## This
+
+### `new` keyword
 
 ```javascript
 // constructor function (mark the pascal casing)
@@ -1071,8 +1073,8 @@ const obj = {
     fullname: 'Aurelio De Rosa',
     getFullname: function() {
       return this.fullname;
-    }
-  }
+    },
+  },
 };
 
 const test = obj.prop.getFullname;
@@ -1158,7 +1160,7 @@ JavaScript provides a literal syntax for creating an object and assigning proper
 ```javascript
 const person = {
   firstName: 'Paul',
-  lastName: 'Irish'
+  lastName: 'Irish',
 };
 ```
 
@@ -1202,7 +1204,7 @@ const person = new Person('Paul');
 
 <!-- prettier-ignore -->
 ***
------------HERE-------------
+
 ### Prototype Linking Example
 
 ```javascript
@@ -1459,6 +1461,19 @@ isNaN(NaN); // true
 Object.is(a, NaN); // true
 ```
 
+<!-- prettier-ignore -->
+***
+
+## Big number
+
+```js
+const maxSafe = Number.MAX_SAFE_INTEGER;
+const y = maxSafe + 1;
+const z = maxSafe + 2;
+
+console.log(z === y); // oops this is 'true'
+```
+
 ---
 
 # Resources
@@ -1472,3 +1487,7 @@ Object.is(a, NaN); // true
 ---
 
 # May the JS-Force be with you
+
+```
+
+```
