@@ -17,7 +17,7 @@ Copyright (c) 2018-2019 Euricom nv.
 
 <img src="./images/state-ff.jpg" width="400px"/><br>
 
-🤔Which different state management patterns we already used?
+🤔Which different state management patterns we already know?
 
 ---//
 
