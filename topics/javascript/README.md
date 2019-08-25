@@ -10,7 +10,7 @@ Tooling and IDE
 Fundamentals
 
 - [x] [Fundamentals](./slides/javascript-fundamentals.md)
-- [ ] [Functional Javascript](./slides/javascript-functional.md)
+- [x] [Functional Javascript](./slides/javascript-functional.md)
 - [ ] [Module Systems](./slides/javascript-modules.md)
 
 ES6 and beyond

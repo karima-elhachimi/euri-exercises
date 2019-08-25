@@ -1,7 +1,7 @@
 ---
 title: Functional Javascript
 transition: 'fade'
-verticalSeparator: "^\\*\\*\\*"
+verticalSeparator: '---//'
 ---
 
 ## Functional Javascript
@@ -27,7 +27,7 @@ Copyright (c) 2017-2019 Euricom nv.
     font-size: 70%;
 }
 .reveal blockquote {
-    font-size: 80%;
+    font-size: 120%;
 }
 .reveal pre code {
     display: block;
@@ -35,7 +35,8 @@ Copyright (c) 2017-2019 Euricom nv.
     overflow: auto;
     max-height: 800px;
     word-wrap: normal;
-    font-size: 90%;
+    line-height: 35px;
+    font-size: 120%;
 }
 </style>
 
@@ -51,32 +52,9 @@ Copyright (c) 2017-2019 Euricom nv.
 
 > Pure? How can a function be pure?
 
-<!-- prettier-ignore -->
-***
+---//
 
 ## A pure function
-
-```js
-function sum(a, b) {
-  return a + b;
-}
-```
-
-An impure function
-
-```js
-const count = 1;
-function inc(v) {
-  count += v;
-}
-```
-
-inc() is impure because it changes count outside its scope
-
-<!-- prettier-ignore -->
-***
-
-## A pure function:
 
 > The function always returns the same result for the same arguments.
 
@@ -84,16 +62,80 @@ and
 
 > The function does NOT produce any observable side effects.
 
-<!-- prettier-ignore -->
-***
+---//
 
-## Side effects:
+## Side effects
 
 - Making a HTTP request
-- Mutating data
+- Mutating external data
+- Mutating arguments
 - DOM Query/Manipulation
 - Math.random()
 - Getting the current time
+
+---//
+
+## Examples
+
+### Pure function
+
+```js
+function sum(a, b) {
+  return a + b;
+}
+```
+
+```js
+function getLength(array) {
+  return array.length;
+}
+```
+
+---//
+
+## Examples
+
+### Impure function
+
+```js
+// inc() is impure because it changes count outside its scope
+const count = 1;
+function inc(v) {
+  count += v;
+}
+```
+
+```js
+// Use of a random/non consistent value
+function getTime() {
+  return new Date().getTime();
+}
+```
+
+```js
+function add(x, y) {
+  updateDatabase(); // Side Effect
+  return x + y;
+}
+```
+
+```js
+class MyClass {
+  #count: 1;
+  #inc(v) {
+    this.count += v;
+  }
+}
+```
+
+---//
+
+# The Big Deal
+
+- **'Predictable'**: Using a function and knowing exactly what it does feels so good.
+- **'Portable'**: Pure functions can be reused easily as they do not hold any form of state
+- **'Cacheable'**: It becomes easy to cache results
+- **'Testable'**: Last but not least, pure functions are easy and a pleasure to test
 
 ---
 
@@ -101,8 +143,7 @@ and
 
 > No mutants allowed
 
-<!-- prettier-ignore -->
-***
+---//
 
 ## Immutable
 
@@ -118,8 +159,7 @@ number = 12;
 obj = { name: 'john' }
 ```
 
-<!-- prettier-ignore -->
-***
+---//
 
 ## Immutable
 
@@ -144,8 +184,7 @@ obj = {
 })
 ```
 
-<!-- prettier-ignore -->
-***
+---//
 
 ### Pure function
 
@@ -162,7 +201,7 @@ function updatedName(obj, newName) {
 
 // GOOD
 function updatedName(obj, name) {
-  // for a pure function never change
+  // a pure function never change
   // the input arguments
   return {
     ...obj, // spread operator is your friend
@@ -173,8 +212,7 @@ function updatedName(obj, name) {
 const updatedObj = updatedName(obj, 'peter');
 ```
 
-<!-- prettier-ignore -->
-***
+---//
 
 ## Immutable changes
 
@@ -192,8 +230,7 @@ const array = [{ id: 1, name: 'bob' }, { id: 2, name: 'peter' }];
 const newArray = array.filter(item => item.id != 1);
 ```
 
-<!-- prettier-ignore -->
-***
+---//
 
 ## Immutable changes
 
@@ -220,8 +257,7 @@ const newArray = [...arr].sort(compareFunction);
 
 > makes your live easier
 
-<!-- prettier-ignore -->
-***
+---//
 
 ## Array handling
 
@@ -239,8 +275,7 @@ Useful Array functions
 
 `forEach`, `map`, `reduce`, `filter`, `sort`, `find`, `some`, `any`
 
-<!-- prettier-ignore -->
-***
+---//
 
 ## Array - for loops
 
@@ -270,8 +305,7 @@ for (let item of companies)
 })
 ```
 
-<!-- prettier-ignore -->
-***
+---//
 
 ## Array - Mapping
 
@@ -295,8 +329,7 @@ const companyNames = companies.map(item => {
 const companyNames = companies.map(item => item.name)
 ```
 
-<!-- prettier-ignore -->
-***
+---//
 
 ## Array - for loops
 
@@ -311,8 +344,7 @@ const transformed = companies.map(item => {
 })
 ```
 
-<!-- prettier-ignore -->
-***
+---//
 
 ### Array - Calculation (sum, group, ...)
 
@@ -334,8 +366,7 @@ const totEmployees = companies.reduce((acc, item) => {
 }, 0);
 ```
 
-<!-- prettier-ignore -->
-***
+---//
 
 ### Array - Filter, Find and Sort
 
@@ -357,38 +388,42 @@ const sortedCompanies = companies.sort((a, b) => a.name > b.name);
 
 <small>[JavaScript Higher Order Functions & Arrays Youtube](https://www.youtube.com/watch?time_continue=495&v=rRgD1yVwIvE)</small>
 
-<!-- prettier-ignore -->
-***
+---//
 
 ## Examples of use
 
 Chain functions
 
+<!-- prettier-ignore -->
 ```js
-const sortedNames = companies.map(item => item.name).sort((a, b) => a > b);
+const sortedNames = companies.map(item => item.name)
+                             .sort((a, b) => a > b);
 ```
 
 Add item to array
 
+<!-- prettier-ignore -->
 ```js
 const name = 'Wolfoods';
-const newId = companies.reduce((acc, item) => Math.max(acc, item.id), 0) + 1;
+const newId = companies.reduce((acc, item) => 
+                Math.max(acc, item.id), 0) + 1;
 companies.push({
   id: newId,
   name,
 });
 ```
 
-<!-- prettier-ignore -->
-***
+---//
 
 ## Examples of use
 
 Remove an item from an array (don't use splice)
 
+<!-- prettier-ignore -->
 ```js
 const idToRemove = 999;
-companies = companies.filter(item => item.id === idToRemove);
+companies = companies.filter(item => 
+              item.id === idToRemove);
 ```
 
 Find and update an item
@@ -397,3 +432,9 @@ Find and update an item
 const company = companies.find(item => item.id === 1);
 company.name = 'Other name';
 ```
+
+---
+
+# Resources
+
+- https://ultimatecourses.com/blog/pure-versus-impure-functions
