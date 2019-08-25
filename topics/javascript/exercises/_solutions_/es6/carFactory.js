@@ -1,5 +1,7 @@
-// car.js
+// improve code with ES6+ features
+
 export class Car {
+    #power = 0;
     constructor(options) {
         const default = {
             engine: '200D',
@@ -12,10 +14,14 @@ export class Car {
         this.value -= value
     }
 
-    set carValue (carValue) {
-        if (carValue < 0)
+    set power (power) {
+        if (power < 0)
             throw new Error('invalid value')
-        this.value = carValue
+        this.#power = power
+    }
+
+    get power() {
+        return this.#power;
     }
 
     delayLogName (timeout = 100) {
