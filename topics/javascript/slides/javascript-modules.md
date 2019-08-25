@@ -1,7 +1,7 @@
 ---
 title: Javascript Modules Systems
-transition: "fade"
-verticalSeparator: "^\\*\\*\\*"
+transition: 'fade'
+verticalSeparator: '---//'
 ---
 
 ## Javascript Modules Systems
@@ -35,7 +35,8 @@ Copyright (c) 2017-2019 Euricom nv.
     overflow: auto;
     max-height: 800px;
     word-wrap: normal;
-    font-size: 90%;
+    line-height: 35px;
+    font-size: 120%;
 }
 </style>
 
@@ -55,8 +56,7 @@ Copyright (c) 2017-2019 Euricom nv.
 
 > Immediately Invoked Function Expression
 
-<!-- prettier-ignore -->
-***
+---//
 
 ## Revealing module pattern
 
@@ -85,19 +85,18 @@ var myRevealingModule = (function () {
 
 > The nodeJS module pattern
 
-<!-- prettier-ignore -->
-***
+---//
 
 ## CommonJS
 
 ```js
 // myLib.js
 module.exports = {
-  setName: function() {}
+  setName: function() {},
 };
 
 // main.js
-const myLib = require("./mylib.js");
+const myLib = require('./mylib.js');
 myLib.setName();
 ```
 
@@ -109,8 +108,7 @@ Used by nodeJS (webpack.config.js, .eslintrc.js, ...)
 
 > CommonJS in the browser
 
-<!-- prettier-ignore -->
-***
+---//
 
 ## AMD
 
@@ -118,20 +116,20 @@ Powered by RequireJS
 
 ```js
 // foo.js
-define(["jquery"], function($) {
+define(['jquery'], function($) {
   // methods
   function myFunc() {}
 
   // exposed public methods
   return {
-    doSomething: myFunc
+    doSomething: myFunc,
   };
 });
 ```
 
 ```js
 // main.js
-require(["foo"], function(foo) {
+require(['foo'], function(foo) {
   // rest of your code here
   foo.doSomething();
 });
@@ -143,19 +141,18 @@ require(["foo"], function(foo) {
 
 > Combination of IIFE, CommonJS, AMD
 
-<!-- prettier-ignore -->
-***
+---//
 
 ## UMD
 
 ```js
 (function(root, factory) {
-  if (typeof define === "function" && define.amd) {
+  if (typeof define === 'function' && define.amd) {
     // AMD
-    define(["jquery"], factory);
-  } else if (typeof exports === "object") {
+    define(['jquery'], factory);
+  } else if (typeof exports === 'object') {
     // Node, CommonJS-like
-    module.exports = factory(require("jquery"));
+    module.exports = factory(require('jquery'));
   } else {
     // Browser globals (root is window)
     root.myLib = factory(root.jQuery);
@@ -165,7 +162,7 @@ require(["foo"], function(foo) {
 
   function myFunc() {}
   return {
-    func: myFunc
+    func: myFunc,
   };
 });
 ```
@@ -176,31 +173,77 @@ require(["foo"], function(foo) {
 
 > EcmaScript Module Pattern
 
-<!-- prettier-ignore -->
-***
+---//
 
 ## ES Modules
 
 myService.js
 
 ```js
-export const MAX_LENGTH = 1000;  // named const export
-export class Car() {             // named class export
+// named export
+export const MAX_LENGTH = 1000;
+export class Car() {
     ...
 }
+
+// default (unnamed) export
 const config = {
     ...
 }
-export default config;           // default (unnamed) export
+export default config;
 ```
 
 main.js
 
 ```js
-import config from "./service"; // default import
-import { MAX_LENGTH, Car } from "./service"; // named imports
+// default import
+import config from './service';
 
-import * as lib from "./service"; // import all
+// named imports
+import { MAX_LENGTH, Car } from './service';
+```
+
+ES Modules are supported by WebPack, Babel & NodeJS 12+ (experimental)
+
+---//
+
+## ES Modules
+
+More specialized imports
+
+```js
+// import all
+import * as lib from './service';
+
 console.log(lib.MAX_LENGTH);
 const car = new lib.Car();
 ```
+
+Alias
+
+```js
+import { Car as MyCar } from './service';
+
+const car = new MyCar();
+```
+
+---
+
+## Exercise
+
+- Create a calculator calc.js with IIFE and use it in browser
+- Create a calculator (calc.common.js) with CommonJS and use it in nodejs
+
+```bash
+# start by node
+node index.js
+```
+
+- Create a calculator (calc.esm.js) with ES Modules and use it in nodejs
+
+```bash
+# use node-js starter (includes babel)
+npm start
+```
+
+- Create a calculator (calc.umd.js) so you can use it in nodeJS and in browser
