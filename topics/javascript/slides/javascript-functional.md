@@ -309,7 +309,7 @@ for (let item of companies)
 
 ## Array - Mapping
 
-Good old for loop
+Don't
 
 ```js
 const companyNames = [];
@@ -318,7 +318,7 @@ for (let i = 0; i < companies.length; i++) {
 }
 ```
 
-Preferred
+Do
 
 ```js
 const companyNames = companies.map(item => {
@@ -433,8 +433,37 @@ const company = companies.find(item => item.id === 1);
 company.name = 'Other name';
 ```
 
+---//
+
+## Pure or impure
+
+```js
+const darkSide = [
+  'Darth Vader',
+  'Grand Moff Tarkin',
+  'Boba Fett',
+  'Emperor Palpatine',
+];
+const removed = darkSide.splice(2, 0, 'Jabba the Hutt');
+```
+
+Splice is modifying the array (splice is pure!)
+
+```js
+const spacecraft = [
+  'Lambda Class Shuttle',
+  'imperial landing craft',
+  '4 Tantive',
+];
+spacecraft.sort();
+```
+
+Sort is modifying the array
+
 ---
 
 # Resources
 
-- https://ultimatecourses.com/blog/pure-versus-impure-functions
+- [Pure versus impure functions](https://ultimatecourses.com/blog/pure-versus-impure-functions)
+- [10 JavaScript array methods you should know](https://dev.to/frugencefidel/10-javascript-array-methods-you-should-know-4lk3)
+- [Most Useful JavaScript Array Functions](https://vegibit.com/most-useful-javascript-array-functions)
