@@ -309,7 +309,7 @@ function myApp(state = {}, action) {
 
 ---
 
-### Store
+### [Store](https://redux.js.org/basics/store)
 
 The Store is the object that brings [actions](https://redux.js.org/basics/actions) and [reducers](https://redux.js.org/basics/reducers) together and has following responsibilities:
 
@@ -322,7 +322,7 @@ The Store is the object that brings [actions](https://redux.js.org/basics/action
 
 ---//
 
-#### Store - Example
+#### [Store](https://redux.js.org/basics/store)
 
 ```js
 // actionTypes.js
@@ -350,7 +350,7 @@ export default function counterReducer(state = 0, action) {
 
 ---//
 
-#### Store - Example
+#### [Store](https://redux.js.org/basics/store)
 
 ```js
 // store.js
