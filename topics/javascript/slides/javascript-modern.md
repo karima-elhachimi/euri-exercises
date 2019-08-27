@@ -1,6 +1,6 @@
 ---
 title: Javascript modern features
-transition: "fade"
+transition: 'fade'
 verticalSeparator: "^\\*\\*\\*"
 ---
 
@@ -35,7 +35,7 @@ Copyright (c) 2017-2019 Euricom nv.
     overflow: auto;
     max-height: 800px;
     word-wrap: normal;
-    font-size: 90%;
+    font-size: 120%;
 }
 </style>
 
@@ -88,12 +88,12 @@ Copyright (c) 2017-2019 Euricom nv.
 
 ```js
 // ES5
-var message = "hi";
+var message = 'hi';
 return message;
 
 // ES6
-const message = "hi";
-message = "hello" < --ERROR;
+const message = 'hi';
+message = 'hello' < --ERROR;
 ```
 
 > const is not immutable!
@@ -115,7 +115,7 @@ console.log( names );
 <!-- prettier-ignore -->
 ***
 
-### Property value shorthand
+## Property value shorthand
 
 ```js
 // ES3/ES5
@@ -123,7 +123,7 @@ function getCar(make, model, value) {
   return {
     make: make,
     model: model,
-    value: value
+    value: value,
   };
 }
 ```
@@ -138,7 +138,7 @@ function getCar(make, model, value) {
   return {
     make,
     model,
-    value
+    value,
   };
 }
 ```
@@ -146,7 +146,7 @@ function getCar(make, model, value) {
 <!-- prettier-ignore -->
 ***
 
-### Method definition shorthand
+## Method definition shorthand
 
 ```js
 // ES5
@@ -154,7 +154,7 @@ function getCar(make, model, value) {
   return {
     depreciate: function() {
       this.value -= 2500;
-    }
+    },
   };
 }
 ```
@@ -168,7 +168,7 @@ function getCar(make, model, value) {
   return {
     depreciate() {
       this.value -= 2500;
-    }
+    },
   };
 }
 ```
@@ -176,113 +176,7 @@ function getCar(make, model, value) {
 <!-- prettier-ignore -->
 ***
 
-## The arrow function
-
-Simpler syntax
-
-```js
-const createGreeting = function(message, name) {
-  return message + name;
-};
-
-// version 1
-const arrowGreeting = (message, name) => {
-  return message + name;
-};
-
-// version 2
-const arrowGreeting = (message, name) => message + name;
-```
-
-<!-- prettier-ignore -->
-***
-
-## The arrow function
-
-```js
-const service = {
-  foo: "peter",
-  delayLog(timeout) {
-    setTimeout(
-      function() {
-        console.log(this.foo);
-      }.bind(this),
-      timeout
-    );
-  }
-};
-service.delayAction(500);
-```
-
-```js
-// Easier with arrow function
-const service = {
-  foo: "peter",
-  delayAction(timeout) {
-    delayLog(() => {
-      console.log(this.foo);
-    }, timeout);
-  }
-};
-```
-
-<!-- .element: class="fragment" data-fragment-index="2" -->
-
-<!-- prettier-ignore -->
-***
-
-### The arrow function - Not to use
-
-Event Handlers
-
-```js
-class player {
-  constructor(name) {
-    this.name = name;
-    this.elm = document.createElement("div");
-    this.elm.addEventListener("click", this.sayHello);
-  }
-  sayHello() {
-    console.log(this.name + ' say: "hello!"'); // 'undefined say 'hello!"';
-  }
-}
-```
-
-Object Methods
-
-```js
-const person = {
-  points: 23,
-  score: () => {
-    this.points++; // no error but doesn't work
-  }
-};
-```
-
-<!-- prettier-ignore -->
-***
-
-### The arrow function - Not to use
-
-Prototype methods
-
-```js
-class Car {
-  constructor(make, colour) {
-    this.make = make;
-    this.colour = colour;
-  }
-}
-
-Car.prototype.summarize = () => {
-  return `This car is a ${this.make} in the colour ${this.colour}`;
-};
-```
-
-<!-- prettier-ignore -->
-***
-
-### The class
+## The class
 
 ```js
 // ES6
@@ -337,29 +231,7 @@ class Foo {
 <!-- prettier-ignore -->
 ***
 
-## The TypeScript class
-
-```js
-// TypeScript
-class Car {
-  model: String  // <-- class property
-
-  constructor(private make: String, private value: Number, model: String) {
-      this.model = model;
-  }
-
-  depreciate() {
-      this.value -= 2500;
-  }
-}
-```
-
-<small>Class properties will be supported in ES9</small>
-
-<!-- prettier-ignore -->
-***
-
-### Don't overuse classes!
+## Don't overuse classes!
 
 ```js
 export class Utils {
@@ -367,9 +239,9 @@ export class Utils {
   parseDate(dateString) {}
 }
 
-import { Util } from "./util";
+import { Util } from './util';
 var utils = new Util();
-utils.trim(" abc    ");
+utils.trim(' abc    ');
 ```
 
 The class don't hold state, better to use functions
@@ -389,17 +261,145 @@ trim(' abc    ');
 <!-- prettier-ignore -->
 ***
 
+## The arrow function
+
+Simpler syntax
+
+```js
+const createGreeting = function(message, name) {
+  return message + name;
+};
+
+// version 1
+const arrowGreeting = (message, name) => {
+  return message + name;
+};
+
+// version 2
+const arrowGreeting = (message, name) => message + name;
+```
+
+<!-- prettier-ignore -->
+***
+
+## The arrow function - this
+
+```js
+const service = {
+  foo: 'peter',
+  delayLog(timeout) {
+    setTimeout(
+      function() {
+        console.log(this.foo);
+      }.bind(this),
+      timeout,
+    );
+  },
+};
+service.delayAction(500);
+```
+
+```js
+// Easier with arrow function
+const service = {
+  foo: 'peter',
+  delayAction(timeout) {
+    delayLog(() => {
+      console.log(this.foo);
+    }, timeout);
+  },
+};
+```
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+<!-- prettier-ignore -->
+***
+
+## The arrow function - multi line return
+
+```js
+const createGreeting = (message, name) => {
+  return {
+    message,
+    name,
+  };
+};
+```
+
+Simplified
+
+```js
+// multi line return
+const createGreeting = (message, name) => ({
+  message,
+  name,
+});
+```
+
+<!-- prettier-ignore -->
+***
+
+## The arrow function
+
+### NOT for
+
+Event Handlers
+
+```js
+const button = document.querySelector('#pushy');
+button.addEventListener('click', () => {
+  this.classList.toggle('on'); // => ERROR: TypeError, cannot read property 'toggle' of undefined
+});
+```
+
+Object Methods
+
+```js
+const person = {
+  points: 23,
+  score: () => {
+    this.points++; // => ERROR: TypeError: Cannot read property 'points' of undefined
+  },
+};
+```
+
+<!-- prettier-ignore -->
+***
+
+## The arrow function
+
+### NOT for
+
+Prototype methods
+
+```js
+class Car {
+  constructor(make, colour) {
+    this.make = make;
+    this.colour = colour;
+  }
+}
+
+Car.prototype.summarize = () => {
+  return `This car is a ${this.make} in the colour ${this.colour}`;
+};
+```
+
+<!-- prettier-ignore -->
+***
+
 ## String interpollation
 
 Multiline with interpollation
 
 ```js
-const message = "world";
+const message = 'world';
 const template = `
-        <div>
-            <span>Hello ${message}</span>
-        </div>
-    `;
+    <div>
+        <span>Hello ${message}</span>
+    </div>
+`;
 ```
 
 ```js
@@ -441,17 +441,17 @@ var myFunction = function(state = INITIAL_STATE, action){
 <!-- prettier-ignore -->
 ***
 
-## Computed properts
+## Computed properties
 
 ```js
 // ES3/ES5
 function getCar(make, model, value) {
   var car = {};
-  car["make" + make] = true;
+  car['make' + make] = true;
   return car;
 }
 
-var o = getCar("Bmw", "5", 50000);
+var o = getCar('Bmw', '5', 50000);
 o.makeBmw === true;
 ```
 
@@ -462,7 +462,7 @@ vs
 // Computed values now work with object literals
 function getCar(make, model, value) {
   return {
-    ["make" + make]: true
+    ['make' + make]: true,
   };
 }
 ```
@@ -480,13 +480,13 @@ function getCar(make, model, value) {
       return this._value;
     },
     set value(value) {
-      if (value < 0) throw new Error("invalid value");
+      if (value < 0) throw new Error('invalid value');
       this._value = value;
-    }
+    },
   };
 }
 
-let car = getCar("Volvo", "V70", 30000);
+let car = getCar('Volvo', 'V70', 30000);
 console.log(car.value); // OUTPUT: 30000
 car.value = -1; // <- ERROR
 ```
@@ -496,7 +496,7 @@ car.value = -1; // <- ERROR
 <!-- prettier-ignore -->
 ***
 
-### Property accessors in class
+## Property accessors in class
 
 ```js
 class Car {
@@ -510,7 +510,7 @@ class Car {
   }
 
   set value(value) {
-    if (value < 0) throw new Error("invalid value");
+    if (value < 0) throw new Error('invalid value');
     this._value = value;
   }
 }
@@ -522,12 +522,12 @@ class Car {
 ## Computed property accessor names
 
 ```js
-var expr = "foo";
+var expr = 'foo';
 
 var obj = {
   get [expr]() {
-    return "bar";
-  }
+    return 'bar';
+  },
 };
 
 console.log(obj.foo); // "bar"
@@ -536,10 +536,10 @@ console.log(obj.foo); // "bar"
 <!-- prettier-ignore -->
 ***
 
-### Looping over array and object properties
+## Looping over array and object properties
 
 ```js
-const list = ["john", "zoo", "bar"];
+const list = ['john', 'zoo', 'bar'];
 
 // ES5
 for (var i = 0, len = list.length; i < len; i++) {
@@ -557,7 +557,7 @@ for (let item of list) {
   console.log(item);
 }
 // ES6+ loop over properties of an object
-const obj = { name: "peter", age: 12 };
+const obj = { name: 'peter', age: 12 };
 for (let key in obj) {
   if (obj.hasOwnProperty(key)) {
     console.log(key, obj[key]);
@@ -584,7 +584,7 @@ function join() {
   arg.shift();
   return arg.join(separator);
 }
-console.log(join("//", "one", "two", "three"));
+console.log(join('//', 'one', 'two', 'three'));
 ```
 
 ```js
@@ -654,9 +654,9 @@ x.push(...y); // x is [1, 2, 3, 4]
 
 ```js
 var myConfig = {
-  url: "www.google.com/api",
-  data: "some value",
-  methodType: "POST"
+  url: 'www.google.com/api',
+  data: 'some value',
+  methodType: 'POST',
 };
 
 // ES5
@@ -685,16 +685,16 @@ We can destruct nested objects
 
 ```js
 const store = {
-  customer: { name: "euricom", location: "mechelen" },
+  customer: { name: 'euricom', location: 'mechelen' },
   pending: false,
   addCustomer(arg) {
     // ....
-  }
+  },
 };
 
 const {
   customer: { name },
-  addCustomer
+  addCustomer,
 } = store;
 console.log(name);
 addCustomer(arg);
@@ -707,10 +707,10 @@ addCustomer(arg);
 
 ```js
 // Array destructuring: uses an iterator to get to the elements of a source
-let [x, ...y] = "abc"; // x='a'; y=['b', 'c']
+let [x, ...y] = 'abc'; // x='a'; y=['b', 'c']
 ```
 
-Combines desctructering with spread operator
+Combines destructuring with spread operator
 
 ```js
 // ES5 - Result of multiple promises
@@ -721,9 +721,11 @@ Promise.all([promiseGetUsers, promiseGetCustomers]).then(result => {
 });
 
 // ES6: Array destructuring result
-Promise.all([promiseGetUsers, promiseGetCustomers]).then(([users, customers]) => {
-  console.log(users, customers);
-});
+Promise.all([promiseGetUsers, promiseGetCustomers]).then(
+  ([users, customers]) => {
+    console.log(users, customers);
+  },
+);
 ```
 
 Less lines to write, less confusion
@@ -737,7 +739,9 @@ Less lines to write, less confusion
 <!-- prettier-ignore -->
 ***
 
-### Class Fields
+## Class Fields
+
+Often used on react projects
 
 ```js
 class MyClass {
@@ -747,9 +751,9 @@ class MyClass {
 }
 ```
 
-<small>Babel plugins:[@babel/plugin-proposal-class-properties], TS 1.5+ </small>
+Available in Chrome & NodeJS 12
 
-> Yes more typescript like
+See https://github.com/tc39/proposal-class-fields (Stage 3)
 
 <!-- prettier-ignore -->
 ***
@@ -766,7 +770,7 @@ class MyClass {
     }
 ```
 
-<small>Babel plugins:[@babel/plugin-proposal-object-rest-spread], TS 2.0+ </small>
+See https://github.com/tc39/proposal-object-rest-spread (Stage 4)
 
 > Great for immutable objects!
 
@@ -774,6 +778,8 @@ class MyClass {
 ***
 
 ## Decorators
+
+Class Decorator
 
 ```js
 // A simple decorator
@@ -788,8 +794,8 @@ console.log(MyClass.annotated); // true
 ```
 
 ```js
-// A decorator with argument
-@displayName("Auto")
+// A class decorator with argument
+@displayName('Auto')
 class Car {}
 
 function displayName(name) {
@@ -799,28 +805,35 @@ function displayName(name) {
 }
 ```
 
-A decorator is just a function
+A decorator is basically just a function
 
 <!-- prettier-ignore -->
 ***
 
 ## Decorators
 
-To enable decorators you must add a babel plugin
+Class Member Decorator
 
-[@babel/plugin-proposal-decorators](https://github.com/babel/babel/tree/master/packages/babel-plugin-proposal-decorators)
-
-```
-{
-    "presets": ["@babel/preset-env"],
-    "plugins": ["@babel/plugin-proposal-decorators"]
+```js
+// A class member decorators
+class MyClass {
+  @Readonly
+  name;
+}
+function Readonly(target, name, descriptor) {
+  descriptor.writable = false;
+  return descriptor;
 }
 ```
+
+Use cases: Angular, MobX, Redux
+
+See https://github.com/tc39/proposal-decorators (stage 2)
 
 <!-- prettier-ignore -->
 ***
 
-### Trailing Function Commas
+## Trailing Func Commas
 
 ```js
 
@@ -844,65 +857,175 @@ To enable decorators you must add a babel plugin
     )
 ```
 
-https://github.com/tc39/proposal-trailing-function-commas
-
-<small>ES8<br>Babel plugins:[syntax-trailing-function-commas], TS 2.0 </small>
+See https://github.com/tc39/proposal-trailing-function-commas (stage 4)
 
 <!-- prettier-ignore -->
 ***
 
-### Private fields #
-
-T.B.D
-https://dev.to/gafi/7-new-exciting-javascript-features-you-need-to-know-1fkh
-https://github.com/tc39/proposal-class-fields
-
-<!-- prettier-ignore -->
-***
-
-### Optional Chaining ?.
-
-T.B.D
-https://dev.to/gafi/7-new-exciting-javascript-features-you-need-to-know-1fkh
-https://github.com/tc39/proposal-optional-chaining
-
-<!-- prettier-ignore -->
-***
-
-### Nullish Coalescing ??
-
-T.B.D
-https://dev.to/gafi/7-new-exciting-javascript-features-you-need-to-know-1fkh
-https://github.com/tc39/proposal-nullish-coalescing
-
-<!-- prettier-ignore -->
-***
-
-### BigInt
-
-T.B.D
-https://dev.to/gafi/7-new-exciting-javascript-features-you-need-to-know-1fkh
-https://github.com/tc39/proposal-bigint
-
-<!-- prettier-ignore -->
-***
-
-### Top Level await
-
-T.B.D
-https://dev.to/gafi/7-new-exciting-javascript-features-you-need-to-know-1fkh
-https://github.com/tc39/proposal-top-level-await
+## Private fields
 
 ```js
-// db.mjs
-export const connection = await createConnection();
+class Counter {
+  #x = 0;
+
+  #increment() {
+    this.#x++;
+  }
+
+  onClick() {
+    this.#increment();
+  }
+
+}
+
+const c = new Counter();
+c.onClick(); // works fine
+c.#increment(); // error
 ```
 
-```js
-// server.mjs
-import { connection } from './db.mjs';
+Available in Chrome & NodeJS 12
 
-server.start();
+See https://github.com/tc39/proposal-private-methods (stage 3)
+
+<!-- prettier-ignore -->
+***
+
+## Optional Chaining ?.
+
+Looks familiar?
+
+```js
+const please = {
+  make: {
+    it: {
+      stop: false,
+    },
+  },
+};
+
+// I don't like to write this code :(
+if (please && please.make && please.make.it && please.make.it.stop) {
+  // ...
+}
+```
+
+<!-- prettier-ignore -->
+***
+
+## Optional Chaining ?.
+
+Logical AND operator
+
+```
+if (please && please.make && please.make.it && please.make.it.stop) {
+  // ...
+}
+```
+
+Use library function
+
+```js
+import get from 'lodash/get';
+if (get(please, 'make.it.stop', false)) {
+  // ...
+}
+```
+
+Use Optional Chaining
+
+```js
+// I love this
+if (please?.make?.it?.stop) {
+  // ...
+}
+```
+
+See https://github.com/tc39/proposal-optional-chaining (stage 3)
+
+<!-- prettier-ignore -->
+***
+
+## Nullish Coalescing ??
+
+Using a fallback
+
+```js
+const duration = input.duration || 500;
+
+// what when duration is '0' (zero)
+```
+
+Improved with Nullish Coalescing
+
+```js
+// only overrides undefined or null
+const duration = input.duration ?? 500;
+```
+
+See https://github.com/tc39/proposal-nullish-coalescing (stage 3)
+
+<!-- prettier-ignore -->
+***
+
+## BigInt
+
+Using standard number
+
+```js
+const maxSafe = Number.MAX_SAFE_INTEGER;
+const y = maxSafe + 1;
+const z = maxSafe + 2;
+
+console.log(z === y); // oops this is 'true'
+```
+
+Using BitInt
+
+```js
+const maxSafe = BigInt(Number.MAX_SAFE_INTEGER);
+console.log('maxSafe', maxSafe);
+
+const y = maxSafe + 1n; // notice the new syntax
+console.log('maxSafe + 1', y);
+
+const z = maxSafe + 2n;
+console.log('maxSafe + 2', z);
+
+console.log(z === y); // 'false'
+```
+
+Available in Chrome & NodeJS 12
+
+See https://github.com/tc39/proposal-bigint (stage 3)
+
+<!-- prettier-ignore -->
+***
+
+## Numeric separator
+
+```js
+const FACTOR = 1_000_000_000;
+const FEE = 123_00;
+
+const FRACTION = 0.000_001;
+
+const BITS = 0b1010_0001_1000_0101;
+const FLAG = 0xdead_beef;
+```
+
+Available in Chrome & NodeJS 12
+
+See https://github.com/tc39/proposal-numeric-separator) (stage 3)
+
+<!-- prettier-ignore -->
+***
+
+## Dynamic import
+
+```js
+import(`./l10n/${myLocale}`)
+  .then(locale => app.l10n.use(locale))
+  .catch(err => app.reportError(err));
 ```
 
 ---
@@ -914,7 +1037,7 @@ server.start();
 <!-- prettier-ignore -->
 ***
 
-### Generators
+## Generators
 
 The basics
 
@@ -945,7 +1068,7 @@ for(const i of it) {
 <!-- prettier-ignore -->
 ***
 
-### Generators
+## Generators
 
 More practical example
 
@@ -973,6 +1096,8 @@ for (const user of activeUsers) {
 }
 ```
 
+Use cases: react-saga, mobx
+
 <!-- prettier-ignore -->
 ***
 
@@ -982,9 +1107,9 @@ Properties of an object can be either a string (as in ES5)
 or symbol (new in ES6)
 
 ```js
-var key = Symbol("key");
+var key = Symbol('key');
 const myObject = {
-  [key]: "abc"
+  [key]: 'abc',
 };
 ```
 
@@ -1006,7 +1131,7 @@ Can be used as private variable
 <!-- prettier-ignore -->
 ***
 
-## String interpollation
+## Tagged template strings
 
 Tagged templates
 
@@ -1018,14 +1143,16 @@ const query = graphql`
         }
     `;
 
-function grahql(literals, ...placeholders) {
-  console.log("literals", literals);
-  console.log("placeholder", placeholders);
-  console.log("raw", literals.raw[0]);
+function graphql(literals, ...placeholders) {
+  console.log('literals', literals);
+  console.log('placeholder', placeholders);
+  console.log('raw', literals.raw[0]);
 }
 ```
 
 You get the opportunity to pre process the template string literals plus the values.
+
+Use cases: gql,
 
 ---
 
@@ -1041,12 +1168,12 @@ You get the opportunity to pre process the template string literals plus the val
 Common used object functions
 
 ```js
-const a = { name: "peter" };
+const a = { name: 'peter' };
 const b = Object.assign({}, a, { age: 12 }); // { name: 'peter', age: 12 }
 
 const b = { ...a, age: 99 }; // { name: 'peter', age: 99 }
 
-Object.keys({ name: "peter", age: 12 }); // [ 'name', 'age' ]
+Object.keys({ name: 'peter', age: 12 }); // [ 'name', 'age' ]
 
 NaN == NaN; // false
 isNan(NaN); // true
@@ -1061,12 +1188,23 @@ Object.create(Object.prototype); // {}
 ## String functions
 
 ```js
-"abc ".trim(); // 'abr'
-"hello world".includes("world"); // true
-"hello world".startWith("hello"); // true
+'abc '.trim(); // 'abr'
+'hello world'.includes('world'); // true
+'hello world'.startWith('hello'); // true
 
-"hello world".indexOf("world"); // 6 (ES5 version of includes)
+'hello world'.indexOf('world'); // 6 (ES5 version of includes)
 ```
+
+<!-- prettier-ignore -->
+***
+
+## Array functions
+
+Array functions
+
+`forEach`, `map`, `reduce`, `filter`, `sort`, `find`, `some`, `any`
+
+More on [Functional JavaScript](./javascript-functional.md)
 
 ---
 
@@ -1082,7 +1220,9 @@ Object.create(Object.prototype); // {}
 - [You-Dont-Know-JS Book series](https://github.com/getify/You-Dont-Know-JS)
 - [Frontendmasters - Kyle Simpson](https://frontendmasters.com/courses/)
 - [JavaScript Weekly](http://javascriptweekly.com/)
-- [TOP 10 JAVASCRIPT TRAPS FOR A C# DEVELOPER](http://prasadhonrao.com/top-10-javascript-traps-for-a-csharp-developer/)
+- [Node.js Weekly](https://nodeweekly.com)
+- [7 Exciting New JavaScript Features You Need to Know](https://dev.to/gafi/7-new-exciting-javascript-features-you-need-to-know-1fkh)
+- [So, what’s new in ES2020](https://tdd.github.io/confoo2018-es2020/#/mainTitle)
 
 ---
 

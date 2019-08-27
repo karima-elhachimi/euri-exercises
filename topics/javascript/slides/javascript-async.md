@@ -1,6 +1,6 @@
 ---
 title: Javascript Async
-transition: "fade"
+transition: 'fade'
 verticalSeparator: "^\\*\\*\\*"
 ---
 
@@ -35,7 +35,8 @@ Copyright (c) 2017-2019 Euricom nv.
     overflow: auto;
     max-height: 800px;
     word-wrap: normal;
-    font-size: 90%;
+    line-height: 35px;
+    font-size: 120%;
 }
 </style>
 
@@ -65,9 +66,46 @@ use
 ```js
 getCustomer(123, function(err, result) {
   if (err) {
-    console.log("ERROR", err);
+    console.log('ERROR', err);
   }
   console.log(result);
+});
+```
+
+<!-- prettier-ignore -->
+***
+
+## Callback function
+
+### Use cases
+
+setTimeout
+
+```js
+setTimeout(() => {
+  console.log('I waited for 5 sec');
+}, 5000);
+```
+
+event handler
+
+```js
+const button = document.querySelector('#pushy');
+button.addEventListener('click', function() {
+  this.classList.toggle('on');
+});
+```
+
+read file in nodeJS
+
+```js
+var fs = require('fs');
+fs.readFile('DATA', 'utf8', function(err, contents) {
+  if (err) {
+    console.log('failed to read file');
+    return;
+  }
+  console.log(contents);
 });
 ```
 
@@ -83,6 +121,52 @@ getCustomer(123, function(err, result) {
 ## Basic Promise Usage
 
 ```js
+// call a promise based api
+const promise = axios.get('/user?ID=12345');
+```
+
+```js
+// use the promise
+promise
+  .then(result => {
+    console.log(result); // output: 'Success!'
+  })
+  .catch(error => {
+    /* error == 'Failure!' */
+  });
+```
+
+<!-- prettier-ignore -->
+***
+
+## Basic Promise Usage
+
+```js
+promise.then(result => {
+  console.log(result); // output: 'Success!'
+});
+```
+
+All promise instances get a `then` method which allows you to react to the promise. The first then method callback receives the result given to it by the resolve() call.
+
+```js
+promise
+  .then(result => {
+    //
+  })
+  .catch(error => {
+    /* error == 'Failure!' */
+  });
+```
+
+The `catch` callback is executed when the promise is rejected.
+
+<!-- prettier-ignore -->
+***
+
+## Create a promise
+
+````js
 const promise = new Promise(function(resolve, reject) {
     // Do an async task async task and then...
     if(/* good condition */) {
@@ -91,29 +175,7 @@ const promise = new Promise(function(resolve, reject) {
         reject('Failure!');
     }
 });
-
-// use the promise
-promise
-    .then((result) => {
-        console.log(result);  // output: 'Success!'
-    })
-    .catch((error) => {
-        /* error == 'Failure!' */
-    })
 ```
-
-<!-- prettier-ignore -->
-***
-
-## Basic Promise Usage
-
-> then
-
-All promise instances get a then method which allows you to react to the promise. The first then method callback receives the result given to it by the resolve() call.
-
-> catch
-
-The catch callback is executed when the promise is rejected.
 
 <!-- prettier-ignore -->
 ***
@@ -125,14 +187,14 @@ function setTimeoutP(timeout) {
   return new Promise(resolve => {
     setTimeout(() => {
       if (timeout < 0) {
-        reject(new Error("bad timeout value"));
+        reject(new Error('bad timeout value'));
         return;
       }
-      resolve("done");
+      resolve('done');
     }, timeout);
   });
 }
-```
+````
 
 <!-- prettier-ignore -->
 ***
@@ -142,7 +204,7 @@ function setTimeoutP(timeout) {
 ```js
 // use
 setTimeoutP(1000).then(() => {
-  console.log("it is done");
+  console.log('it is done');
 });
 
 setTimeoutP(-1)
@@ -150,24 +212,7 @@ setTimeoutP(-1)
     // ...
   })
   .catch(err => {
-    console.log("Error", err);
-  });
-```
-
-<!-- prettier-ignore -->
-***
-
-## Use a promise api
-
-Making async methods calls via promise
-
-```js
-myAsyncAction(arg)
-  .then(result => {
-    // successfull result
-  })
-  .catch(err => {
-    // error
+    console.log('Error', err);
   });
 ```
 
@@ -179,12 +224,12 @@ myAsyncAction(arg)
 ```js
 setTimeoutP(1000)
   .then(() => {
-    console.log("first");
+    console.log('first');
     return setTimeoutP(2000);
   })
   .then(() => {
-    console.log("second");
-    return "happy"; // by returning a value
+    console.log('second');
+    return 'happy'; // by returning a value
     // its wrapped in a new promise
   })
   .then(result => {
@@ -204,12 +249,12 @@ function action(timeout) {
   // return the promise for continues handling
   return setTimeoutP(timeout)
     .then(() => {
-      console.log("first");
+      console.log('first');
       return setTimeoutP(timeout * 2);
     })
     .then(() => {
-      console.log("second");
-      return "happy";
+      console.log('second');
+      return 'happy';
     });
 }
 
@@ -223,16 +268,16 @@ action.then(result => console.log(result)); // output: happy
 
 ```js
 // resolved promise
-const promise = Promise.resolve("hello");
+const promise = Promise.resolve('hello');
 
 // rejected promise
-const promise = Promise.reject(new Error("bad bad"));
+const promise = Promise.reject(new Error('bad bad'));
 ```
 
 ```js
 function asyncAction(arg) {
   if (!arg) {
-    return Promise.reject("bad bad");
+    return Promise.reject('bad bad');
   }
   return getCustomer(); // get customer returns an promise
 }
@@ -290,7 +335,7 @@ Promise.race([promise1, promise2])
 ```js
 function getCustomers() {
   return http
-    .get("/api/customers")
+    .get('/api/customers')
     .then(result => {
       customers = result.data;
       return customers;
@@ -305,7 +350,7 @@ function getCustomers() {
 ```js
 async function getCustomers() {
   try {
-    const result = await http.get("/api/customers");
+    const result = await http.get('/api/customers');
     return result.data;
   } catch (error) {
     console.log(err);
@@ -324,7 +369,9 @@ Chaining multiple calls
 ```js
 async function getCustomerFromOrder(orderId) {
   const resOrder = await http.get(`/api/orders/${orderId}`);
-  const resCustomer = await http.get(`/api/customer/${resOrder.data.customerId}`);
+  const resCustomer = await http.get(
+    `/api/customer/${resOrder.data.customerId}`,
+  );
   return resCustomer.data;
 }
 ```
@@ -336,37 +383,55 @@ async function getCustomerById(cust1, cust2, cust3) {
   const result = await Promise.All(
     http.get(`/api/customer/${cust1}`),
     http.get(`/api/customer/${cust2}`),
-    http.get(`/api/customer/${cust3}`)
+    http.get(`/api/customer/${cust3}`),
   );
   return result.map(res => res.data);
+}
+```
+
+---
+
+# Generators
+
+Promises
+
+```js
+async function getCustomers() {
+  try {
+    const result = await http.get('/api/customers');
+    return result.data;
+  } catch (error) {
+    console.log(err);
+    return [];
+  }
+}
+```
+
+Generator
+
+```js
+function* getCustomers() {
+  try {
+    const result = yield http.get('/api/customers');
+    return result.data;
+  } catch (error) {
+    console.log(err);
+    return [];
+  }
 }
 ```
 
 <!-- prettier-ignore -->
 ***
 
-## Generators
+## Use async generators
+
+Use https://github.com/tj/co
 
 ```js
-async function getCustomers() {
-  try {
-    const result = await http.get("/api/customers");
-    return result.data;
-  } catch (error) {
-    console.log(err);
-    return [];
-  }
-}
-```
+import co from 'co';
 
-```js
-function* getCustomers() {
-  try {
-    const result = yield http.get("/api/customers");
-    return result.data;
-  } catch (error) {
-    console.log(err);
-    return [];
-  }
-}
+co(getCustomers()).then(result => {
+  console.log(result);
+});
 ```

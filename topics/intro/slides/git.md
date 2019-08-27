@@ -28,14 +28,18 @@ cd git-intro
 ## Show working tree status
 
 ```bash
-git status
+# get current repo status
+$ git status
 ```
 
-> On branch master
->
-> No commits yet
->
-> nothing to commit (create/copy files and use "git add" to track)
+```bash
+# output
+On branch master
+No commits yet
+
+nothing to commit (create/copy files and use "git add" to track)
+```
+
 
 ---
 
@@ -82,7 +86,7 @@ git log --name-status
 # Ignore node_modules directories
 ECHO "node_modules/" > .gitignore
 
-# Ignore macos related finder leftovers
+# Ignore macOS related finder leftovers
 ECHO ".DS_Store" >> .gitignore
 
 # Add everything to the index
@@ -103,16 +107,19 @@ git commit
 
 ```bash
 # Add the remote
-git remote add origin git@github.com:[user]/git-intro.git
+git remote add origin https://github.com/[yourusername]/git-intro.git
 
 # Push changes to github
 git push
+>>> FAIL: The current branch master has no upstream branch
 ```
 
-> FAIL: The current branch master has no upstream branch
-
 ```bash
+# connect local branch to remote
 git push --set-upstream origin master
+
+# simplified
+git push -u origin master
 ```
 
 ---
@@ -120,8 +127,8 @@ git push --set-upstream origin master
 ## Branching
 
 ```bash
-# create a local branch
-git checkout -b FEAT-1
+# create a feature branch
+git checkout -b features/feat1
 
 # Change the title of our repository readme
 echo "# Introduction into Git" > README.md
@@ -133,7 +140,7 @@ git add .
 git commit -m 'Changed title'
 
 # Push branch online
-git push --set-upstream origin FEAT-1
+git push --set-upstream origin features/feat1
 ```
 
 ---
@@ -155,11 +162,11 @@ git pull
 
 ---
 
-## Update our FEAT-1 branch
+## Update our feat1 branch
 
 ```bash
-# Switch to FEAT-1 branch
-git checkout FEAT-1
+# Switch to features/feat1 branch
+git checkout features/feat1
 
 # Merge changes in master into our branch
 git merge master
@@ -263,11 +270,11 @@ git push
 
 ---
 
-## Integrate changes from FEAT-1 branch
+## Integrate changes from feat1 branch
 
 ```bash
 # Merge changes
-git merge FEAT-1
+git merge features/feat1
 
 # Resolve the conflict using our mergetool
 git mergetool
@@ -285,10 +292,10 @@ git push
 
 ```bash
 # Delete the remote branch
-git push origin :FEAT-1
+git push origin :features/feat1
 
 # Delete the local branch
-git branch -d FEAT-1
+git branch -d features/feat1
 ```
 
 ---//
@@ -302,3 +309,5 @@ git help {command}
 ```
 
 - [online](https://git-scm.com/)
+- https://github.github.com/training-kit/downloads/github-git-cheat-sheet/
+- http://gitready.com/

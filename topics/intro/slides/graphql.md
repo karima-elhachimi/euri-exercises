@@ -2,7 +2,7 @@
 title: GraphQL
 ---
 
-# GraphQL, the future of REST API's
+# GraphQL, the future of REST APIs
 
 ![](./images/overview.png)
 
@@ -94,58 +94,33 @@ data: {
 Get list of users
 
 ```json
-    query {
-        users {
-            name
-            role
-        }
+query {
+    users {
+        name
+        role
     }
+}
 ```
-
-```
-    // JSON result
-    data: {
-        users: [
-            { name: "Peter", role: "admin" },
-            { name: "Jan", role: "admin" }
-        }
-    }
-```
-
----
-
-### A GraphQL type
-
-User Type
 
 ```json
-    type User {
-        name: String
-        role: String
+data: {
+    users: [
+        { name: "Peter", role: "admin" },
+        { name: "Jan", role: "admin" }
     }
-
-    type Query {
-        users(): [User]
-    }
-```
-
-mapped to code
-
-```javascript
-    // type Query {
-    {
-        // name: String
-        users() {
-            return users;
-        }
-    }
+}
 ```
 
 ---
 
-### GraphiQL
 
-![](./images/graphiql.png)
+### Demo
+
+![](./images/graphql-playground.png)
+
+Open https://euri-test-api-ohrakgrzhg.now.sh
+
+(it can take a minute to wake up)
 
 ---
 
@@ -158,53 +133,55 @@ mapped to code
 ### Query with field argument
 
 ```json
-    query {
-        user(id: 1234) {        <-- field argument
-            id
-            name
-        }
+query {
+    user(id: 1234) {        <-- field argument
+        id
+        name
     }
+}
 ```
 
-```javascript
-    // JSON result
-    data: {
-        user: {
-            id: 1234,
-            name: "Peter"
-        }
+```json
+// JSON result
+data: {
+    user: {
+        id: 1234,
+        name: "Peter"
     }
+}
 ```
 
 ---
 
 ### Query with complex field (or join)
 
-```json
-    query {
-        me {
-            name
-            profilePicture {
-                width
-                height
-                url
-            }
+```
+query {
+    me {
+        name
+        profilePicture {
+            width
+            height
+            url
         }
     }
+}
 ```
 
-```javascript
-    // JSON result
-    data: {
-        me: {
-            name: "Peter",
-            profilePicture {
+```json
+// JSON result
+{
+    "data": {
+        "me": {
+            "name": "Peter",
+            "profilePicture" {
                 "width": 50,
                 "height": 50,
                 "url": "https://cdn/some.jpg"
             }
         }
     }
+}
 ```
 
 ---
@@ -229,54 +206,56 @@ mapped to code
 ### Query with aliases
 
 ```json
-    query {
-        me {
-            name
-            thumbnail: profilePicture(size: 50) {
-                url
-            }
-            profilePicture(size: 3000) {
-                width
-                url
-            }
+query {
+    me {
+        name
+        thumbnail: profilePicture(size: 50) {
+            url
+        }
+        profilePicture(size: 3000) {
+            width
+            url
         }
     }
+}
 ```
 
-```javascript
-    // JSON result
-    data: {
-        me {
-            name: "Peter",
-            thumbnail {
-                url: "https://cdn/50.jpg"
+```json
+// JSON result
+{
+    "data": {
+        "me": {
+            "name": "Peter",
+            "thumbnail": {
+                "url": "https://cdn/50.jpg"
             },
-            profilePicture {
-                width: 3000,
-                url: "https://cdn/3000.jpg"
+            "profilePicture": {
+                "width": 3000,
+                "url": "https://cdn/3000.jpg"
             }
         }
     }
+}
 ```
 
 ---
 
 ### Query with variables
 
-```json
-    query {
-        users(id: 1) {
-            name
-        }
+```
+query {
+    users(id: 1) {
+        name
     }
+}
 ```
 
-```json
-    query findUser($userId: String!) {
-        users(id: $userId) {
-            name
-        }
+```
+query findUser($userId: String!) {
+    users(id: $userId) {
+        name
     }
+}
 ```
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
@@ -294,18 +273,18 @@ mapped to code
 
 ### Query with paging and filtering
 
-```json
-    query {
-        me {
+```
+query {
+    me {
+        name
+        friends(orderby: IMPORTANCE, first: 1) {
             name
-            friends(orderby: IMPORTANCE, first: 1) {
+            events(first: 10) {
                 name
-                events(first: 10) {
-                    name
-                }
             }
         }
     }
+}
 ```
 
 ---
@@ -330,83 +309,53 @@ mapped to code
 
 ---
 
-### We can use interfaces and union types
-
-We can use interfaces and union types
-
-```json
-    query {
-        user(name: 'peter') {
-            name
-            email
-            ... on Manager {
-                role
-            }
-            ... on Employee {
-                managerName
-            }
-        }
-    }
-```
-
-```javascript
-    data: {
-        user: {
-            name: "Peter",
-            managerName: "Wim"
-        }
-    }
-```
-
----
-
 # GraphQL mutation
 
-> Mutation is like an action in Redux
+> Query to get info, Mutation to modify it
 
 ---
 
 ## Simple mutation
 
-```json
-    // query
-    query {
-        article(id: 1234) {
-            name
-            status
-        }
+```
+// query
+query {
+    article(id: 1234) {
+        name
+        status
     }
+}
 ```
 
-```json
-    // mutation
-    mutation {
-        deleteArticle(id: 1234) {
-            status
-        }
+```
+// mutation
+mutation {
+    deleteArticle(id: 1234) {
+        status
     }
+}
 ```
 
 ---
 
 ## Complex mutation
 
-```json
-    mutation newArticle {
-        createArticle(article: {
-            slug: "something-new",
-            title: "Something New",
-            status: live,
-            relatedArticles: [
-                { id: 1 }
-            ]
-        }) {
-            id
-            relatedArticles {
-                slug
-            }
+```
+mutation newArticle {
+    createArticle(article: {
+        slug: "something-new",
+        title: "Something New",
+        status: live,
+        relatedArticles: [
+            { id: 1 }
+        ]
+    }) {
+        id
+        relatedArticles {
+            slug
         }
     }
+}
 ```
 
 ---
@@ -419,61 +368,74 @@ We can use interfaces and union types
 
 ## The GraphQL Schema
 
-```json
-    type User {
-        name: String
-        profilePicture(size: Int = 50): ProfilePicture
-        friends(first: Int, orderby: FriendOrderEnum): [User]
-        events(first: Int): [Event]
-    }
+```
+type User {
+    name: String
+    profilePicture(size: Int = 50): ProfilePicture
+    friends(first: Int, orderby: FriendOrderEnum): [User]
+    events(first: Int): [Event]
+}
 
-    enum FriendOrderEnum {
-        FIRST_NAME,
-        IMPORTANCE
-    }
-
+enum FriendOrderEnum {
+    FIRST_NAME,
+    IMPORTANCE
+}
 ```
 
-```json
-    type ProfilePicture {
-        height: Int,
-        width: Int,
-        url: String
-    }
+```
+type ProfilePicture {
+    height: Int,
+    width: Int,
+    url: String
+}
 
-    type Event {
-        name: String
-        attendees(first: Int): [User]
-    }
+type Event {
+    name: String
+    attendees(first: Int): [User]
+}
 
-    type Query {
-        user (id: Int): User
-        users(first: Int): [User]
-    }
+type Query {
+    user (id: Int): User
+    users(first: Int): [User]
+}
 ```
 
 ---
 
 ### We can query the types
 
-```json
-    query {
-        __schema {
-            queryType { name }
-            types {
+```
+query {
+    __schema {
+        queryType { name }
+        types {
+            name
+            fields {
                 name
-                fields {
+                type {
+                    kind
                     name
-                    type {
-                        kind
-                        name
-                        ofType { name }
-                    }
+                    ofType { name }
                 }
             }
         }
     }
+}
 ```
+
+---
+
+# Exercise
+
+Open https://euri-test-api-phflgvcuay.now.sh/graphql
+
+1. Query all users ordered by firstName (retrieve all fields)
+2. Query a single user and use a variable
+3. Add and complete a task
+4. Query all products (all fields) & basket with products (all fields) in one query. 
+5. Add an other product to the basket
+
+When using the basket use a random checkoutID (eg: "123" or "peterBasket") to get your own basket.
 
 ---
 
@@ -488,7 +450,7 @@ We can use interfaces and union types
 
 ---
 
-## Api's
+## Apis
 
 Public
 
@@ -497,19 +459,12 @@ Public
 - [The Star Wars Graphql API](http://graphql-swapi.parseapp.com/)
 - [The GitHub API](https://graphql-explorer.githubapp.com)
 - [APIs-Gurus](https://github.com/APIs-guru/graphql-apis)
+- [Euricom Test Api](https://euri-test-api-ohrakgrzhg.now.sh)
 
-Fake API's
+Fake APIs
 
 - http://fake.graphql.guru/
 - https://github.com/APIs-guru/graphql-faker
-
----
-
-# Exercise
-
-> In which film we have a wookie that is not Chewbacca
-
-http://graphql.org/swapi-graphql/
 
 ---
 
