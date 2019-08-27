@@ -130,11 +130,11 @@ export default ThemedApp;
 
 ```bash
 # Install redux
-npm i --save redux
+npm i --save redux@3
 
 # Later on you probably want react bindings & developer tools
 npm i react-redux
-npm i --save-dev redux-devtools
+npm i --save-dev redux-devtools-extension
 ```
 
 ---
@@ -213,6 +213,23 @@ It's very important that the reducer stays pure, **never**:
 
 ---//
 
+#### Reducers - State Shape
+
+In Redux, all the application state is stored as a single object. It's a good idea to think of its shape before writing any code.
+
+```js
+// It's common to keep entity state as a id map
+// (see https://redux.js.org/basics/reducers#note-on-relationships)
+const todoState = {
+  1: { id: 1, name: 'Call the doctor' },
+  2: { id: 2, name: 'Wash car' }
+};
+```
+
+🤔 What's the minimal representation of your app's state as an object?
+
+---//
+
 #### Reducers - `switch`
 
 ```js
@@ -225,6 +242,7 @@ function visibilityReducer(state = initialState, action) {
   switch (action) {
     case REVEAL:
       return {
+        // 💡 We NEVER mutate state
         visible: true
       };
     default:
@@ -259,4 +277,106 @@ function createReducer(initialState, handlers) {
     return handler ? handler(state, action) : state;
   };
 }
+```
+
+---//
+
+#### Reducers - `combineReducers`
+
+You can combine multiple reducers into 1
+
+```js
+import { combineReducers } from 'redux';
+
+function reducer1(state, action) {}
+function reducer2(state, action) {}
+
+const myApp = combineReducers({
+  stateProperty1: reducer1,
+  stateProperty2: reducer2
+});
+```
+
+```js
+// = Roughly (see https://redux.js.org/api/combinereducers)
+function myApp(state = {}, action) {
+  return {
+    stateProperty1: reducer1(state.stateProperty1, action),
+    stateProperty2: reducer2(state.stateProperty2, action)
+  };
+}
+```
+
+---
+
+### Store
+
+The Store is the object that brings [actions](https://redux.js.org/basics/actions) and [reducers](https://redux.js.org/basics/reducers) together and has following responsibilities:
+
+- Holds application state
+- Allows access to state via [`getState()`](https://redux.js.org/api/store#getState)
+- Allows state to be updated via [`dispatch(action)`](https://redux.js.org/api/store#dispatchaction)
+- Registers listeners via [`subscribe(listener)`](https://redux.js.org/api/store#subscribelistener)
+
+👉 It's important to note that you'll only have a single store in a Redux application.
+
+---//
+
+#### Store - Example
+
+```js
+// actionTypes.js
+export const INCREMENT_COUNTER = 'INCREMENT_COUNTER';
+export const DECREMENT_COUNTER = 'DECREMENT_COUNTER';
+```
+
+```js
+// counterReducer.js
+import { INCREMENT_COUNTER, DECREMENT_COUNTER } from './actionTypes';
+
+export default function counterReducer(state = 0, action) {
+  switch (action.type) {
+    case INCREMENT_COUNTER: {
+      return state + 1;
+    }
+    case DECREMENT_COUNTER: {
+      return state - 1;
+    }
+    default:
+      return state;
+  }
+}
+```
+
+---//
+
+#### Store - Example
+
+```js
+// store.js
+import { combineReducers, createStore } from 'redux';
+import counterReducer from './counterReducer';
+import { INCREMENT_COUNTER, DECREMENT_COUNTER } from './actionTypes';
+
+const reducer = combineReducers({
+  myCounter: counterReducer
+});
+
+const store = createStore(reducer);
+
+// Log the initial state
+console.log(store.getState());
+
+// Every time the state changes, log it
+// Note that subscribe() returns a function for unregistering the listener
+const unsubscribe = store.subscribe(() => console.log(store.getState()));
+
+// Dispatch some actions
+store.dispatch({ type: INCREMENT_COUNTER });
+store.dispatch({ type: INCREMENT_COUNTER });
+store.dispatch({ type: DECREMENT_COUNTER });
+store.dispatch({ type: INCREMENT_COUNTER });
+
+// Stop listening to state updates
+unsubscribe();
 ```
