@@ -137,9 +137,9 @@ npm i react-redux
 npm i --save-dev redux-devtools
 ```
 
----//
+---
 
-#### [Actions](https://redux.js.org/basics/actions#actions)
+### [Actions](https://redux.js.org/basics/actions#actions)
 
 Actions are payloads of information that send data from your application to your store (using [`store.dispatch()`](https://redux.js.org/api/store#dispatchaction)).
 
@@ -182,9 +182,9 @@ export function addTodo(todo) {
 }
 ```
 
----//
+---
 
-#### [Reducers](https://redux.js.org/basics/reducers)
+### [Reducers](https://redux.js.org/basics/reducers)
 
 Reducers specify how the application's state changes in response to actions sent to the store.
 
@@ -216,7 +216,7 @@ It's very important that the reducer stays pure, **never**:
 #### Reducers - `switch`
 
 ```js
-const REVEAL: 'REVEAL';
+const REVEAL = 'REVEAL';
 
 const initialState = { visible: false };
 
@@ -225,11 +225,38 @@ function visibilityReducer(state = initialState, action) {
   switch (action) {
     case REVEAL:
       return {
-        visible: true,
+        visible: true
       };
     default:
       // Return the previous state for any unknown action.
       return state;
   }
+}
+```
+
+---//
+
+#### Reducers - `createReducer`
+
+```js
+const REVEAL = 'REVEAL';
+
+const initialState = { visible: false };
+
+const visibilityReducer = createReducer(initialState, {
+  [REVEAL]: (state, action) => ({
+    visible: true
+  })
+});
+```
+
+```js
+// High Order Function
+function createReducer(initialState, handlers) {
+  return function reducer(state = initialState, action) {
+    const handler = handlers[action.type];
+
+    return handler ? handler(state, action) : state;
+  };
 }
 ```
