@@ -134,7 +134,7 @@ npm i --save redux@3
 
 # Later on you probably want react bindings & developer tools
 npm i react-redux
-npm i --save-dev redux-devtools
+npm i --save-dev redux-devtools-extension
 ```
 
 ---
