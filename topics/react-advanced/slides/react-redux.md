@@ -189,10 +189,10 @@ export function addTodo(todo) {
 Reducers specify how the application's state changes in response to actions sent to the store.
 
 ```js
-// ⚠️ A reducer is a pure function
+// 💡 A reducer is a pure function
 // that takes the previous state and an action,
 // and returns the next state.
-(previousState, action) => newState;
+const reducer = (previousState, action) => newState;
 ```
 
 <small>
@@ -210,3 +210,26 @@ It's very important that the reducer stays pure, **never**:
 - Mutate its arguments
 - Perform side effects (API calls and routing transitions)
 - Call non-pure functions, e.g. `Date.now()` or `Math.random()`.
+
+---//
+
+#### Reducers - `switch`
+
+```js
+const REVEAL: 'REVEAL';
+
+const initialState = { visible: false };
+
+// 👉 Using ES6 defaults arguments syntax
+function visibilityReducer(state = initialState, action) {
+  switch (action) {
+    case REVEAL:
+      return {
+        visible: true,
+      };
+    default:
+      // Return the previous state for any unknown action.
+      return state;
+  }
+}
+```
