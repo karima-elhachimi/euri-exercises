@@ -1,4 +1,23 @@
 {
+  "todos": [
+    {
+      "id": 1,
+      "name": "Wash dishes"
+    },
+    {
+      "id": 2,
+      "name": "Take out the trash"
+    },
+    {
+      "id": 3,
+      "name": "Walk the dog"
+    },
+    {
+      "id": 4,
+      "name": "Feed the dog",
+      "completed": true
+    }
+  ],
   "users": [
     {
       "isFamily": true,

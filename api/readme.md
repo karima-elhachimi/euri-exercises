@@ -2,7 +2,11 @@
 
 Home of json-server based api, used during the bootcamp
 
-## UserApi
+## Fake Api
+
+```bash
+npm start
+```
 
 ### Users
 
@@ -14,6 +18,10 @@ http://localhost:3000/users
 - lastName {String}
 - firstName {String}
 
-```bash
-npm run serve:user-api
-```
+### Todos
+
+http://localhost:3000/todos
+
+- id {number}
+- name {string}
+- completed {bool?}
