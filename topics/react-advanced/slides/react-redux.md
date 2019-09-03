@@ -523,3 +523,14 @@ const store = createStore(
 ```
 
 [📖 Using Redux DevTools in production](https://medium.com/@zalmoxis/using-redux-devtools-in-production-4c5b56c5600f)
+
+---
+
+### [React-Redux](https://react-redux.js.org)
+
+> Official React bindings for Redux
+
+```
+// Install react bindings
+npm i --save react-redux
+```
