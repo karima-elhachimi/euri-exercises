@@ -1,6 +1,6 @@
 module.exports = {
-  extends: ['airbnb', 'plugin:jest/recommended'],
-  plugins: ['import', 'react-hooks'],
+  extends: ['airbnb', 'airbnb/hooks', 'plugin:jest/recommended'],
+  plugins: ['import'],
   parser: 'babel-eslint',
   parserOptions: {
     sourceType: 'module',
