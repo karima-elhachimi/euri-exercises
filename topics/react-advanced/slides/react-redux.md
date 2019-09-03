@@ -131,10 +131,6 @@ export default ThemedApp;
 ```bash
 # Install redux
 npm i --save redux@3
-
-# Later on you probably want react bindings & developer tools
-npm i react-redux
-npm i --save-dev redux-devtools-extension
 ```
 
 ---
@@ -419,3 +415,111 @@ unsubscribe();
 - verify that our reducer retains other todo's and does not complete them,
 - verify that our reducer sets the completed flag to true for the given todo
 
+---
+
+### [Middleware](https://redux.js.org/advanced/middleware)
+
+> It provides a third-party extension point between dispatching an action, and the moment it reaches the reducer.
+
+---//
+
+#### Middleware - problem
+
+🤔 What if we wanted to log every dispatched action and the state afterwards?
+
+```js
+// We don't want to repeat this every time
+const action = addTodo({ id: 3, title: 'Use Middleware' });
+
+console.log('dispatching', action);
+store.dispatch(action);
+console.log('next state', store.getState());
+```
+
+❓Any ideas?
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+<small>
+Wrapping dispatch, monkey patching dispatch, ...
+</small>
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+---//
+
+#### Middleware - solution
+
+```js
+// Redux middleware contract,
+// es6 arrow function makes these look prettier
+const middleware = store => next => action => {};
+
+// equivalent
+function middleware(store) {
+  return function wrapDispatch(next) {
+    return function dispatch(action) {};
+  };
+}
+```
+
+```js
+/**
+ * Logs all actions and states after they are dispatched.
+ */
+const logMiddleWare = store => next => action => {
+  console.info('dispatching', action);
+  const result = next(action);
+  console.log('next state', store.getState());
+  return result;
+};
+```
+
+---//
+
+#### [Middleware - `applyMiddleware`](https://redux.js.org/api/applymiddleware)
+
+```js
+import { combineReducers, createStore, applyMiddleware } from 'redux';
+import todoReducer from './reducers/todoReducer';
+
+const reducer = combineReducers({
+  todos: todoReducer
+});
+
+const store = createStore(
+  // Unchanged
+  reducer,
+  // 👉 Here we apply the middleware
+  // only the last middleware will be passed dispatch as next
+  applyMiddleware(logMiddleWare)
+);
+```
+
+---//
+
+### [Redux devtools extension](https://github.com/zalmoxisus/redux-devtools-extension)
+
+[🔗 Install chrome extension](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd)
+
+```
+npm i --save redux-devtools-extension
+```
+
+```js
+import { combineReducers, createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction';
+import todoReducer from './reducers/todoReducer';
+
+const reducer = combineReducers({
+  todos: todoReducer
+});
+
+const store = createStore(
+  //
+  reducer,
+  composeWithDevTools(applyMiddleware(logMiddleWare))
+);
+```
+
+[📖 Using Redux DevTools in production](https://medium.com/@zalmoxis/using-redux-devtools-in-production-4c5b56c5600f)
