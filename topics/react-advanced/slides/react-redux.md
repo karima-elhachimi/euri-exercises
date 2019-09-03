@@ -380,3 +380,42 @@ store.dispatch({ type: INCREMENT_COUNTER });
 // Stop listening to state updates
 unsubscribe();
 ```
+
+---
+
+### Exercise 1 - Todo's
+
+```js
+/**
+ * @typedef {object} Todo
+ * @property {number} id
+ * @property {string} title
+ * @property {bool} [completed]
+ */
+```
+
+- verify that our `todoReducer` has an initialState of `{}`
+
+---//
+
+#### Exercise 1-2 - `addTodo`
+
+```js
+// state design
+{
+  [id]: todo,
+}
+```
+
+- create an `addTodo` actionCreator with the todo as payload
+- verify that our reducer spreads the existing state
+- verify that our reducer normalizes the todo under its id
+
+---//
+
+#### Exercise 1-2 - `completeTodo`
+
+- create an `completeTodo` actionCreator with the completed todo his id as payload
+- verify that our reducer retains other todo's and does not complete them,
+- verify that our reducer sets the completed flag to true for the given todo
+
