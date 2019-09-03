@@ -498,7 +498,7 @@ const store = createStore(
 
 ---//
 
-### [Redux devtools extension](https://github.com/zalmoxisus/redux-devtools-extension)
+#### [Redux devtools extension](https://github.com/zalmoxisus/redux-devtools-extension)
 
 [🔗 Install chrome extension](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd)
 
