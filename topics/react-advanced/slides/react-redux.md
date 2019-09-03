@@ -440,9 +440,8 @@ console.log('next state', store.getState());
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-<small>
-Wrapping dispatch, monkey patching dispatch, ...
-</small>
+- Wrap dispatch
+- Monkey Patch Dispatch
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
