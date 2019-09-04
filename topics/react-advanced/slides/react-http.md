@@ -223,8 +223,8 @@ export default MyComponent;
 ### How to test code using axios?
 
 - A manual mock ([jest-mock-axios](https://www.npmjs.com/package/jest-mock-axios))
-- [nock](https://www.npmjs.com/package/nock)
 - [axios-mock-adapter](https://www.npmjs.com/package/axios-mock-adapter)
+- [nock](https://www.npmjs.com/package/nock)
 
 ---//
 
@@ -288,46 +288,6 @@ describe('users api', () => {
 
 ---//
 
-#### nock
-
-```bash
-npm i --save-dev nock
-```
-
-```js
-import nock from 'nock';
-import userApi from './users';
-
-describe('users api', () => {
-  describe('getUsers', () => {
-    test('it returns the res.data', async () => {
-      const pattyBouvier = {
-        lastName: 'Bouvier',
-        firstName: 'Patty',
-        id: 6
-      };
-
-      nock('http://localhost:3000')
-        .get('/users')
-        .reply(200, [pattyBouvier]);
-
-      const result = await userApi.getUsers();
-
-      expect(result).toEqual([pattyBouvier]);
-    });
-  });
-});
-```
-
----//
-
-#### nock ✅
-
-- it is library agnostic
-- you can provide expected response before invoking code
-
----//
-
 #### axios-mock-adapter
 
 ```bash
@@ -382,6 +342,60 @@ describe('getUsers', () => {
 - by default all api request respond with 404
 - full axios support
 
+---//
+
+#### nock
+
+```bash
+npm i --save-dev nock
+```
+
+```js
+import nock from 'nock';
+import userApi from './users';
+
+describe('users api', () => {
+  describe('getUsers', () => {
+    test('it returns the res.data', async () => {
+      const pattyBouvier = {
+        lastName: 'Bouvier',
+        firstName: 'Patty',
+        id: 6
+      };
+
+      nock('http://localhost:3000')
+        .get('/users')
+        .reply(200, [pattyBouvier]);
+
+      const result = await userApi.getUsers();
+
+      expect(result).toEqual([pattyBouvier]);
+    });
+  });
+});
+```
+
+---//
+
+#### nock ✅
+
+- it is library agnostic
+- you can provide expected response before invoking code
+- `disableNetConnect`: blocks all real http requests
+
+```js
+// jest.setup.js
+import nock from 'nock';
+
+beforeAll(() => {
+  nock.disableNetConnect();
+});
+
+afterAll(() => {
+  nock.enableNetConnect();
+});
+```
+
 ---
 
 ### Exercises
@@ -393,7 +407,7 @@ describe('getUsers', () => {
 #### Exercises - Rules
 
 - write the functions in a tdd fashion, so write tests first
-- use nock or axios-mock-adapter
+- use nock
 - make the code/tests as clean as possible
 
 ---//
