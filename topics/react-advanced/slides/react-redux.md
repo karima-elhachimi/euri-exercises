@@ -137,7 +137,7 @@ npm i --save redux@3
 
 ### [Actions](https://redux.js.org/basics/actions#actions)
 
-Actions are payloads of information that send data from your application to your store (using [`store.dispatch()`](https://redux.js.org/api/store#dispatchaction)).
+Actions are payloads of information that send data from your application to your store.
 
 ```js
 // 💡Types should typically be defined as string constants.
@@ -532,4 +532,62 @@ const store = createStore(
 ```
 // Install react bindings
 npm i --save react-redux
+```
+
+---//
+
+#### [`<Provider />`](https://react-redux.js.org/api/provider)
+
+The `Provider` makes the Redux `store` available to any nested components that have been wrapped in the `connect()` function.
+
+```jsx
+// src/js/app.jsx
+import { Provider } from 'react-redux';
+import store from './store/store';
+
+function RuntimeApp() {
+  return (
+    <Router>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Router>
+  );
+}
+```
+
+---//
+
+#### [`connect()`](https://react-redux.js.org/api/connect)
+
+The `connect()` function connects a React component to a Redux store.
+
+```js
+function connect(
+  mapStateToProps?,
+  mapDispatchToProps?,
+  mergeProps?,
+  options?)
+```
+
+---//
+
+#### [`mapStateToProps?: (state, ownProps?) => Object`](https://react-redux.js.org/api/connect#mapstatetoprops-state-ownprops-object)
+
+```jsx
+/* 
+👉 If your function is declared as taking one parameter,
+it will be called whenever the store state changes,
+and given the store state as the only parameter. 
+*/
+const mapStateToProps = state => ({ todos: state.todos });
+
+/* 
+👉 if your function is declared as taking two parameters,
+it will be called whenever the store state changes or 
+when the wrapper component receives new props
+*/
+const mapStateToProps = (state, ownProps) => ({
+  todo: state.todos[ownProps.id]
+});
 ```
