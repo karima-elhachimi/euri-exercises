@@ -2,7 +2,15 @@
 
 ## Bootcamp Manager
 
-T.B.D
+### Tom Marien
+
+- Email: <a href="mailto:tom.marien@euri.com">tom.marien@euri.com</a>
+- Email: <a href="tommarien@gmail.com">tommarien@gmail.com</a>
+- Mobile: +32 485 27 35 85
+- Training: unit testing and patterns and React state management
+- Team Lead / Coach (Full stack Javascript Projects)
+
+<img src="https://media.licdn.com/dms/image/C4E03AQF54wSvWO8zhw/profile-displayphoto-shrink_200_200/0?e=1573689600&v=beta&t=H6ig9gf_V-hqGY4i8DIMBoD7XGrUEHmUPH1JoXScHDs" width="250">
 
 ## Trainers
 
