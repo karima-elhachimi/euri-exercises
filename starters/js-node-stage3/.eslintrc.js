@@ -15,11 +15,10 @@ module.exports = {
   },
   rules: {
     // Not our taste?
-    'arrow-parens': 'off'
+    'arrow-parens': 'off',
     'no-console': 'off',
     'consistent-return': 'off',
     'no-plusplus': 'off',
-
     'linebreak-style': 'off', // Don't play nicely with Windows.
   },
 };
