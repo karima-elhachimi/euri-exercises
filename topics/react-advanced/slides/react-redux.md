@@ -591,3 +591,112 @@ const mapStateToProps = (state, ownProps) => ({
   todo: state.todos[ownProps.id]
 });
 ```
+
+---//
+
+#### [`mapDispatchToProps?: Object | (dispatch, ownProps?) => Object`](https://react-redux.js.org/api/connect#mapdispatchtoprops-object-dispatch-ownprops-object)
+
+```jsx
+/* 
+👉 Your component will receive dispatch by default, i.e., 
+when you do not supply a second parameter to connect()
+*/
+import React from 'react';
+import { connect } from 'react-redux';
+import { func, array } from 'prop-types';
+import { addTodo } from '../../store/actions/todoActions';
+
+function Todos({ todos, dispatch }) {
+  const onButtonClick = () => {
+    dispatch(addTodo({ id: todos.length + 1, title: 'My Todo' }));
+  };
+
+  return (
+    <>
+      <div style={{ backgroundColor: '#f8f9fa' }}>
+        <pre style={{ height: '20pc', overflowY: 'scroll' }}>
+          <code>{JSON.stringify(todos, undefined, 2)}</code>
+        </pre>
+      </div>
+      <button type="button" onClick={onButtonClick}>
+        Add Todo
+      </button>
+    </>
+  );
+}
+
+Todos.propTypes = {
+  dispatch: func.isRequired,
+  todos: array
+};
+
+Todos.defaultProps = {
+  todos: []
+};
+
+const mapStateToProps = state => ({ todos: Object.values(state.todos) });
+
+export default connect(mapStateToProps)(Todos);
+```
+
+---//
+
+#### [`mapDispatchToProps?: Object | (dispatch, ownProps?) => Object`](https://react-redux.js.org/api/connect#mapdispatchtoprops-object-dispatch-ownprops-object)
+
+```jsx
+/*
+👉 When mapDispatchToProps is a function taking one parameter,
+it will be given the dispatch of your store
+*/
+const mapDispatchToProps = dispatch => {
+  return {
+    // dispatching plain actions
+    increment: () => dispatch({ type: 'INCREMENT' }),
+    decrement: () => dispatch({ type: 'DECREMENT' }),
+    reset: () => dispatch({ type: 'RESET' })
+  };
+};
+
+/*
+👉 When mapDispatchToProps is a function taking two parameters,
+it will be called with dispatch as the first parameter 
+and the props passed to the wrapper component as the second parameter,
+and will be re-invoked whenever the connected component receives new props.
+*/
+const mapDispatchToProps = (dispatch, ownProps) => {
+  toggleTodo: () => dispatch(toggleTodo(ownProps.todoId));
+};
+```
+
+---//
+
+#### [`mapDispatchToProps`: Object Shorthand Form](https://react-redux.js.org/api/connect#object-shorthand-form)
+
+```jsx
+import {
+  //
+  addTodo,
+  deleteTodo,
+  toggleTodo
+} from './actionCreators';
+
+const mapDispatchToProps = {
+  addTodo,
+  deleteTodo,
+  toggleTodo
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(TodoApp);
+```
+
+```jsx
+// 🤔 internally, React-Redux calls bindActionCreators
+bindActionCreators(mapDispatchToProps, dispatch);
+```
+
+---//
+
+### React Testing Library?
