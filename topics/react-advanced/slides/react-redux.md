@@ -576,7 +576,7 @@ function connect(
 
 ```jsx
 /* 
-👉 If your function is declared as taking one parameter,
+👉 if your function is declared as taking one parameter,
 it will be called whenever the store state changes,
 and given the store state as the only parameter. 
 */
