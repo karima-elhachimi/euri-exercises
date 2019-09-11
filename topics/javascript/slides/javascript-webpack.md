@@ -839,7 +839,7 @@ module.exports = (env, args) => {
 <!-- prettier-ignore -->
 ***
 
-## Extract CSS - Next
+## Extract CSS - Replace StyleLoader
 
 ```js
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -925,7 +925,7 @@ npm i --save-dev optimize-css-assets-webpack-plugin
 ```
 
 ```js
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = (env, args) => {
   const devMode = args.mode !== 'production';
@@ -935,10 +935,9 @@ module.exports = (env, args) => {
     output: {},
     module: {},
     plugins: [
-      // ..
-      new MiniCssExtractPlugin({}),
+      // ...
       devMode ? undefined : new OptimizeCssAssetsPlugin()
-    ]
+    ].filter(Boolean)
   };
 };
 ```
