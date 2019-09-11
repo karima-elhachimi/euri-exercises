@@ -6,7 +6,7 @@ More info about this setup can be found [here](https://medium.freecodecamp.org/t
 
 ## Prerequisites
 
-- [Node 8.x](https://nodejs.org/en/) or higher
+- [Node 10.x](https://nodejs.org/en/) or higher
 - [Visual Studio Code](https://code.visualstudio.com/)
 
 ## Getting Started
