@@ -385,7 +385,7 @@ unsubscribe();
 /**
  * @typedef {object} Todo
  * @property {number} id
- * @property {string} title
+ * @property {string} name
  * @property {bool} [completed]
  */
 ```
@@ -429,7 +429,7 @@ unsubscribe();
 
 ```js
 // We don't want to repeat this every time
-const action = addTodo({ id: 3, title: 'Use Middleware' });
+const action = addTodo({ id: 3, name: 'Use Middleware' });
 
 console.log('dispatching', action);
 store.dispatch(action);
@@ -608,7 +608,7 @@ import { addTodo } from '../../store/actions/todoActions';
 
 function Todos({ todos, dispatch }) {
   const onButtonClick = () => {
-    dispatch(addTodo({ id: todos.length + 1, title: 'My Todo' }));
+    dispatch(addTodo({ id: todos.length + 1, name: 'My Todo' }));
   };
 
   return (

@@ -13,7 +13,7 @@ import { ADD_TODO, COMPLETE_TODO } from '../actionTypes';
 /**
  * @typedef {object} Todo
  * @property {number} id
- * @property {string} title
+ * @property {string} name
  * @property {bool} [completed]
  */
 
@@ -52,7 +52,6 @@ export default function todoReducer(state = {}, action) {
       const { payload: id } = action;
 
       const existingTodo = state[id];
-      if (!existingTodo) return state;
 
       return {
         ...state,
@@ -89,7 +88,7 @@ describe('todoReducer', () => {
       const initialState = {
         1: {
           id: 1,
-          title: 'You should keep me'
+          name: 'You should keep me'
         }
       };
 
@@ -100,7 +99,7 @@ describe('todoReducer', () => {
     });
 
     it('it reduces the todo under a map keyed by its id', () => {
-      const newTodo = { id: 2, title: 'Complete this exercise' };
+      const newTodo = { id: 2, name: 'Complete this exercise' };
 
       const newState = todoReducer(undefined, addTodo(newTodo));
 
@@ -113,11 +112,11 @@ describe('todoReducer', () => {
       const initialState = {
         1: {
           id: 1,
-          title: 'You should keep me'
+          name: 'You should keep me'
         },
         2: {
           id: 2,
-          title: 'Complete this exercise'
+          name: 'Complete this exercise'
         }
       };
 
@@ -158,8 +157,8 @@ console.log(store.getState());
 const unsubscribe = store.subscribe(() => console.log(store.getState()));
 
 // Dispatch some actions
-store.dispatch(addTodo({ id: 1, title: 'Wash dishes' }));
-store.dispatch(addTodo({ id: 2, title: 'Iron clothes' }));
+store.dispatch(addTodo({ id: 1, name: 'Wash dishes' }));
+store.dispatch(addTodo({ id: 2, name: 'Iron clothes' }));
 
 store.dispatch(completeTodo(1));
 
