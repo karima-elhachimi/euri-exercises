@@ -4,7 +4,7 @@ This is a starter project to get up and running with webpack, ES6+ and Babel qui
 
 ## Prerequisites
 
-- [Node 8.x](https://nodejs.org/en/) or higher
+- [Node 10.x](https://nodejs.org/en/) or higher
 - [Visual Studio Code](https://code.visualstudio.com/)
 
 ## Getting Started

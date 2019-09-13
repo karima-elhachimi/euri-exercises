@@ -131,17 +131,13 @@ export default ThemedApp;
 ```bash
 # Install redux
 npm i --save redux@3
-
-# Later on you probably want react bindings & developer tools
-npm i react-redux
-npm i --save-dev redux-devtools-extension
 ```
 
 ---
 
 ### [Actions](https://redux.js.org/basics/actions#actions)
 
-Actions are payloads of information that send data from your application to your store (using [`store.dispatch()`](https://redux.js.org/api/store#dispatchaction)).
+Actions are payloads of information that send data from your application to your store.
 
 ```js
 // 💡Types should typically be defined as string constants.
@@ -380,3 +376,327 @@ store.dispatch({ type: INCREMENT_COUNTER });
 // Stop listening to state updates
 unsubscribe();
 ```
+
+---
+
+### Exercise 1 - Todo's
+
+```js
+/**
+ * @typedef {object} Todo
+ * @property {number} id
+ * @property {string} name
+ * @property {bool} [completed]
+ */
+```
+
+- verify that our `todoReducer` has an initialState of `{}`
+
+---//
+
+#### Exercise 1-2 - `addTodo`
+
+```js
+// state design
+{
+  [id]: todo,
+}
+```
+
+- create an `addTodo` actionCreator with the todo as payload
+- verify that our reducer spreads the existing state
+- verify that our reducer normalizes the todo under its id
+
+---//
+
+#### Exercise 1-2 - `completeTodo`
+
+- create an `completeTodo` actionCreator with the completed todo his id as payload
+- verify that our reducer retains other todo's and does not complete them,
+- verify that our reducer sets the completed flag to true for the given todo
+
+---
+
+### [Middleware](https://redux.js.org/advanced/middleware)
+
+> It provides a third-party extension point between dispatching an action, and the moment it reaches the reducer.
+
+---//
+
+#### Middleware - problem
+
+🤔 What if we wanted to log every dispatched action and the state afterwards?
+
+```js
+// We don't want to repeat this every time
+const action = addTodo({ id: 3, name: 'Use Middleware' });
+
+console.log('dispatching', action);
+store.dispatch(action);
+console.log('next state', store.getState());
+```
+
+❓Any ideas?
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+- Wrap dispatch
+- Monkey Patch Dispatch
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+---//
+
+#### Middleware - solution
+
+```js
+// Redux middleware contract,
+// es6 arrow function makes these look prettier
+const middleware = store => next => action => {};
+
+// equivalent
+function middleware(store) {
+  return function wrapDispatch(next) {
+    return function dispatch(action) {};
+  };
+}
+```
+
+```js
+/**
+ * Logs all actions and states after they are dispatched.
+ */
+const logMiddleWare = store => next => action => {
+  console.info('dispatching', action);
+  const result = next(action);
+  console.log('next state', store.getState());
+  return result;
+};
+```
+
+---//
+
+#### [Middleware - `applyMiddleware`](https://redux.js.org/api/applymiddleware)
+
+```js
+import { combineReducers, createStore, applyMiddleware } from 'redux';
+import todoReducer from './reducers/todoReducer';
+
+const reducer = combineReducers({
+  todos: todoReducer
+});
+
+const store = createStore(
+  // Unchanged
+  reducer,
+  // 👉 Here we apply the middleware
+  // only the last middleware will be passed dispatch as next
+  applyMiddleware(logMiddleWare)
+);
+```
+
+---//
+
+#### [Redux devtools extension](https://github.com/zalmoxisus/redux-devtools-extension)
+
+[🔗 Install chrome extension](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd)
+
+```
+npm i --save redux-devtools-extension
+```
+
+```js
+import { combineReducers, createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction';
+import todoReducer from './reducers/todoReducer';
+
+const reducer = combineReducers({
+  todos: todoReducer
+});
+
+const store = createStore(
+  //
+  reducer,
+  composeWithDevTools(applyMiddleware(logMiddleWare))
+);
+```
+
+[📖 Using Redux DevTools in production](https://medium.com/@zalmoxis/using-redux-devtools-in-production-4c5b56c5600f)
+
+---
+
+### [React-Redux](https://react-redux.js.org)
+
+> Official React bindings for Redux
+
+```
+// Install react bindings
+npm i --save react-redux
+```
+
+---//
+
+#### [`<Provider />`](https://react-redux.js.org/api/provider)
+
+The `Provider` makes the Redux `store` available to any nested components that have been wrapped in the `connect()` function.
+
+```jsx
+// src/js/app.jsx
+import { Provider } from 'react-redux';
+import store from './store/store';
+
+function RuntimeApp() {
+  return (
+    <Router>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Router>
+  );
+}
+```
+
+---//
+
+#### [`connect()`](https://react-redux.js.org/api/connect)
+
+The `connect()` function connects a React component to a Redux store.
+
+```js
+function connect(
+  mapStateToProps?,
+  mapDispatchToProps?,
+  mergeProps?,
+  options?)
+```
+
+---//
+
+#### [`mapStateToProps?: (state, ownProps?) => Object`](https://react-redux.js.org/api/connect#mapstatetoprops-state-ownprops-object)
+
+```jsx
+/* 
+👉 if your function is declared as taking one parameter,
+it will be called whenever the store state changes,
+and given the store state as the only parameter. 
+*/
+const mapStateToProps = state => ({ todos: state.todos });
+
+/* 
+👉 if your function is declared as taking two parameters,
+it will be called whenever the store state changes or 
+when the wrapper component receives new props
+*/
+const mapStateToProps = (state, ownProps) => ({
+  todo: state.todos[ownProps.id]
+});
+```
+
+---//
+
+#### [`mapDispatchToProps?: Object | (dispatch, ownProps?) => Object`](https://react-redux.js.org/api/connect#mapdispatchtoprops-object-dispatch-ownprops-object)
+
+```jsx
+/* 
+👉 Your component will receive dispatch by default, i.e., 
+when you do not supply a second parameter to connect()
+*/
+import React from 'react';
+import { connect } from 'react-redux';
+import { func, array } from 'prop-types';
+import { addTodo } from '../../store/actions/todoActions';
+
+function Todos({ todos, dispatch }) {
+  const onButtonClick = () => {
+    dispatch(addTodo({ id: todos.length + 1, name: 'My Todo' }));
+  };
+
+  return (
+    <>
+      <div style={{ backgroundColor: '#f8f9fa' }}>
+        <pre style={{ height: '20pc', overflowY: 'scroll' }}>
+          <code>{JSON.stringify(todos, undefined, 2)}</code>
+        </pre>
+      </div>
+      <button type="button" onClick={onButtonClick}>
+        Add Todo
+      </button>
+    </>
+  );
+}
+
+Todos.propTypes = {
+  dispatch: func.isRequired,
+  todos: array
+};
+
+Todos.defaultProps = {
+  todos: []
+};
+
+const mapStateToProps = state => ({ todos: Object.values(state.todos) });
+
+export default connect(mapStateToProps)(Todos);
+```
+
+---//
+
+#### [`mapDispatchToProps?: Object | (dispatch, ownProps?) => Object`](https://react-redux.js.org/api/connect#mapdispatchtoprops-object-dispatch-ownprops-object)
+
+```jsx
+/*
+👉 When mapDispatchToProps is a function taking one parameter,
+it will be given the dispatch of your store
+*/
+const mapDispatchToProps = dispatch => {
+  return {
+    // dispatching plain actions
+    increment: () => dispatch({ type: 'INCREMENT' }),
+    decrement: () => dispatch({ type: 'DECREMENT' }),
+    reset: () => dispatch({ type: 'RESET' })
+  };
+};
+
+/*
+👉 When mapDispatchToProps is a function taking two parameters,
+it will be called with dispatch as the first parameter 
+and the props passed to the wrapper component as the second parameter,
+and will be re-invoked whenever the connected component receives new props.
+*/
+const mapDispatchToProps = (dispatch, ownProps) => {
+  toggleTodo: () => dispatch(toggleTodo(ownProps.todoId));
+};
+```
+
+---//
+
+#### [`mapDispatchToProps`: Object Shorthand Form](https://react-redux.js.org/api/connect#object-shorthand-form)
+
+```jsx
+import {
+  //
+  addTodo,
+  deleteTodo,
+  toggleTodo
+} from './actionCreators';
+
+const mapDispatchToProps = {
+  addTodo,
+  deleteTodo,
+  toggleTodo
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(TodoApp);
+```
+
+```jsx
+// 🤔 internally, React-Redux calls bindActionCreators
+bindActionCreators(mapDispatchToProps, dispatch);
+```
+
+---//
+
+### React Testing Library?

@@ -3,7 +3,7 @@
 # General
 
 - [x] [Agenda](./agenda.md)
-- [ ] [Team](./team.md)
+- [x] [Team](./team.md)
 - [x] [Licenses](./licenses.md)
 - [x] [Starters](./starters/readme.md)
 

@@ -1,6 +1,6 @@
 module.exports = {
-  extends: ['airbnb', 'plugin:jest/recommended'],
-  plugins: ['import', 'react-hooks'],
+  extends: ['airbnb', 'airbnb/hooks', 'plugin:jest/recommended'],
+  plugins: ['import'],
   parser: 'babel-eslint',
   parserOptions: {
     sourceType: 'module',
@@ -22,8 +22,6 @@ module.exports = {
     'import/no-named-as-default': 'off',
     'react/forbid-prop-types': 'off',
     'jest/no-focused-tests': 'error',
-    'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
     'jsx-a11y/label-has-associated-control': [ // airbnb require both nesting and htmlFor
       'error',
       {

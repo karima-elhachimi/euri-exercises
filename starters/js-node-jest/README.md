@@ -6,7 +6,7 @@ More info about this setup can be found [here]( https://medium.freecodecamp.org/
 
 ## Prerequisites
 
-- [Node 8.x](https://nodejs.org/en/) or higher
+- [Node 10.x](https://nodejs.org/en/) or higher
 - [Yarn Package Manager](https://yarnpkg.com/en/) (an alternative to npm)
 - [Visual Studio Code](https://code.visualstudio.com/)
 
