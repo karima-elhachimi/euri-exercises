@@ -12,4 +12,4 @@
 - [X] [Introduction](./topics/intro/README.md)
 - [ ] [Javascript](./topics/javascript/README.md)
 - [ ] [Styling & Layout](./topics/styling-layout/README.md)
-- [ ] [React](./topics/react/README.md)
+- [x] [React](./topics/react/README.md)
