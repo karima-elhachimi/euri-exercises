@@ -1,8 +1,11 @@
 # Frontend Bootcamp 2019 Q3
 
+# Agenda
+
+[Google Calendar: Euricom React Bootcamp](https://calendar.google.com/calendar?cid=YjhjaWlpcG1ya2VwbmJkdmJpZ2NuNW5kcmdAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ)
+
 # General
 
-- [x] [Agenda](./agenda.md)
 - [x] [Team](./team.md)
 - [x] [Licenses](./licenses.md)
 - [x] [Starters](./starters/readme.md)

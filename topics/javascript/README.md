@@ -11,7 +11,7 @@ Fundamentals
 
 - [x] [Fundamentals](./slides/javascript-fundamentals.md)
 - [x] [Functional Javascript](./slides/javascript-functional.md)
-- [ ] [Module Systems](./slides/javascript-modules.md)
+- [x] [Module Systems](./slides/javascript-modules.md)
 
 ES6 and beyond
 
@@ -20,7 +20,7 @@ ES6 and beyond
 
 Unit tests
 
-- [ ] [Unit tests - fundamentals](./slides/javascript-unit-testing.md)
+- [x] [Unit tests - fundamentals](./slides/javascript-unit-testing.md)
 - [x] [Unit tests - kata](./slides/javascript-kata.md)
 
 ### Slides
