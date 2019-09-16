@@ -260,26 +260,26 @@ git status
 
 ---//
 
-## Checkout & pull
+## Pull
 
 Get back the latest changes
 
 ```bash
-# Update local repository
-git fetch
-
-# get changes into working directory
-git checkout HEAD
-git checkout HEAD~1  # 1 versions back
-
-# pull == fetch & checkout
+# pull merge
 git pull
+
+# pull rebase
 git pull --rebase
 ```
 
 ---//
 
 ## Checkout
+
+```bash
+# get previous version
+git checkout master~3
+```
 
 <img src="./images/git-checkout.png" width="800px"/>
 
