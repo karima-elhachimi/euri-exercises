@@ -1,6 +1,6 @@
 ---
 title: HTTP / REST
-transition: "fade"
+transition: 'fade'
 verticalSeparator: ---//
 ---
 
@@ -524,14 +524,8 @@ body contains the error details
 # Exercices
 
 ```bash
-# Ensure you have checked out the bootcamp source
-git clone git@github.com:Euricom/training-bootcamp-frontend-2019Q3.git
-
-# Navigate to the api folder and install deps
-npm install
-
-# Run our fake api server
-npm run serve:user-api
+# open euri-test-api
+open https://euri-test-api-phflgvcuay.now.sh
 ```
 
 > Use [PostMan](https://www.getpostman.com/downloads/) & open the [API](https://euri-test-api-phflgvcuay.now.sh) to complete the following exercises.
@@ -542,7 +536,7 @@ npm run serve:user-api
 
 ```js
 - Get a list of all users ordered by
-  lastName desc 
+  lastName desc
 - Get a paginated list of users where the
   pageSize is 5 and get the second page. As a
   bonus find out how the api communicates the
