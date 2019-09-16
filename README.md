@@ -12,7 +12,7 @@
 
 # Content
 
-- [X] [Introduction](./topics/intro/README.md)
-- [ ] [Javascript](./topics/javascript/README.md)
-- [ ] [Styling & Layout](./topics/styling-layout/README.md)
+- [x] [Introduction](./topics/intro/README.md)
+- [x] [Javascript](./topics/javascript/README.md)
+- [x] [Styling & Layout](./topics/styling-layout/README.md)
 - [x] [React](./topics/react/README.md)
