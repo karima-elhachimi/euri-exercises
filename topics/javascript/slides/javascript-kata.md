@@ -5,6 +5,15 @@ separator: ^---$
 verticalSeparator: ^<!--vertical-->$
 ---
 
+# TDD Kata's
+
+<img src="./images/tdd-mantra.gif" width="400px" /><br>
+<small>
+Copyright (c) 2019 Euricom nv.
+</small>
+
+---
+
 # Roman Numerals
 
 📖 The Romans were a clever bunch. They conquered most of Europe and ruled it for hundreds of years. They invented concrete and straight roads and even bikinis.
