@@ -129,7 +129,8 @@ Copyright (c) 2017-2019 Euricom nv.
 - 2017: Most browsers implementing > 95% of ES2015
   <!-- prettier-ignore -->
 
----
+<!-- prettier-ignore -->
+***
 
 ## Today
 
@@ -297,7 +298,7 @@ In common with browser:
 
 ---
 
-# Scope and Closure
+# Scope
 
 > Where to look for things.
 
@@ -322,10 +323,10 @@ Do you know the answer?
     }
 
     bar();
-    name;           // ?????
-    foo;            // ?????
-    bam;            // ?????
-    baz();          // ?????
+    console.log('name:', name);   // ?????
+    console.log('foo:', foo);     // ?????
+    console.log('bam:', bam);     // ?????
+    baz();                        // ?????
 ```
 
 <!-- prettier-ignore -->
@@ -347,10 +348,11 @@ Answer!
     }
 
     bar();
-    name;           // undefined
-    foo;            // 'bar'
-    bam;            // 'yay'
-    baz();          // Uncaught ReferenceError: baz is not defined
+
+    console.log('name:', name);   // undefined
+    console.log('foo:', foo);     // 'bar'
+    console.log('bam:', bam);     // 'yay'
+    baz();                        // Uncaught ReferenceError: baz is not defined
 ```
 
 > The answer is defined by the hoisting behavior of Javascript.
@@ -376,38 +378,15 @@ Result
 ```javascript
 var a = undefined:  // compiler hoised these
 var b = undefined:  // compiler hoised these
-a;              // undefined
-b;              // undefined
+a;                  // undefined
+b;                  // undefined
 a = b;
 b = 2;
-b;              // 2
-a;              // undefined
+b;                  // 2
+a;                  // undefined
 ```
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
-
-<!-- prettier-ignore -->
-***
-
-### Strict Mode
-
-The syntax, for declaring [strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode), was designed to be compatible with older versions of JavaScript.
-
-```
-"use strict";
-var a = '1234';
-console.log(b);         // error
-```
-
-Not Allowed to:
-
-- Using a variable/object without declaring it
-- Deleting a variable
-- With statement
-- Keywords: interface, private, yield, ...
-- ...
-
-**_Guideline_**: always 'use strict' when using Javascript
 
 <!-- prettier-ignore -->
 ***
@@ -419,67 +398,20 @@ var foo = 2;
 if (true) {
   var bar = 1;
 }
-console.log(foo + bar); // output: throws error, 2, 3 of undefined
-```
+// output?
+// throws error, 2, 3 of undefined
+console.log(foo + bar);
 
-```js
-for(var i = 0; i < 10; i++) {
-    ...
+for (var i = 0; i < 10; i++) {
+  // noop
 }
-console.log(i)           // output: throws error, 10, 11, undefined
+
+// output?
+// throws error, 10, 11, undefined
+console.log(i);
 ```
 
 > No block scoping when using var!
-
-<!-- prettier-ignore -->
-***
-
-## Use `let` and `const`
-
-```js
-let foo = 2
-if (true) {
-    let bar = 1
-}
-for(let i = 0 i < 10 i++) {
-    ...
-}
-console.log(foo + bar)   // error
-console.log(i)           // error
-```
-
-In ES6+/Typescript always prefer `const` and `let` over `var`.
-
-<!-- prettier-ignore -->
-***
-
-## Declared / undeclared
-
-What if I use it before it is declared?
-
-```javascript
-console.log(name); // WHAT HAPPENS HERE?
-var name = 'marc';
-```
-
-Result
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-```javascript
-console.log(name); // undefined
-name = 'marc';
-```
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-```javascript
-'use strict';
-console.log(name); // Error!
-name = 'marc';
-```
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
 
 <!-- prettier-ignore -->
 ***
@@ -495,6 +427,42 @@ console.log(a); // error, 0, 1?
 ```
 
 > Remember our for loop (BlockScoping slide 5) ;)
+
+<!-- prettier-ignore -->
+***
+
+## Use `let`
+
+```js
+let foo = 2;
+if (true) {
+  let bar = 1;
+}
+for (let i = 0; i < 10; i++) {
+  // noop
+}
+console.log(foo + bar); // error
+console.log(i); // error
+```
+
+<!-- prettier-ignore -->
+***
+
+## Use `const`
+
+```js
+const foo = 2;
+if (true) {
+  const bar = 1;
+}
+for (let i = 0; i < 10; i++) {
+  // noop
+}
+console.log(foo + bar); // error
+console.log(i); // error
+```
+
+> In ES6+/Typescript always prefer `const` and `let` over `var`.
 
 <!-- prettier-ignore -->
 ***
@@ -643,9 +611,192 @@ foo();
 <!-- prettier-ignore -->
 ***
 
-## Closure
+# Exercise
 
-A Closure is when a function "remember" its lexical scope even when the function is executed outside that lexical scope.
+> Build a calculator (add, sub) in javascript and use it the browser
+
+- Use index.html, main.js, calc.js
+
+```html
+<input type="text" id="val1" />
+<input type="text" id="val2" />
+<button id="myBtn">Add</button>
+```
+
+```javascript
+// response to button click
+document.getElementById("myBtn").addEventListener("click", function() {
+    const val1 = document.getElementById('val1').value;
+    const val2 = document.getElementById('val2').value;
+    const result = calc.sum(val1, val2);
+    console.log(result);
+}
+```
+
+<!-- prettier-ignore -->
+***
+
+# IIFE
+
+Immediately-Invoked Function Expression (IIFE)
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+```js
+(function() {
+  var a = 0;
+  console.log(a);
+})();
+```
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+<!-- prettier-ignore -->
+***
+
+# IIFE
+
+Immediately-Invoked Function Expression (IIFE)
+
+```javascript
+function doSomething() {
+  // ...
+  // simulate block scoping
+  (function() {
+    var a = 0;
+    // ...
+  })();
+  // ...
+}
+```
+
+Used to isolate from global scope
+
+```javascript
+
+var myModule = (function($, global) {
+    var myVar = '';
+    function doThis() {
+        ...
+    }
+})(jquery, window);
+```
+
+<!-- prettier-ignore -->
+***
+
+### The Revealing Module Pattern
+
+```javascript
+var myRevealingModule = (function() {
+  var privateVar = 'Ben Cherry';
+
+  function privateFunction() {
+    console.log('Name:' + privateVar);
+  }
+
+  function publicSetName(strName) {
+    privateVar = strName;
+  }
+
+  function publicGetName() {
+    privateFunction();
+  }
+
+  return {
+    setName: publicSetName,
+    getName: publicGetName
+  };
+})();
+
+myRevealingModule.setName('Paul Kinlan');
+```
+
+See also [JavaScript Design Patterns](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
+
+<!-- prettier-ignore -->
+***
+
+# Exercise
+
+> Refactor the calculator with an IIFE and isolate the global state
+
+<!-- prettier-ignore -->
+***
+
+### Javascript modules systems
+
+Modules systems
+
+- IIFE (Revealing Module Pattern)
+- CommonJS (Node module pattern)
+- ES Modules (ECMAScript Modules)
+
+Outdated
+
+- AMD (Asynchronous Module Definition)
+- UMD (Combination of IIFE, CommonJS, AMD)
+
+<!-- prettier-ignore -->
+***
+
+## CommonJS Module
+
+IIFE
+
+```js
+// myLib.js
+const myLib = (function() {
+  return {
+    setName: function() {}
+  };
+})();
+
+// main.js
+myLib.setName();
+```
+
+CommonJS (Used by nodeJS)
+
+```js
+// myLib.cjs.js
+module.exports = {
+  setName: function() {}
+};
+
+// main.cjs.js
+const myLib = require('./myLib.cjs.js');
+myLib.setName();
+```
+
+<!-- prettier-ignore -->
+***
+
+# Exercise
+
+> Create the calculator for nodeJS
+
+- Use commonJS for the calculator module
+- Access the calculator via command line
+- User `process.argv` to get arguments
+
+```bash
+node main.js 1 2
+```
+
+---
+
+# Closure
+
+<!-- prettier-ignore -->
+***
+
+## A Closure is when a function "remember" its lexical scope even when the function is executed outside that lexical scope.
+
+<!-- prettier-ignore -->
+***
+
+## Closure - Sample
 
 ```javascript
 function foo() {
@@ -720,117 +871,9 @@ How to fix this?
 <!-- prettier-ignore -->
 ***
 
-### IIFE
+## Closure - Exercise 2
 
-Immediately-Invoked Function Expression (IIFE)
-
-```javascript
-function doSomething() {
-  // ...
-  // simulate block scoping
-  (function() {
-    var a = 0;
-    // ...
-  })();
-  // ...
-}
-```
-
-```javascript
-Is used to isolate from global scope
-
-var myModule = (function($, global) {
-    var myVar = '';
-    function doThis() {
-        ...
-    }
-})(jquery, window);
-```
-
-<!-- prettier-ignore -->
-***
-
-### The Revealing Module Pattern
-
-```javascript
-var myRevealingModule = (function() {
-  var privateVar = 'Ben Cherry';
-
-  function privateFunction() {
-    console.log('Name:' + privateVar);
-  }
-
-  function publicSetName(strName) {
-    privateVar = strName;
-  }
-
-  function publicGetName() {
-    privateFunction();
-  }
-
-  return {
-    setName: publicSetName,
-    getName: publicGetName,
-  };
-})();
-
-myRevealingModule.setName('Paul Kinlan');
-```
-
-See also [JavaScript Design Patterns](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
-
-<!-- prettier-ignore -->
-***
-
-### Javascript modules systems
-
-- IIFE (Revealing Module Pattern)
-- CommonJS (Node module pattern)
-- AMD (Asynchronous Module Definition)
-- UMD (Combination of IIFE, CommonJS, AMD)
-- ES Modules (ECMAScript Modules)
-
-More on this later!
-
-<!-- prettier-ignore -->
-***
-
-# Exercise
-
-> Build a calculator module and use it the browser
-
-- Use index.html, main.js & calc.js
-- Isolate the calculator with an iife
-
-<!-- prettier-ignore -->
-***
-
-- HTML Tips
-
-```html
-<input type="text" id="val1" />
-<input type="text" id="val2" />
-<button id="myBtn">Add</button>
-```
-
-```javascript
-// response to button click
-document.getElementById("myBtn").addEventListener("click", function() {
-    const val1 = document.getElementById('val1').value;
-    const val2 = document.getElementById('val2').value;
-    const result = calc.sum(val1, val2);
-    console.log(result);
-}
-```
-
-> Refactor the calculator and use it in nodeJS
-
-- Use commonJS or UMD for the calculator module
-- Access the calculator via command line
-
-```bash
-node main.js 1 2
-```
+Javascript Scope and closures
 
 ---
 
@@ -911,7 +954,7 @@ const o1 = {
   bar: 'bar1',
   foo: function() {
     console.log(this.bar);
-  },
+  }
 };
 
 const o2 = { bar: 'bar2', foo: o1.foo };
@@ -993,9 +1036,9 @@ const car = {
       function() {
         console.log(this.name + ' started');
       }.bind(this),
-      1000,
+      1000
     );
-  },
+  }
 };
 
 car.start(); // output: Bmw started
@@ -1073,8 +1116,8 @@ const obj = {
     fullname: 'Aurelio De Rosa',
     getFullname: function() {
       return this.fullname;
-    },
-  },
+    }
+  }
 };
 
 const test = obj.prop.getFullname;
@@ -1098,7 +1141,8 @@ Don't change the obj!
 To create the simplest new object in JavaScript, you can use Object.create:
 
 ```javascript
-var person = Object.create(null); // this creates an empty objects
+// this creates an empty objects
+var person = Object.create(null);
 ```
 
 In JavaScript, objects are pairs of keys and values
@@ -1133,7 +1177,8 @@ const peter = Object.create(dev);
 console.log(peter.role); // 'dev'
 peter.code(); // 'writing code'
 
-console.log(Object.getPrototypeOf(peter)); // returns the dev object
+// returns the dev object
+console.log(Object.getPrototypeOf(peter));
 ```
 
 <!-- prettier-ignore -->
@@ -1143,11 +1188,12 @@ console.log(Object.getPrototypeOf(peter)); // returns the dev object
 
 `__proto__` points the actual object that is used in the lookup chain to resolve properties, methods, etc.
 
+<!-- prettier-ignore -->
 ```javascript
-console.log(peter.__proto__); // undefined or points to Object ?
+// undefined or points to Object ?
+console.log(peter.__proto__);
 
-const isSame = Object.getPrototypeOf(peter) === peter.__proto__;
-console.log(isSame); // true or false ?
+Object.getPrototypeOf(peter) === peter.__proto__
 ```
 
 <!-- prettier-ignore -->
@@ -1160,7 +1206,7 @@ JavaScript provides a literal syntax for creating an object and assigning proper
 ```javascript
 const person = {
   firstName: 'Paul',
-  lastName: 'Irish',
+  lastName: 'Irish'
 };
 ```
 
@@ -1196,7 +1242,8 @@ function Person(name) {
 const person = new Person('Paul');
 ```
 
----
+<!-- prettier-ignore -->
+***
 
 ## Prototype Linking
 
@@ -1278,6 +1325,46 @@ var Person = (function() {
   };
   return Person;
 })();
+```
+
+<!-- prettier-ignore -->
+***
+
+## Exercise 1
+
+```js
+// create an animal object that implements eat() function.
+const animal = ...
+
+// create a rabbit object that prototypal inherits from animal and add a jump() function.
+const rabit = ...
+```
+
+- Use Object.create
+- Use Constructor function
+- Use a class
+
+<!-- prettier-ignore -->
+***
+
+## Exercise 2
+
+Create a for each function
+
+```js
+// Step 1
+myForEach([0, 1, 2], function(value, index) {
+  console.log(value, this[index] === value /* should be true */);
+});
+
+function myForEach(arr, callback) {
+  // implement me
+}
+
+// Step 2 - Make this work
+[0, 1, 2].myForEach(function(value) {
+  console.log(value);
+});
 ```
 
 ---

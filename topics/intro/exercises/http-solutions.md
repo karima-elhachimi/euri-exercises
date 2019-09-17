@@ -1,14 +1,14 @@
 # HTTP/REST solutions
 
 ```bash
-# Get a list of all users ordered by lastName desc 
-GET https://euri-test-api-phflgvcuay.now.sh/api/users/1003?sort=lastName-
+# Get a list of all users ordered by lastName desc
+GET https://euri-test-api-phflgvcuay.now.sh/api/users/1003?sort=-lastName
 ```
 
 ```bash
-# Get a paginated list of users where the pageSize is 5 and get the 
+# Get a paginated list of users where the pageSize is 5 and get the
 # second page. As a bonus find out how the api communicates the
-# total amount of users 
+# total amount of users
 GET https://euri-test-api-phflgvcuay.now.sh/api/users?page=1&pageSize=3
 ```
 
@@ -19,7 +19,7 @@ GET https://euri-test-api-phflgvcuay.now.sh/api/users/1003
 
 ```bash
 # Create a new user with the data of yourself
-POST https://euri-test-api-phflgvcuay.now.sh/api/users 
+POST https://euri-test-api-phflgvcuay.now.sh/api/users
 Content-Type: application/json
 
 {
@@ -32,7 +32,7 @@ Content-Type: application/json
 
 ```bash
 # Remove yourself again
-DELETE https://euri-test-api-phflgvcuay.now.sh/api/users/[yourId] 
+DELETE https://euri-test-api-phflgvcuay.now.sh/api/users/[yourId]
 ```
 
 ```bash

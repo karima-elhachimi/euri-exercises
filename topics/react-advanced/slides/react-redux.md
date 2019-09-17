@@ -714,7 +714,7 @@ import reducer from '../src/js/store/reducers';
 export function renderWithRedux(ui, { initialState = {}, store = createStore(reducer, initialState) } = {}) {
   return {
     ...renderRtl(ui, {
-      wrapper: () => <Provider store={store}>{ui}</Provider>
+      wrapper: props => <Provider {...props} store={store} />
     }),
     // adding `store` to the returned utilities to allow us
     // to reference it in our tests (just try to avoid using
@@ -722,4 +722,47 @@ export function renderWithRedux(ui, { initialState = {}, store = createStore(red
     store
   };
 }
+```
+
+---//
+
+### Exercise 2: Todos Module
+
+```html
+<div class="container-fluid">
+  <div class="row">
+    <div class="todos col-4">
+      <h1>Todos</h1>
+      <form>
+        <input type="text" aria-label="newTodoName" class="form-control" placeholder="Add todo" />
+      </form>
+      <hr />
+      <ul class="list-unstyled todos__list">
+        <li class="todos__list-item">
+          <div class="form-check">
+            <label class="form-check-label"
+              ><input type="checkbox" class="form-check-input" value="" />Take out the trash</label
+            >
+          </div>
+        </li>
+        <li class="todos__list-item">
+          <div class="form-check">
+            <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" />Buy bread</label>
+          </div>
+        </li>
+        <li class="todos__list-item">
+          <div class="form-check">
+            <label class="form-check-label"
+              ><input type="checkbox" class="form-check-input" value="" />Teach penguins to fly</label
+            >
+          </div>
+        </li>
+      </ul>
+      <hr />
+      <div class="todos__footer">
+        <strong><span>3</span></strong> items remaining
+      </div>
+    </div>
+  </div>
+</div>
 ```

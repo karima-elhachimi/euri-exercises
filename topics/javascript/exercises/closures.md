@@ -1,15 +1,14 @@
-
-# Javascript Function Problems
+# Javascript Scope and closures
 
 ## What is x?
 
-	function funkey(o) {
-		o = null;
-	}
+    function funkey(o) {
+    	o = null;
+    }
 
-	var x = [];
-	funkey(x);
-	alert(x);
+    var x = [];
+    funkey(x);
+    alert(x);
 
     // what is x?
     a. null
@@ -17,7 +16,7 @@
     c. undefined
     d. throw
 
-<img src="./questions-answers.png" width="100"> Answer:
+<img src="./solution.jpeg" width="300">
 
     a. null
     b. []        <--
@@ -42,7 +41,7 @@
     c. undefined
     d. throw
 
-<img src="./questions-answers.png" width="100"> Answer:
+<img src="./solution.jpeg" width="300">
 
     a. 1    <--
     b. 2
@@ -53,7 +52,7 @@
 
     identify(3)  // 3
 
-<img src="./questions-answers.png" width="100"> Answer:
+<img src="./solution.jpeg" width="300">
 
     function identity(x) {
         return x;
@@ -69,7 +68,7 @@
     add(3, 4)   // 7
     mul(3, 4)   // 12
 
-<img src="./questions-answers.png" width="100"> Answer:
+<img src="./solution.jpeg" width="300">
 
     function add(x, y) {
         return x + y;
@@ -84,7 +83,7 @@
     idf = identityf(3);
     idf();  // 3
 
-<img src="./questions-answers.png" width="100"> Answer:
+<img src="./solution.jpeg" width="300">
 
     function identityf(arg) {
         return function() {
@@ -96,7 +95,7 @@
 
     addf(3)(4)  // 7
 
-<img src="./questions-answers.png" width="100"> Answer:
+<img src="./solution.jpeg" width="300">
 
     function addf(x) {
         return function(y) {
@@ -110,7 +109,7 @@
     addf(3)(4)           // 7
     applyf(mul)(5)(6)    // 30
 
-<img src="./questions-answers.png" width="100"> Answer:
+<img src="./solution.jpeg" width="300">
 
     function applyf(fn) {
         return function(x) {
@@ -126,7 +125,7 @@
     add3(4)             // 7
     curry(mul, 5)(6)    // 30
 
-<img src="./questions-answers.png" width="100"> Answer:
+<img src="./solution.jpeg" width="300">
 
     function curry(fn, x) {
         return function(y) {
@@ -139,7 +138,7 @@
     inc(5)          // 6
     inc(inc(5))     // 7
 
-<img src="./questions-answers.png" width="100"> Answer:
+<img src="./solution.jpeg" width="300">
 
     inc = addf(1);
     inc = applyf(add)(1);
@@ -150,7 +149,7 @@
     Number.prototype.add = methodize(add);
     (3).add(4)      // 7
 
-<img src="./questions-answers.png" width="100"> Answer:
+<img src="./solution.jpeg" width="300">
 
     function methodize(fn) {
         return function(y) {
@@ -162,7 +161,7 @@
 
     demethodize(Number.prototype.add)(5, 6) // 11
 
-<img src="./questions-answers.png" width="100"> Answer:
+<img src="./solution.jpeg" width="300">
 
     function demethodize(fn) {
         return function(that, y) {
@@ -177,7 +176,7 @@
     var square = twice(mul);
     square(11)  // 121
 
-<img src="./questions-answers.png" width="100"> Answer:
+<img src="./solution.jpeg" width="300">
 
     function twice(fn) {
         return function(x) {
@@ -185,12 +184,11 @@
         }
     }
 
-
 ## Write a function 'compose' that takes two unary functions and return a unary function that calls them both.
 
     compose(double, square)(3)     // 36
 
-<img src="./questions-answers.png" width="100"> Answer:
+<img src="./solution.jpeg" width="300">
 
     function compose(fn1,fn2) {
         return function(x) {
@@ -202,7 +200,7 @@
 
     composeb(add, mul)(2,3,5);      // 25
 
-<img src="./questions-answers.png" width="100"> Answer:
+<img src="./solution.jpeg" width="300">
 
     function composeb(fn1, fn2) {
         return function(x,y,z) {
@@ -216,7 +214,7 @@
     add_once(3, 4)  // 7
     add_once(3, 4)  // throw;
 
-<img src="./questions-answers.png" width="100"> Answer:
+<img src="./solution.jpeg" width="300">
 
     function once(fn) {
         return function(x, y) {
@@ -232,7 +230,7 @@
     counter.inc();  // 11
     counter.dec();  // 10
 
-<img src="./questions-answers.png" width="100"> Answer:
+<img src="./solution.jpeg" width="300">
 
     function counterf(x) {
         return {
@@ -256,7 +254,7 @@
     temp.revoke();
     temp.invoke(8);     // throw;
 
-<img src="./questions-answers.png" width="100"> Answer:
+<img src="./solution.jpeg" width="300">
 
     function revocable(fn) {
         return {
