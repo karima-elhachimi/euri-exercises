@@ -525,10 +525,10 @@ body contains the error details
 
 ```bash
 # open euri-test-api
-open https://euri-test-api-phflgvcuay.now.sh
+open https://euri-test-api-gyitloixhh.now.sh/
 ```
 
-> Use [PostMan](https://www.getpostman.com/downloads/) & open the [API](https://euri-test-api-phflgvcuay.now.sh) to complete the following exercises.
+> Use [PostMan](https://www.getpostman.com/downloads/) & open the [API](https://euri-test-api-gyitloixhh.now.sh/) to complete the following exercises.
 
 ---//
 
