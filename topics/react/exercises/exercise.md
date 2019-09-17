@@ -83,9 +83,13 @@
 
 ------
 
-## 2. userApp propTypes
-Add propTypes to our components from our userApp.
+## 2. personApp propTypes
+Add propTypes to our components from our personApp.
+
+Make sure to check off every person property!
 
 
 ## 3. Lifecycle events
-Add all the different lifecycle events to our userApp. Let them all console.log their name and try to trigger them all.
+Set a document title -> Persons (*number of persons*)
+
+Updates when a person is added.
