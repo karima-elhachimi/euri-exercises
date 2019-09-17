@@ -1,15 +1,62 @@
 ---
 title: Git Introduction
+transition: 'fade'
 verticalSeparator: ---//
 ---
 
 # Git, a distributed version control system
 
 <img src="./images/git.png" style="background-color:#f0efe7"/>
+<br>
+
+<small>
+Copyright (c) 2017-2019 Euricom nv.
+</small>
+
+<!-- markdownlint-disable -->
+<br>
+<style type="text/css">
+.reveal h1 {
+    font-size: 3.0em;
+}
+.reveal h2 {
+    font-size: 2.00em;
+}
+.reveal h3 {
+    font-size: 1.00em;
+}
+.reveal p {
+    font-size: 100%;
+}
+.reveal blockquote {
+    font-size: 80%;
+}
+.reveal pre code {
+    display: block;
+    padding: 5px;
+    overflow: auto;
+    max-height: 800px;
+    word-wrap: normal;
+    line-height: 35px;
+    font-size: 140%;
+}
+</style>
 
 ---
 
-## Create a new repository
+# Overview
+
+<img src="./images/git-overview.png" width="800px"/>
+
+---
+
+# Basics
+
+> What you all should know
+
+---//
+
+## New Repo
 
 ```bash
 # either create a new directory and type
@@ -23,9 +70,9 @@ cd git-intro
 
 ```
 
----
+---//
 
-## Show working tree status
+## Status
 
 ```bash
 # get current repo status
@@ -40,10 +87,11 @@ No commits yet
 nothing to commit (create/copy files and use "git add" to track)
 ```
 
+---//
 
----
+## Add & Commit
 
-## Create our very first commit
+Create our very first commit
 
 ```bash
 
@@ -57,7 +105,7 @@ git add README.md
 git commit -m "Added Readme"
 ```
 
----
+---//
 
 ## Log
 
@@ -78,9 +126,11 @@ git log --graph --oneline --decorate --all
 git log --name-status
 ```
 
----
+---//
 
-## Create our second commit
+## Diff
+
+Create our second commit
 
 ```bash
 # Ignore node_modules directories
@@ -99,15 +149,81 @@ git difftool --cached
 git commit
 ```
 
+---//
+
+## Overview
+
+<img src="./images/git-overview.png" width="800px"/>
+
+---//
+
+## .gitignore
+
+Exclude files
+
+- build files
+- temp files (logs, caches, dependencies, ...)
+- secrets !!!!!
+
+Setup global
+
+```bash
+# macos
+git config --global core.excludesfile ~/.gitignore
+
+# win
+git config --global core.excludesfile %USERPROFILE%\.gitignore
+```
+
+---//
+
+## .gitignore
+
+Sample root .gitignore
+
+```bash
+# OS generated files
+.DS_Store
+.Trashes
+Thumbs.db
+```
+
+Sample project .gitignore
+
+```bash
+# IDE local settings
+.vscode/**
+.idea
+
+# Dependency directories
+node_modules/**
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# generated files
+dist/**
+test-reports/**
+```
+
 ---
+
+# Team work
+
+> Work together
+
+---//
 
 ## Remote
 
-- create a personal repository online in github call it git-intro (no license nor a readme)
+Create a personal online repository
 
 ```bash
 # Add the remote
-git remote add origin https://github.com/[yourusername]/git-intro.git
+git remote add origin \
+   https://github.com/[yourusername]/git-intro.git
 
 # Push changes to github
 git push
@@ -122,9 +238,156 @@ git push --set-upstream origin master
 git push -u origin master
 ```
 
+---//
+
+## Fetch & Status
+
+Update a file on github and ...
+
+Get updates
+
+```bash
+# Get the changes
+git fetch
+
+# Show tree status
+git status
+> On branch master
+> Your branch and 'origin/master' have diverged,
+> and have 1 and 1 different commits each, respectively.
+> (use "git pull" to merge the remote branch into yours)
+```
+
+---//
+
+## Pull
+
+Get back the latest changes
+
+```bash
+# pull merge
+git pull
+
+# pull rebase
+git pull --rebase
+```
+
+---//
+
+## Checkout
+
+```bash
+# get previous version
+git checkout master~3
+```
+
+<img src="./images/git-checkout.png" width="800px"/>
+
+---//
+
+## Fetch, checkout & pull
+
+<img src="./images/git-overview.png" width="800px"/>
+
+---//
+
+## Merge (pull) vs rebase
+
+<img src="./images/git-merge-rebase.png" width="800px"/>
+
+---//
+
+## Stash
+
+You can't pull with incomplete changes
+
+```bash
+# pull when you have local uncommitted changes
+git pull --rebase
+Updating bc3bb13..ea441f4
+error: Your local changes to the following files would be overwritten by merge:
+	README.md
+Please commit your changes or stash them before you merge.
+```
+
+Shelve you changes
+
+```bash
+# Shelve incomplete changes
+git stash
+git stash save "my_stash"
+
+# Working directory is clean
+git status
+
+# Update from remote
+git pull --rebase
+
+# Put stash back
+git stash list
+git stash apply  # or pop
+```
+
+---//
+
+## Merge conflicts &#128531;
+
+Update on remote and local same file and ...
+
+```bash
+# Get the changes
+git pull
+git pull --rebase  # or using rebase
+
+# Merge the conflicts (manually or use tool)
+git mergetool
+
+# If using rebase - continue the rebase
+git rebase --continue
+
+# Show status
+git status
+
+# Conclude the merge
+git commit
+```
+
+---//
+
+## Undo changes
+
+```bash
+# Reset latest change
+git reset HEAD~1 --hard
+
+# Reset to commit
+git reflog # to find the commit sha
+git reset [commit-sha] --hard
+```
+
+---//
+
+## git reset
+
+<img src="./images/git-reset.png" width="800px"/>
+
 ---
 
-## Branching
+# Branching
+
+> Organize
+
+---//
+
+## Gitflow
+
+A successful Git branching model
+
+<img src="./images/git-model@2x.png" width="800px"/>
+
+---//
+
+## Feature branch
 
 ```bash
 # create a feature branch
@@ -143,170 +406,46 @@ git commit -m 'Changed title'
 git push --set-upstream origin features/feat1
 ```
 
----
+---//
 
-## Updating with remote
-
-- Add the dist/ folder to .ignore using github
+## Switch and merge
 
 ```bash
-# Switch back to master branch
+# Switch
+git checkout features/feat1
 git checkout master
-
-# Check to see if there are any updates to master branch
-git fetch
-
-# Update local branch with remote changes
-git pull
-```
-
----
-
-## Update our feat1 branch
-
-```bash
-# Switch to features/feat1 branch
 git checkout features/feat1
 
 # Merge changes in master into our branch
 git merge master
 
-# Push to github (branch already has upstream)
-git push
-```
-
----
-
-## Create our third commit
-
-- First add a line to our readme trough github
-
-```bash
-# Switch to master
-git checkout master
-
-# Add a subtitle
-ECHO "## Subtitle" >> README.md
-git add .
-git commit -m 'Added subtitle'
-
-# Push online
-git push
-```
-
-> This will fail because the remote has diverged from your local branch
-
----//
-
-```bash
-# Get the changes
-git fetch
-
-# Show tree status
-git status
-```
-
-> On branch master
-> Your branch and 'origin/master' have diverged,
-> and have 1 and 1 different commits each, respectively.
-> (use "git pull" to merge the remote branch into yours)
-
----//
-
-### Option 1: Pull
-
-```bash
-# Get the changes
-git pull
-
-# Merge the conflicts
-git mergetool
-
-# Add only the README.md
-git add README.md
-
-# Show status
-git status
-
-# Conclude the merge
-git commit
-
-```
-
-> This will lead to a merge commit
-
----//
-
-### Undo changes
-
-```bash
-# Use git reflog to find the commit sha of Added Subtitle
-git reflog
-
-# Reset to commit sha
-git reset [commit-sha] --hard
-```
-
----//
-
-### Option 2: Rebase local changes
-
-```bash
-# Get the changes
-git pull --rebase
-
-# Merge the conflicts
-git mergetool
-
-# Continue the rebase
-git rebase --continue
-
-# Show status (See no merge commit)
-git status
-
-# Push
-git push
-```
-
----
-
-## Integrate changes from feat1 branch
-
-```bash
-# Merge changes
-git merge features/feat1
-
-# Resolve the conflict using our mergetool
-git mergetool
-
-# Conclude the merge
-git commit
-
-# Push the changes
+# Push to origin (branch already has upstream)
 git push
 ```
 
 ---//
 
-### Remove remote and local branch
+## Remove branch
 
 ```bash
-# Delete the remote branch
-git push origin :features/feat1
-
 # Delete the local branch
 git branch -d features/feat1
+
+# Delete the remote branch (be carefull)
+git push origin :features/feat1
 ```
 
----//
+---
 
-## Want to learn more?
+# Learn more?
 
-- local
+### git help
 
 ```bash
 git help {command}
 ```
+
+### resources
 
 - [online](https://git-scm.com/)
 - https://github.github.com/training-kit/downloads/github-git-cheat-sheet/

@@ -1,15 +1,22 @@
 ---
-title: Roman Numeral Kata
-transition: "fade"
-separator: ^<!--horizontal-->$
+title: Javascript TDD Kata's
+transition: 'fade'
+separator: ^---$
 verticalSeparator: ^<!--vertical-->$
+---
+
+# TDD Kata's
+
+<img src="./images/tdd-mantra.gif" width="400px" /><br>
+<small>
+Copyright (c) 2019 Euricom nv.
+</small>
+
 ---
 
 # Roman Numerals
 
-## Kata
-
-The Romans were a clever bunch. They conquered most of Europe and ruled it for hundreds of years. They invented concrete and straight roads and even bikinis.
+📖 The Romans were a clever bunch. They conquered most of Europe and ruled it for hundreds of years. They invented concrete and straight roads and even bikinis.
 
 <!--vertical-->
 
@@ -82,3 +89,31 @@ Implement the romanToArabic function
 - IV => 4
 - VI => 6
 - ...
+
+---
+
+# Greeter
+
+💪 Try not to read ahead. Do one task at a time. The trick is to learn to work incrementally.
+
+<small>This kata demonstrates the problems of static scoped functions and objects.</small>
+
+🧠 All tests should always pass, regardless of environment conditions.
+
+<!--vertical-->
+
+## Greeter
+
+Write a Greeter class with greet function that receives a name as input and outputs `Hello <name>`.
+
+1. greet trims the input
+2. greet capitalizes the first letter of the name
+3. greet returns Good morning `<name>` when the time is 06:00-12:00
+4. greet returns Good evening `<name>` when the time is 18:00-22:00
+5. greet returns Good night `<name>` when the time is 22:00-06:00
+
+---
+
+# The bowling game
+
+[http://butunclebob.com/ArticleS.UncleBob.TheBowlingGameKata](http://butunclebob.com/ArticleS.UncleBob.TheBowlingGameKata)

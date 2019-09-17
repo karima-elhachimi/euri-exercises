@@ -113,7 +113,6 @@ data: {
 
 ---
 
-
 ### Demo
 
 ![](./images/graphql-playground.png)
@@ -223,18 +222,18 @@ query {
 ```json
 // JSON result
 {
-    "data": {
-        "me": {
-            "name": "Peter",
-            "thumbnail": {
-                "url": "https://cdn/50.jpg"
-            },
-            "profilePicture": {
-                "width": 3000,
-                "url": "https://cdn/3000.jpg"
-            }
-        }
+  "data": {
+    "me": {
+      "name": "Peter",
+      "thumbnail": {
+        "url": "https://cdn/50.jpg"
+      },
+      "profilePicture": {
+        "width": 3000,
+        "url": "https://cdn/3000.jpg"
+      }
     }
+  }
 }
 ```
 
@@ -432,7 +431,7 @@ Open https://euri-test-api-phflgvcuay.now.sh/graphql
 1. Query all users ordered by firstName (retrieve all fields)
 2. Query a single user and use a variable
 3. Add and complete a task
-4. Query all products (all fields) & basket with products (all fields) in one query. 
+4. Query all products (all fields) & basket with products (all fields) in one query.
 5. Add an other product to the basket
 
 When using the basket use a random checkoutID (eg: "123" or "peterBasket") to get your own basket.
@@ -443,10 +442,9 @@ When using the basket use a random checkoutID (eg: "123" or "peterBasket") to ge
 
 - [http://graphql.org/](http://graphql.org/)
 - [graphqlweekly](https://graphqlweekly.com/)
-- [learngraphql.com](https://learngraphql.com/)
+- [howtographql.com](https://www.howtographql.com)
 - [apollo-stack](https://medium.com/apollo-stack)
 - [awesome-graphql](https://github.com/chentsulin/awesome-graphql)
-- [launchpad.graphql.com](https://launchpad.graphql.com)
 
 ---
 
