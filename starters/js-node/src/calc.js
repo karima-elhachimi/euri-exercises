@@ -1,16 +1,15 @@
 var calc = {
   
   sum: function(a, b) {
-    return a + b;
+    return +a + +b;
   },
 
   sub: function (a, b) {
-    return a - b;
+    return +a - +b;
   },
-  divide:  divide
+  divide(a, b){
+    return +a/+b;
+  
+  }
 }
 
-function divide(a, b){
-  return a/b;
-
-}
