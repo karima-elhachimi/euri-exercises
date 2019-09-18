@@ -36,3 +36,30 @@ const addf = function(arg1){
 addf(1)(2);
 
 console.log(`addf: ${addf(2)(4)}`);
+
+function applyf(fun){
+    return function(a){
+        return function(b){
+            return fun(a, b);
+        }
+    };
+}
+
+console.log(`tripple call: ${applyf(sum)(2)(3)}`);
+
+function curry(fun, x){
+    return function(y){
+        return fun(x, y);
+    }
+
+}
+
+console.log(`curry: ${curry(sum, 2)(3)}`);
+
+
+const inc = curry(sum, 1)
+
+console.log(`inc: ${inc(inc(5))}`);
+
+
+
