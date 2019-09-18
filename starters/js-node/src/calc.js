@@ -1,15 +1,19 @@
-var calc = {
+const calc = (function(){
   
-  sum: function(a, b) {
+  function sum(a, b) {
     return +a + +b;
-  },
+  }
 
-  sub: function (a, b) {
+  function sub(a, b) {
     return +a - +b;
-  },
-  divide(a, b){
+  }
+  function divide(a, b) {
     return +a/+b;
   
   }
-}
+  return {
+    sum: sum,
+    sub: sub
+  }
+})();
 
