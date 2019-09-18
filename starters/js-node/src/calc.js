@@ -1,7 +1,16 @@
-export function sum(a, b) {
-  return a + b;
+var calc = {
+  
+  sum: function(a, b) {
+    return a + b;
+  },
+
+  sub: function (a, b) {
+    return a - b;
+  },
+  divide:  divide
 }
 
-export function subtract(a, b) {
-  return a - b;
+function divide(a, b){
+  return a/b;
+
 }
