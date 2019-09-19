@@ -9,21 +9,21 @@ function myForEach(arr, callback) {
     }
 }
 
-
+/*
 Array.prototype.myForEach = function(){
     for(let i = 0; i < this.length; i++){
         console.log(i);
         return i;
     }
 };
-
+*/
 Array.prototype.myForEach = function(fn){
     myForEach(this, fn)
-}
+}; 
 
 // Step 2 - Make this work
-const myArr = [2, 3, 4];
-myArr.myForEach(function (value) {
+//const myArr = [2, 3, 4];
+[2, 3, 4].myForEach(function (value) {
     console.log(value);
 });
 
