@@ -1,7 +1,15 @@
-const animal = Object.create(null);
+/* const animal = Object.create(null);
 animal.eats = function(food){
     console.log(`I eat ${food}`);
-}
+} */
+
+//kan ook met
+const animal = Object.create(null, {
+    eat(food){
+        console.log(`I eat ${food}`);
+    }
+});
+
 
 const rabbit = Object.create(animal);
 rabbit.jumps = function(hops) {
@@ -16,9 +24,15 @@ rabbit.jumps(3);
 //constructor
 
 function Animal1(){
-    this.eats = function(food){
+    //Dit maakt de functie niet aan op de prototype van Animal1, maar op elke instantie van Animal1.
+    //Oplossing is om deze functie aan te maken buiten de  functie. 
+    function eat(food){
         console.log(`I eat ${food}`);
     }
+}
+
+Animal1.prototype.eat = function(food ){
+    console.log(`I eat ${food}`);
 }
 
 const cat = new Animal1();
