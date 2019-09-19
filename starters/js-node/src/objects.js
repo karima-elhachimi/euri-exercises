@@ -35,7 +35,6 @@ cat.meows(4);
 
 class Animal2 {
 
-    sound;
     constructor(sound){
         this.sound = sound;
     }
@@ -57,5 +56,27 @@ dog.makeSound();
 
 dog.speak(2);
 
+//Animal2.prototype.makeSound = function(){
+//    console.log("We don't make sound anymore.");
+//}
+
+dog.makeSound();
+
+
+class Cat extends Animal2 {
+    constructor(sound, fur){
+        super(sound);
+        this.fur = fur
+    }
+
+    brushFur(){
+        console.log(`Brush ${this.fur}`);
+    }
+}
+
+const ragDoll = new Cat("mowr", "long haired fur");
+
+ragDoll.makeSound();
+ragDoll.brushFur();
 
 
